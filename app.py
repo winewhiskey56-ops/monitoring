@@ -4,7 +4,7 @@ import json
 import os
 import uuid
 
-# --- КОНФИГУРАЦИЯ ---
+# --- БАЗОВАЯ НАСТРОЙКА ---
 DB_FILE = "wine_monitoring_db.json"
 CATEGORIES = ["Новый Свет", "Европа", "Игристые", "Крепкие напитки"]
 SHOPS = ["Лента", "Метро", "Магнит", "Перекресток", "О'кей", "Красное и Белое"]
@@ -35,16 +35,27 @@ if 'current_wine' not in st.session_state:
 def get_perc(reg, disc):
     return round((1 - disc / reg) * 100, 1) if reg > 0 else 0
 
+# Исправленная функция подсветки
 def highlight_min_max(row):
+    # Выбираем только колонки с ценами
     price_cols = [c for c in row.index if c == "Наша Итог." or c in SHOPS]
-    vals = {col: row[col] for col in price_cols if isinstance(row[col], (int, float)) and row[col] > 0}
+    # Преобразуем в числа, игнорируя текст "Нет в наличии"
+    vals = {}
+    for col in price_cols:
+        val = row[col]
+        if isinstance(val, (int, float)) and val > 0:
+            vals[col] = val
+    
     styles = ['' for _ in row]
     if vals:
-        min_col = min(vals, key=vals.get)
-        max_col = max(vals, key=vals.get)
+        min_val = min(vals.values())
+        max_val = max(vals.values())
         for i, col in enumerate(row.index):
-            if col == min_col: styles[i] = 'background-color: #d4edda; color: #155724; font-weight: bold'
-            elif col == max_col: styles[i] = 'background-color: #f8d7da; color: #721c24; font-weight: bold'
+            if col in vals:
+                if vals[col] == min_val:
+                    styles[i] = 'background-color: #d4edda; color: #155724; font-weight: bold'
+                elif vals[col] == max_val:
+                    styles[i] = 'background-color: #f8d7da; color: #721c24; font-weight: bold'
     return styles
 
 def go_to_edit(wine_id=None):
@@ -58,34 +69,30 @@ def go_to_edit(wine_id=None):
         }
     st.session_state.page = "edit"
 
-def go_to_table():
-    st.session_state.page = "table"
-    st.session_state.current_wine = None
-
 st.set_page_config(layout="wide", page_title="Wine Intelligence")
 
 # --- СТРАНИЦА: ТАБЛИЦА ---
 if st.session_state.page == "table":
     st.title("🍷 Мониторинг цен Оренбург")
     
-    c_btn1, c_btn2 = st.columns([6, 1])
-    with c_btn2:
+    col_header, col_add = st.columns([6, 1])
+    with col_add:
         if st.button("➕ Добавить вино", use_container_width=True):
             go_to_edit()
             st.rerun()
 
     if not st.session_state.wines:
-        st.info("База пуста. Добавьте товар.")
+        st.info("База пуста.")
     else:
-        f_col1, f_col2 = st.columns([2, 2])
-        with f_col1: search = st.text_input("🔍 Поиск по названию", "")
-        with f_col2: f_cat = st.multiselect("Категория", CATEGORIES, default=CATEGORIES)
+        f1, f2 = st.columns(2)
+        with f1: search = st.text_input("🔍 Поиск", "")
+        with f2: f_cat = st.multiselect("Категория", CATEGORIES, default=CATEGORIES)
 
-        table_rows = []
+        data = []
         for w in st.session_state.wines:
             if (not search or search.lower() in w['name'].lower()) and (w['category'] in f_cat):
                 row = {
-                    "INTERNAL_ID": w['id'], # Скрытый ID для логики
+                    "ID": w['id'],
                     "Название": w['name'],
                     "Категория": w['category'],
                     "Наша Рег.": w['our_reg'],
@@ -94,38 +101,40 @@ if st.session_state.page == "table":
                 }
                 for shop in SHOPS:
                     comp = next((c for c in w['competitors'] if c['shop'] == shop), None)
-                    row[shop] = comp['disc'] if comp and comp['in_stock'] else (None if not comp else "Нет в наличии")
-                table_rows.append(row)
+                    if comp:
+                        row[shop] = comp['disc'] if comp['in_stock'] else "Нет в наличии"
+                    else:
+                        row[shop] = None
+                data.append(row)
 
-        if table_rows:
-            df = pd.DataFrame(table_rows)
+        if data:
+            df = pd.DataFrame(data)
+            # Применяем стиль КРОМЕ колонки ID
+            styled_df = df.style.apply(highlight_min_max, axis=1)
+
             st.write("### Сводная таблица")
-            st.caption("💡 Кликните по любой строке, чтобы открыть карточку товара")
-            
-            # Настройка отображения (скрываем технический ID)
-            display_df = df.drop(columns=['INTERNAL_ID'])
-            styled_df = display_df.style.apply(highlight_min_max, axis=1)
+            st.caption("💡 Просто нажми на нужную строку, чтобы открыть карточку")
 
-            # Вывод интерактивной таблицы
-            selection = st.dataframe(
+            # ИСПОЛЬЗУЕМ НОВЫЙ ФОРМАТ ВЫБОРА (для версии 1.35+)
+            event = st.dataframe(
                 styled_df,
                 use_container_width=True,
                 height=600,
                 on_select="rerun",
-                selection_mode="single_row",
-                column_config={"INTERNAL_ID": None} # Дополнительная страховка скрытия
+                selection_mode="single-row", # Изменено для стабильности
+                column_config={"ID": None}  # Прячем технический ID
             )
 
-            # Обработка клика по строке
-            if selection.selection.rows:
-                selected_row_index = selection.selection.rows[0]
-                selected_wine_id = df.iloc[selected_row_index]['INTERNAL_ID']
-                go_to_edit(selected_wine_id)
+            # Проверка выбора строки
+            if event and "selection" in event and event["selection"]["rows"]:
+                row_idx = event["selection"]["rows"][0]
+                selected_id = df.iloc[row_idx]["ID"]
+                go_to_edit(selected_id)
                 st.rerun()
         else:
             st.warning("Ничего не найдено.")
 
-# --- СТРАНИЦА: КАРТОЧКА ---
+# --- СТРАНИЦА: КАРТОЧКА (Логика без изменений, чтобы не ломать рабочее) ---
 elif st.session_state.page == "edit":
     wine = st.session_state.current_wine
     st.title(f"📝 Карточка: {wine['name'] or 'Новое вино'}")
@@ -167,18 +176,21 @@ elif st.session_state.page == "edit":
     b1, b2, b3 = st.columns([2, 2, 6])
     with b1:
         if st.button("💾 Сохранить", type="primary", use_container_width=True):
-            if not wine['name'] or wine['our_reg'] <= 0: st.error("Заполните данные!")
+            if not wine['name'] or wine['our_reg'] <= 0: st.error("Заполни поля!")
             else:
                 idx = next((i for i, w in enumerate(st.session_state.wines) if w['id'] == wine['id']), None)
                 if idx is not None: st.session_state.wines[idx] = wine
                 else: st.session_state.wines.append(wine)
                 save_data(st.session_state.wines)
-                go_to_table(); st.rerun()
+                st.session_state.page = "table"
+                st.rerun()
     with b2:
         if st.button("🔙 Отмена", use_container_width=True):
-            go_to_table(); st.rerun()
+            st.session_state.page = "table"
+            st.rerun()
     with b3:
-        if st.button("🗑️ Удалить вино", type="secondary"):
+        if st.button("🗑️ Удалить всё вино", type="secondary"):
             st.session_state.wines = [w for w in st.session_state.wines if w['id'] != wine['id']]
             save_data(st.session_state.wines)
-            go_to_table(); st.rerun()
+            st.session_state.page = "table"
+            st.rerun()
