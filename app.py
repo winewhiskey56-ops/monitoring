@@ -11,11 +11,19 @@ import pandas as pd
 # Настройки браузера для работы в облаке и обхода блокировок
 def get_driver():
     options = Options()
-    options.add_argument("--headless") # Работа без открытия окна
+    options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    
+    # В Streamlit Cloud пути обычно такие:
+    options.binary_location = "/usr/bin/chromium"
+    
+    # Мы не используем ChromeDriverManager, а берем системный драйвер
+    service = Service("/usr/bin/chromedriver")
+    
+    driver = webdriver.Chrome(service=service, options=options)
     return driver
 
 def search_lenta(wine_name):
