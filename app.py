@@ -1,144 +1,147 @@
 import streamlit as st
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from thefuzz import fuzz
-import time
+import json
+import os
 
-# --- НАСТРОЙКИ ---
-ORENBURG_LENTA_COOKIE = "orenburg"
-ORENBURG_METRO_ID = "68"
-MATCH_THRESHOLD = 75  # Процент схожести названий для признания совпадения
+# --- НАСТРОЙКИ И БАЗА ДАННЫХ ---
+DB_FILE = "wine_db.json"
 
-def get_driver():
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-    try:
-        # Для работы в Streamlit Cloud
-        options.binary_location = "/usr/bin/chromium"
-        service = Service("/usr/bin/chromedriver")
-        driver = webdriver.Chrome(service=service, options=options)
-    except:
-        # Для локальной разработки
-        from webdriver_manager.chrome import ChromeDriverManager
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    return driver
+def load_data():
+    if os.path.exists(DB_FILE):
+        with open(DB_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
 
-# --- ПАРСЕРЫ ---
+def save_data(data):
+    with open(DB_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
-def get_simplewine_items():
-    """Собирает акционные позиции с первой страницы SimpleWine"""
-    driver = get_driver()
-    items = []
-    try:
-        driver.get("https://simplewine.ru/catalog/wine/filter/availability-is-y/apply/")
-        time.sleep(5)
-        cards = driver.find_elements(By.CSS_SELECTOR, ".product-card")
-        
-        for card in cards[:10]: # Берем первые 10 для теста скорости
-            try:
-                name = card.find_element(By.CSS_SELECTOR, ".product-card__name").text
-                price_new = card.find_element(By.CSS_SELECTOR, ".product-card__price-current").text
-                try:
-                    price_old = card.find_element(By.CSS_SELECTOR, ".product-card__price-old").text
-                except:
-                    price_old = price_new
-                
-                items.append({
-                    "name": name,
-                    "simple_price": int(''.join(filter(str.isdigit, price_new))),
-                    "simple_old": int(''.join(filter(str.isdigit, price_old)))
-                })
-            except: continue
-    finally:
-        driver.quit()
-    return items
+# Инициализация данных в сессии
+if 'wines' not in st.session_state:
+    st.session_state.wines = load_data()
 
-def search_competitor(wine_name, shop_url, price_selector, cookie_type=None):
-    """Универсальный поиск по названию у конкурента"""
-    driver = get_driver()
-    try:
-        if cookie_type == "lenta":
-            driver.get("https://lenta.com/")
-            driver.add_cookie({"name": "city", "value": ORENBURG_LENTA_COOKIE})
-        elif cookie_type == "metro":
-            driver.get("https://online.metro-cc.ru/")
-            driver.add_cookie({"name": "metro_store_id", "value": ORENBURG_METRO_ID})
+# --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
+def calc_perc(reg, disc):
+    if reg and disc and reg > 0:
+        return round((1 - disc / reg) * 100, 1)
+    return 0
 
-        driver.get(f"{shop_url}{wine_name}")
-        time.sleep(4)
-        
-        # Берем первый найденный товар
-        price_elem = driver.find_element(By.CSS_SELECTOR, price_selector)
-        price_val = int(''.join(filter(str.isdigit, price_elem.text)))
-        return price_val
-    except:
-        return None
-    finally:
-        driver.quit()
-
-# --- ИНТЕРФЕЙС STREAMLIT ---
-
-st.set_page_config(layout="wide", page_title="Wine Monitor Orenburg")
-st.title("🍷 Мониторинг: SimpleWine vs Оренбург")
-
-if st.button("🚀 Запустить полное сравнение"):
-    progress_bar = st.progress(0)
-    status_text = st.empty()
+# --- СТИЛИЗАЦИЯ ТАБЛИЦЫ ---
+def highlight_prices(row):
+    # Собираем все итоговые цены (наша и конкурентов), которые есть в наличии
+    prices = {}
+    if not row['Нет в наличии']:
+        prices['Наша'] = row['Наша цена (скидка)']
     
-    # 1. Получаем базу от SimpleWine
-    status_text.text("Сбор данных SimpleWine...")
-    source_items = get_simplewine_items()
-    progress_bar.progress(20)
+    # Извлекаем цены конкурентов из вложенных данных (упростим для примера в плоской таблице)
+    # Для демонстрации в таблице выводим минимальную/максимальную среди всех
+    return ['' for _ in row]
+
+# --- ИНТЕРФЕЙС ---
+st.set_page_config(layout="wide", page_title="Wine Control Panel")
+
+st.title("🍷 Система мониторинга цен и ассортимента")
+
+menu = st.sidebar.radio("Навигация", ["Общая таблица", "Добавить/Редактировать вино"])
+
+categories = ["Новый Свет", "Европа", "Игристые", "Крепкие напитки"]
+competitor_list = ["Лента", "Метро", "Магнит", "Перекресток", "О'кей", "Красное и Белое"]
+
+# --- ВКЛАДКА: ДОБАВЛЕНИЕ/РЕДАКТИРОВАНИЕ ---
+if menu == "Добавить/Редактировать вино":
+    st.header("📝 Карточка вина")
     
-    if not source_items:
-        st.error("Не удалось получить данные SimpleWine. Проверьте соединение.")
-    else:
-        results = []
-        total = len(source_items)
+    with st.form("wine_form", clear_on_submit=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            name = st.text_input("Название вина")
+            category = st.selectbox("Категория", categories)
+            out_of_stock = st.checkbox("Нет в наличии")
         
-        for i, item in enumerate(source_items):
-            status_text.text(f"Сравниваем ({i+1}/{total}): {item['name']}")
+        with col2:
+            our_reg = st.number_input("Наша верхняя цена", min_value=0)
+            our_disc = st.number_input("Наша цена со скидкой", min_value=0)
+            st.info(f"Наша скидка: {calc_perc(our_reg, our_disc)}%")
+
+        st.divider()
+        st.subheader("Цены конкурентов")
+        
+        # Динамическое добавление конкурентов (упрощено до выбора нескольких)
+        comp_data = []
+        selected_comps = st.multiselect("Выберите конкурентов для сравнения", competitor_list)
+        
+        for comp in selected_comps:
+            c_col1, c_col2, c_col3 = st.columns([2, 2, 2])
+            with c_col1:
+                st.write(f"**{comp}**")
+            with c_col2:
+                c_reg = st.number_input(f"Рег. цена ({comp})", key=f"reg_{comp}", min_value=0)
+            with c_col3:
+                c_disc = st.number_input(f"Цена со скидкой ({comp})", key=f"disc_{comp}", min_value=0)
             
-            # Поиск в Ленте
-            lenta_price = search_competitor(item['name'], 
-                                         "https://lenta.com/search/?searchText=", 
-                                         ".price-label__integer", "lenta")
-            
-            # Поиск в Metro
-            metro_price = search_competitor(item['name'], 
-                                          "https://online.metro-cc.ru/search?q=", 
-                                          ".product-unit-prices__actual-wrapper", "metro")
-            
-            # Логика скидки Simple
-            discount = item['simple_old'] - item['simple_price']
-            
-            results.append({
-                "Позиция": item['name'],
-                "Simple: Цена (без скидки)": f"{item['simple_old']} ₽",
-                "Simple: Скидка": f"{discount} ₽" if discount > 0 else "Нет",
-                "Simple: Итоговая": f"{item['simple_price']} ₽",
-                "Лента (Оренбург)": f"{lenta_price} ₽" if lenta_price else "—",
-                "Metro (Оренбург)": f"{metro_price} ₽" if metro_price else "—"
+            comp_data.append({
+                "shop": comp,
+                "reg": c_reg,
+                "disc": c_disc,
+                "perc": calc_perc(c_reg, c_disc)
             })
-            progress_bar.progress(20 + int((i+1)/total * 80))
 
-        # Вывод таблицы
-        status_text.success("Анализ завершен!")
-        df = pd.DataFrame(results)
-        
-        st.subheader("Сводная таблица цен")
-        st.dataframe(df, use_container_width=True)
-        
-        # Экспорт
-        csv = df.to_csv(index=False).encode('utf-8-sig')
-        st.download_button("📥 Скачать отчет в CSV", csv, "wine_report_orenburg.csv", "text/csv")
+        if st.form_submit_button("Сохранить карточку"):
+            new_wine = {
+                "Название": name,
+                "Категория": category,
+                "Нет в наличии": out_of_stock,
+                "Наша цена (рег)": our_reg,
+                "Наша цена (скидка)": our_disc,
+                "Наша скидка %": calc_perc(our_reg, our_disc),
+                "Конкуренты": comp_data
+            }
+            st.session_state.wines.append(new_wine)
+            save_data(st.session_state.wines)
+            st.success(f"Вино '{name}' добавлено!")
 
-st.info("Примечание: Парсинг занимает время из-за эмуляции поведения пользователя в Оренбурге для каждого магазина.")
+# --- ВКЛАДКА: ТАБЛИЦА ---
+elif menu == "Общая таблица":
+    st.header("📊 Сравнительный анализ")
+    
+    if not st.session_state.wines:
+        st.warning("База данных пуста. Добавьте первое вино.")
+    else:
+        # Фильтры
+        filter_cat = st.multiselect("Фильтр по категории", categories, default=categories)
+        
+        # Подготовка данных для таблицы
+        display_data = []
+        for w in st.session_state.wines:
+            if w['Категория'] in filter_cat:
+                # Находим лучшую цену среди всех
+                all_prices = [w['Наша цена (скидка)']] + [c['disc'] for c in w['Конкуренты'] if c['disc'] > 0]
+                min_p = min(all_prices) if all_prices else 0
+                max_p = max(all_prices) if all_prices else 0
+                
+                row = {
+                    "Название": w['Название'],
+                    "Категория": w['Категория'],
+                    "Наша цена": w['Наша цена (скидка)'],
+                    "Наша скидка %": w['Наша скидка %'],
+                    "Нет в наличии": "❌" if w['Нет в наличии'] else "✅"
+                }
+                
+                # Добавляем колонки конкурентов
+                for comp in competitor_list:
+                    comp_val = next((c for c in w['Конкуренты'] if c['shop'] == comp), None)
+                    row[f"{comp}"] = comp_val['disc'] if comp_val else "—"
+                
+                display_data.append(row)
+
+        df = pd.DataFrame(display_data)
+
+        # Функция для раскраски
+        def color_prices(val):
+            # Это упрощенная логика раскраски ячеек
+            return ''
+
+        # Вывод таблицы с сортировкой
+        st.dataframe(df.sort_values(by="Название"), use_container_width=True)
+        
+        st.download_button("📥 Экспорт в CSV", df.to_csv(index=False).encode('utf-8-sig'), "wine_inventory.csv")
