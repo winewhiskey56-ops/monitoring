@@ -107,23 +107,23 @@ if st.session_state.page == "table":
                         row[shop] = None
                 data.append(row)
 
-       if data:
+        if data:
             df = pd.DataFrame(data)
             
-            # 1. Создаем настройки для колонок (чтобы скрыть ID и убрать нули в интерфейсе)
+            # Настройки отображения колонок (убираем нули)
             column_settings = {shop: st.column_config.NumberColumn(format="%d") for shop in SHOPS}
             column_settings["ID"] = None
             column_settings["Наша Рег."] = st.column_config.NumberColumn(format="%d")
             column_settings["Наша Итог."] = st.column_config.NumberColumn(format="%d")
 
-            # 2. Применяем форматирование (precision=0 убирает точки и нули)
+            # Форматируем таблицу (precision=0 убирает точки и нули после них)
             display_df = df.drop(columns=['ID'])
             styled_df = display_df.style.format(precision=0, na_rep="-").apply(highlight_min_max, axis=1)
 
             st.write("### Сводная таблица")
             st.caption("💡 Просто нажми на нужную строку, чтобы открыть карточку")
 
-            # 3. Выводим таблицу с обновленным конфигом
+            # Вывод таблицы
             event = st.dataframe(
                 styled_df,
                 use_container_width=True,
