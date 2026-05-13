@@ -1,5 +1,2 @@
 streamlit
-selenium
 pandas
-thefuzz
-webdriver-manager
