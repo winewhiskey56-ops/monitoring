@@ -1,3 +1,4 @@
 streamlit
 selenium
 pandas
+thefuzz  # Для умного сравнения названий вин
