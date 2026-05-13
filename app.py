@@ -107,22 +107,30 @@ if st.session_state.page == "table":
                         row[shop] = None
                 data.append(row)
 
-        if data:
+       if data:
             df = pd.DataFrame(data)
-            # Применяем стиль КРОМЕ колонки ID
-            styled_df = df.style.apply(highlight_min_max, axis=1)
+            
+            # 1. Создаем настройки для колонок (чтобы скрыть ID и убрать нули в интерфейсе)
+            column_settings = {shop: st.column_config.NumberColumn(format="%d") for shop in SHOPS}
+            column_settings["ID"] = None
+            column_settings["Наша Рег."] = st.column_config.NumberColumn(format="%d")
+            column_settings["Наша Итог."] = st.column_config.NumberColumn(format="%d")
+
+            # 2. Применяем форматирование (precision=0 убирает точки и нули)
+            display_df = df.drop(columns=['ID'])
+            styled_df = display_df.style.format(precision=0, na_rep="-").apply(highlight_min_max, axis=1)
 
             st.write("### Сводная таблица")
             st.caption("💡 Просто нажми на нужную строку, чтобы открыть карточку")
 
-            # ИСПОЛЬЗУЕМ НОВЫЙ ФОРМАТ ВЫБОРА (для версии 1.35+)
+            # 3. Выводим таблицу с обновленным конфигом
             event = st.dataframe(
                 styled_df,
                 use_container_width=True,
                 height=600,
                 on_select="rerun",
-                selection_mode="single-row", # Изменено для стабильности
-                column_config={"ID": None}  # Прячем технический ID
+                selection_mode="single-row",
+                column_config=column_settings
             )
 
             # Проверка выбора строки
