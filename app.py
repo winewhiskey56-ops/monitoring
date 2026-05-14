@@ -125,18 +125,25 @@ if st.session_state.page == "table":
 elif st.session_state.page == "edit":
     wine = st.session_state.current_wine
     st.title(f"📝 {wine['name'] or 'Новая позиция'}")
+    
     with st.container(border=True):
         c1, c2 = st.columns(2)
         with c1:
             wine['name'] = st.text_input("Название вина*", value=wine['name'])
             wine['category'] = st.selectbox("Категория*", CATEGORIES, index=CATEGORIES.index(wine['category']))
         with c2:
-            wine['our_reg'] = st.number_input("Наша Рег.", value=int(wine['our_reg']))
-            wine['our_disc'] = st.number_input("Наша Скидка", value=int(wine['our_disc']))
+            wine['our_reg'] = st.number_input("Наша Рег. цена*", value=int(wine['our_reg']))
+            wine['our_disc'] = st.number_input("Наша цена со скидкой*", value=int(wine['our_disc']))
+            
+            # --- ИСПРАВЛЕНИЕ: Показываем нашу скидку ---
+            if wine['our_reg'] > 0:
+                p = get_perc(wine['our_reg'], wine['our_disc'])
+                st.info(f"Наша скидка: **{p}%**")
 
     st.subheader("🛒 Конкуренты")
     used = [c['shop'] for c in wine['competitors']]
     avail = [s for s in SHOPS if s not in used]
+    
     if avail:
         new_s = st.selectbox("Добавить магазин:", [""] + avail)
         if new_s:
@@ -146,15 +153,25 @@ elif st.session_state.page == "edit":
     for i, comp in enumerate(wine['competitors']):
         with st.expander(f"📍 {comp['shop']}", expanded=True):
             cc1, cc2, cc3, cc4 = st.columns([2, 2, 2, 1])
-            with cc1: comp['reg'] = st.number_input(f"Рег.", value=int(comp['reg']), key=f"r_{comp['shop']}")
-            with cc2: comp['disc'] = st.number_input(f"Скидка", value=int(comp['disc']), key=f"d_{comp['shop']}")
-            with cc3: comp['in_stock'] = st.toggle("В наличии", value=comp['in_stock'], key=f"s_{comp['shop']}")
+            with cc1: 
+                comp['reg'] = st.number_input(f"Рег. цена ({comp['shop']})", value=int(comp['reg']), key=f"r_{comp['shop']}")
+            with cc2: 
+                comp['disc'] = st.number_input(f"Цена со скидкой ({comp['shop']})", value=int(comp['disc']), key=f"d_{comp['shop']}")
+            
+            # --- ИСПРАВЛЕНИЕ: Показываем скидку конкурента ---
+            with cc3:
+                if comp['reg'] > 0:
+                    cp = get_perc(comp['reg'], comp['disc'])
+                    st.write(f"Скидка: **{cp}%**")
+                comp['in_stock'] = st.toggle("В наличии", value=comp['in_stock'], key=f"s_{comp['shop']}")
+            
             with cc4:
                 if st.button("🗑️", key=f"del_{comp['shop']}"):
                     wine['competitors'].pop(i)
                     st.rerun()
 
     st.divider()
+    # Кнопки сохранения остаются без изменений
     b1, b2, b3 = st.columns([2, 2, 6])
     with b1:
         if st.button("💾 Сохранить", type="primary", use_container_width=True):
@@ -164,11 +181,15 @@ elif st.session_state.page == "edit":
                 if idx is not None: st.session_state.wines[idx] = wine
                 else: st.session_state.wines.append(wine)
                 save_data(st.session_state.wines)
-                st.session_state.page = "table"; st.rerun()
+                st.session_state.page = "table"
+                st.rerun()
     with b2:
         if st.button("🔙 Отмена", use_container_width=True):
-            st.session_state.page = "table"; st.rerun()
+            st.session_state.page = "table"
+            st.rerun()
     with b3:
         if st.button("🗑️ Удалить вино", type="secondary"):
             st.session_state.wines = [w for w in st.session_state.wines if w['id'] != wine['id']]
-            save_data(st.session_state.wines); st.session_state.page = "table"; st.rerun()
+            save_data(st.session_state.wines)
+            st.session_state.page = "table"
+            st.rerun()
