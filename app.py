@@ -114,4 +114,61 @@ if st.session_state.page == "table":
         if table_rows:
             df = pd.DataFrame(table_rows)
             col_cfg = {shop: st.column_config.NumberColumn(format="%d") for shop in SHOPS}
-            col_cfg.update({"ID": None, "
+            col_cfg.update({"ID": None, "Наша Рег.": st.column_config.NumberColumn(format="%d"), "Наша Итог.": st.column_config.NumberColumn(format="%d")})
+            styled_df = df.style.format(precision=0, na_rep="-").apply(highlight_min_max, axis=1)
+            event = st.dataframe(styled_df, use_container_width=True, height=600, on_select="rerun", selection_mode="single-row", column_config=col_cfg)
+            if event and event.get("selection", {}).get("rows"):
+                idx = event["selection"]["rows"][0]
+                go_to_edit(df.iloc[idx]["ID"])
+                st.rerun()
+
+elif st.session_state.page == "edit":
+    wine = st.session_state.current_wine
+    st.title(f"📝 {wine['name'] or 'Новая позиция'}")
+    with st.container(border=True):
+        c1, c2 = st.columns(2)
+        with c1:
+            wine['name'] = st.text_input("Название вина*", value=wine['name'])
+            wine['category'] = st.selectbox("Категория*", CATEGORIES, index=CATEGORIES.index(wine['category']))
+        with c2:
+            wine['our_reg'] = st.number_input("Наша Рег.", value=int(wine['our_reg']))
+            wine['our_disc'] = st.number_input("Наша Скидка", value=int(wine['our_disc']))
+
+    st.subheader("🛒 Конкуренты")
+    used = [c['shop'] for c in wine['competitors']]
+    avail = [s for s in SHOPS if s not in used]
+    if avail:
+        new_s = st.selectbox("Добавить магазин:", [""] + avail)
+        if new_s:
+            wine['competitors'].append({"shop": new_s, "reg": 0, "disc": 0, "in_stock": True})
+            st.rerun()
+
+    for i, comp in enumerate(wine['competitors']):
+        with st.expander(f"📍 {comp['shop']}", expanded=True):
+            cc1, cc2, cc3, cc4 = st.columns([2, 2, 2, 1])
+            with cc1: comp['reg'] = st.number_input(f"Рег.", value=int(comp['reg']), key=f"r_{comp['shop']}")
+            with cc2: comp['disc'] = st.number_input(f"Скидка", value=int(comp['disc']), key=f"d_{comp['shop']}")
+            with cc3: comp['in_stock'] = st.toggle("В наличии", value=comp['in_stock'], key=f"s_{comp['shop']}")
+            with cc4:
+                if st.button("🗑️", key=f"del_{comp['shop']}"):
+                    wine['competitors'].pop(i)
+                    st.rerun()
+
+    st.divider()
+    b1, b2, b3 = st.columns([2, 2, 6])
+    with b1:
+        if st.button("💾 Сохранить", type="primary", use_container_width=True):
+            if not wine['name']: st.error("Укажите название!")
+            else:
+                idx = next((i for i, w in enumerate(st.session_state.wines) if w['id'] == wine['id']), None)
+                if idx is not None: st.session_state.wines[idx] = wine
+                else: st.session_state.wines.append(wine)
+                save_data(st.session_state.wines)
+                st.session_state.page = "table"; st.rerun()
+    with b2:
+        if st.button("🔙 Отмена", use_container_width=True):
+            st.session_state.page = "table"; st.rerun()
+    with b3:
+        if st.button("🗑️ Удалить вино", type="secondary"):
+            st.session_state.wines = [w for w in st.session_state.wines if w['id'] != wine['id']]
+            save_data(st.session_state.wines); st.session_state.page = "table"; st.rerun()
