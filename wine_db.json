@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "id": "bfca5924-3087-47c3-bc08-fe63f39a09b4",
+        "name": "trapiche",
+        "category": "Новый Свет",
+        "our_reg": 1000,
+        "our_disc": 200,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1000,
+                "disc": 300,
+                "in_stock": true
+            }
+        ]
+    }
+]
