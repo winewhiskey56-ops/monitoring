@@ -1,29 +1,48 @@
 import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import json
-import os
-import uuid
 
-# --- БАЗОВАЯ НАСТРОЙКА ---
-DB_FILE = "wine_monitoring_db.json"
-CATEGORIES = ["Новый Свет", "Европа", "Игристые", "Крепкие напитки"]
-SHOPS = ["Лента", "Метро", "Магнит", "Перекресток", "О'кей", "Красное и Белое"]
+# --- ПОДКЛЮЧЕНИЕ К ОБЛАКУ ---
+# Вставь сюда ссылку на свою таблицу, которую скопировал в Шаге 1
+SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1cCR0T34J6vjr_RvNrnR6hDoz5G83jSwuezPkNGW7_IY/edit?usp=sharing"
 
 def load_data():
-    if os.path.exists(DB_FILE):
-        try:
-            with open(DB_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                for item in data:
-                    item.setdefault('id', str(uuid.uuid4()))
-                    item.setdefault('competitors', [])
-                return data
-        except: return []
-    return []
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    try:
+        # Читаем данные. Мы берем запас в 1000 строк
+        df = conn.read(spreadsheet=SPREADSHEET_URL, ttl=0)
+        df = df.dropna(how="all")
+        
+        data = df.to_dict(orient="records")
+        for item in data:
+            # Превращаем текст обратно в список конкурентов
+            if isinstance(item.get('competitors'), str):
+                try:
+                    item['competitors'] = json.loads(item['competitors'])
+                except:
+                    item['competitors'] = []
+            else:
+                item['competitors'] = []
+        return data
+    except Exception as e:
+        st.error(f"Ошибка загрузки: {e}")
+        return []
 
 def save_data(data):
-    with open(DB_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    # Готовим данные: превращаем списки конкурентов в текст для таблицы
+    save_list = []
+    for item in data:
+        temp = item.copy()
+        temp['competitors'] = json.dumps(item['competitors'], ensure_ascii=False)
+        save_list.append(temp)
+    
+    df = pd.DataFrame(save_list)
+    # Отправляем в Google
+    conn.update(spreadsheet=SPREADSHEET_URL, data=df)
+    # Очищаем кэш, чтобы сайт сразу увидел изменения
+    st.cache_data.clear()
 
 if 'wines' not in st.session_state:
     st.session_state.wines = load_data()
