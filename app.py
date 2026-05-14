@@ -201,14 +201,20 @@ elif st.session_state.page == "edit":
 
     st.divider()
     b1, b2, b3 = st.columns([2, 2, 6])
-    with b1:
+   with b1:
         if st.button("💾 Сохранить", type="primary", use_container_width=True):
-            if not wine['name'] or wine['our_reg'] <= 0: st.error("Заполни поля!")
+            if not wine['name'] or wine['our_reg'] <= 0: 
+                st.error("Заполни поля!")
             else:
+                # Ищем, есть ли уже такое вино в базе
                 idx = next((i for i, w in enumerate(st.session_state.wines) if w['id'] == wine['id']), None)
-                if idx is not None: st.session_state.wines[idx] = wine
-                else: st.session_state.wines.append(wine)
-                save_data(st.session_state.wines)
+                if idx is not None: 
+                    st.session_state.wines[idx] = wine
+                else: 
+                    st.session_state.wines.append(wine)
+                
+                # ВОТ ТУТ МАГИЯ: сохраняем ВЕСЬ список (вместе с карточками) в облако
+                save_data(st.session_state.wines) 
                 st.session_state.page = "table"
                 st.rerun()
     with b2:
