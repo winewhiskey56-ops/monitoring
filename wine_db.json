@@ -298,5 +298,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "db7d1631-ce65-4db4-b995-827e12a59d38",
+        "name": "Вино MISTY CLIFF Совиньон Блан молодое белое полусухое",
+        "category": "Новый Свет",
+        "our_reg": 2400,
+        "our_disc": 1800,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2500,
+                "disc": 1000,
+                "in_stock": true
+            }
+        ]
     }
 ]
