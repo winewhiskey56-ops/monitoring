@@ -718,5 +718,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "b1654044-a47c-47d6-848f-3ab8b7664799",
+        "name": "Вино Luigi Bosca Malbec красное сухое",
+        "category": "Новый Свет",
+        "our_reg": 2600,
+        "our_disc": 2600,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2700,
+                "disc": 2029,
+                "in_stock": true
+            }
+        ]
     }
 ]
