@@ -1474,5 +1474,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "97be2232-31ba-4ec1-9b6e-a727c3308888",
+        "name": "Вино игристое Casa Defra Prosecco белое брют",
+        "category": "Игристые",
+        "our_reg": 2200,
+        "our_disc": 1760,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2250,
+                "disc": 1780,
+                "in_stock": true
+            }
+        ]
     }
 ]
