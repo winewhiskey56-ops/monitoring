@@ -1015,5 +1015,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "8f90c0b8-e5c3-44ca-b99a-56efb7f35c76",
+        "name": "Вино Freschello Rosso Sweet красное полусладкое",
+        "category": "Европа",
+        "our_reg": 1600,
+        "our_disc": 1600,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1430,
+                "disc": 1150,
+                "in_stock": true
+            }
+        ]
     }
 ]
