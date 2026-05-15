@@ -463,5 +463,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "4202273b-21f9-48b2-b5df-be688bb8e58a",
+        "name": "Коньяк CAMUS VSOP ординарный 4 года 40%, п/у, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 7400,
+        "our_disc": 7400,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 7700,
+                "disc": 5900,
+                "in_stock": true
+            }
+        ]
     }
 ]
