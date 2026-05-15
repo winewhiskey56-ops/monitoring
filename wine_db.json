@@ -1327,5 +1327,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "ab0bde29-c5ac-45d0-9aad-e67828d3e58b",
+        "name": "Вино Trimbach Gewurztraminer белое сухое",
+        "category": "Европа",
+        "our_reg": 6500,
+        "our_disc": 6500,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
