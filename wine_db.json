@@ -1444,5 +1444,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "4fe3581b-634a-4f8b-a581-80d4ab9c9b60",
+        "name": "Вино Simonsig Sauvignon Blanc-Semillon белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 2000,
+        "our_disc": 2000,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
