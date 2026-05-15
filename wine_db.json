@@ -877,5 +877,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "19de88c5-e984-4daa-8174-66f7ae10972a",
+        "name": "Вино Herederos del Marques De Riscal Rueda Verdejo белое сухое",
+        "category": "Европа",
+        "our_reg": 3000,
+        "our_disc": 3000,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
