@@ -1414,5 +1414,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "37580d05-854c-47f9-96e1-772fe6e90f14",
+        "name": "Вино Santa Carolina Reserva Pinot Noir красное сухое",
+        "category": "Новый Свет",
+        "our_reg": 1600,
+        "our_disc": 1600,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
