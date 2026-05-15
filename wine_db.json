@@ -1951,5 +1951,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "5624a0ea-8865-43e6-822a-364cc6c97d27",
+        "name": "Вино игристое Hans Baer Riesling Sekt белое сухое",
+        "category": "Игристые",
+        "our_reg": 2200,
+        "our_disc": 1650,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 2200,
+                "disc": 1700,
+                "in_stock": true
+            }
+        ]
     }
 ]
