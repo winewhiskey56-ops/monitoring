@@ -1499,6 +1499,12 @@
                 "reg": 1480,
                 "disc": 1480,
                 "in_stock": true
+            },
+            {
+                "shop": "Перекресток",
+                "reg": 1100,
+                "disc": 1100,
+                "in_stock": true
             }
         ]
     },
