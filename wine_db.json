@@ -1888,5 +1888,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "497a59df-1850-4a27-be70-1f36c2868bbc",
+        "name": "Вино Le Grand Noir Malbec Jean d'Alibert красное полусухое",
+        "category": "Европа",
+        "our_reg": 2000,
+        "our_disc": 1400,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1800,
+                "disc": 1400,
+                "in_stock": true
+            }
+        ]
     }
 ]
