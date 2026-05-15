@@ -1525,5 +1525,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "e39c0979-bb94-4fed-a087-9ab2b1e34bad",
+        "name": "Вино игристое Bruni Prosecco Rose Brut розовое брют",
+        "category": "Игристые",
+        "our_reg": 1900,
+        "our_disc": 1425,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
