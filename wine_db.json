@@ -478,5 +478,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "70432e21-67c2-490a-b53c-56c539b07074",
+        "name": "Коньяк CAMUS Very Special ординарный 3 года 40%, п/у/без п/у, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 5200,
+        "our_disc": 5200,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 5700,
+                "disc": 5000,
+                "in_stock": true
+            }
+        ]
     }
 ]
