@@ -1231,5 +1231,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "c30b1ef4-1ee2-46fe-819b-174d89244c7a",
+        "name": "Вино Шумринка Петрикор красное сухое",
+        "category": "Новый Свет",
+        "our_reg": 2500,
+        "our_disc": 2500,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
