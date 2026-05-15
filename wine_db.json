@@ -388,5 +388,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "b6273a8c-898b-40a2-9ed7-207facc794b4",
+        "name": "Вино игристое MEDUSA белое брют в П/У",
+        "category": "Игристые",
+        "our_reg": 2100,
+        "our_disc": 2100,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1900,
+                "disc": 1326,
+                "in_stock": true
+            }
+        ]
     }
 ]
