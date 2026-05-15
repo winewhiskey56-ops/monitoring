@@ -572,6 +572,12 @@
                 "reg": 7700,
                 "disc": 5900,
                 "in_stock": true
+            },
+            {
+                "shop": "Метро",
+                "reg": 7000,
+                "disc": 5900,
+                "in_stock": true
             }
         ]
     },
