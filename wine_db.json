@@ -2140,5 +2140,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "491e29ec-106f-409f-91c7-e1abb0b12595",
+        "name": "Вино Brunni Prosecco Millesimato белое брют Италия, 750мл",
+        "category": "Игристые",
+        "our_reg": 1800,
+        "our_disc": 1530,
+        "competitors": [
+            {
+                "shop": "Перекресток",
+                "reg": 1600,
+                "disc": 1600,
+                "in_stock": true
+            }
+        ]
     }
 ]
