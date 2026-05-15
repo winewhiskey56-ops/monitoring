@@ -2083,5 +2083,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "6388e6a0-5aef-496e-8747-c8d4e289c99d",
+        "name": "Вино Hans Baer Sauvignon Blanc белое полусухое 11.5%, 750мл",
+        "category": "Европа",
+        "our_reg": 2200,
+        "our_disc": 2200,
+        "competitors": [
+            {
+                "shop": "Перекресток",
+                "reg": 1500,
+                "disc": 1350,
+                "in_stock": true
+            }
+        ]
     }
 ]
