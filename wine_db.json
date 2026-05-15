@@ -2599,5 +2599,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "43e7b853-40ef-4ca6-9a15-4e26e7f53033",
+        "name": "Коньяк французкий ординарный Monnet VS 3года 40% 0,7л п/у",
+        "category": "Крепкие напитки",
+        "our_reg": 4800,
+        "our_disc": 4800,
+        "competitors": [
+            {
+                "shop": "О'кей",
+                "reg": 4500,
+                "disc": 3200,
+                "in_stock": true
+            }
+        ]
     }
 ]
