@@ -1060,5 +1060,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "aa01501f-6bb5-4cba-93e8-dde604376c42",
+        "name": "Вино Domini Veneti Appassimento красное полусухое",
+        "category": "Европа",
+        "our_reg": 3300,
+        "our_disc": 3300,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
