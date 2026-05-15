@@ -1660,5 +1660,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "285a3ab7-d013-4664-bb88-2f755fdd0d0f",
+        "name": "Коньяк Camus VSOP в подарочной упаковке, 0.5л",
+        "category": "Крепкие напитки",
+        "our_reg": 6200,
+        "our_disc": 6200,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 6000,
+                "disc": 4800,
+                "in_stock": true
+            }
+        ]
     }
 ]
