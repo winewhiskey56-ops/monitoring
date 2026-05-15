@@ -163,5 +163,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "b85619d6-eda6-43dc-82de-c99546a545eb",
+        "name": "Вино MATSU El Recio выдержанное красное сухое",
+        "category": "Европа",
+        "our_reg": 3500,
+        "our_disc": 2800,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 3400,
+                "disc": 2700,
+                "in_stock": true
+            }
+        ]
     }
 ]
