@@ -790,5 +790,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "560c9b9d-758d-4552-80e0-38a596fe18e8",
+        "name": "Вино Matsu El Viejo красное сухое",
+        "category": "Европа",
+        "our_reg": 8200,
+        "our_disc": 6150,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 9000,
+                "disc": 9000,
+                "in_stock": true
+            }
+        ]
     }
 ]
