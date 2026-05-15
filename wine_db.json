@@ -583,5 +583,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "3d221526-4a0d-4790-a3d4-b7d2d9044bae",
+        "name": "Виски BUSHMILLS Бушмиллз Блэк Буш купажированный 40%, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 4000,
+        "our_disc": 4000,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 4500,
+                "disc": 2700,
+                "in_stock": true
+            }
+        ]
     }
 ]
