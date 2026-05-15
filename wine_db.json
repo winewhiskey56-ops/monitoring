@@ -133,5 +133,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "6e3d5e74-9fe7-4ec6-8cfd-4705c7da18c7",
+        "name": "Вино LE GRAND NOIR Ле Гран Нуар Шардоне ординарное белое сухое",
+        "category": "Европа",
+        "our_reg": 1600,
+        "our_disc": 1360,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1700,
+                "disc": 1270,
+                "in_stock": true
+            }
+        ]
     }
 ]
