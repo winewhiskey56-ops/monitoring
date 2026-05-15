@@ -628,5 +628,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "889db2a2-abdf-40d1-87a3-f8a4ccd2df99",
+        "name": "Виски BUSHMILLS Бушмиллз Ориджинал купажированный, 40%, 0.5L",
+        "category": "Крепкие напитки",
+        "our_reg": 2200,
+        "our_disc": 2200,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1900,
+                "disc": 1500,
+                "in_stock": true
+            }
+        ]
     }
 ]
