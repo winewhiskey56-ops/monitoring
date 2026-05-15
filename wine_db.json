@@ -1384,5 +1384,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "2c8d46eb-b563-4e47-8afa-60408998a2c8",
+        "name": "Вино Santa Carolina Cellar Selection Sauvignon Blanc белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 1000,
+        "our_disc": 1000,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1150,
+                "disc": 1150,
+                "in_stock": true
+            }
+        ]
     }
 ]
