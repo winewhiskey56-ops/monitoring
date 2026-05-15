@@ -1045,5 +1045,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "431de89d-f674-44b8-b55d-530e76d4d261",
+        "name": "Вино Donnafugata Sedara красное сухое",
+        "category": "Европа",
+        "our_reg": 3500,
+        "our_disc": 3500,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
