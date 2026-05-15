@@ -2119,5 +2119,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "67683def-6055-447e-b77b-9195c0afdf94",
+        "name": "Вино Melini Chianti Riserva DOCG красное сухое 13.5%, 750мл",
+        "category": "Европа",
+        "our_reg": 2300,
+        "our_disc": 2300,
+        "competitors": [
+            {
+                "shop": "Перекресток",
+                "reg": 1900,
+                "disc": 1900,
+                "in_stock": true
+            }
+        ]
     }
 ]
