@@ -1489,5 +1489,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "9d8b2d19-e3bc-4e6c-a343-105ad51e9edf",
+        "name": "Вино игристое Casa Defra Prosecco розовое брют",
+        "category": "Игристые",
+        "our_reg": 2400,
+        "our_disc": 1800,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2250,
+                "disc": 1760,
+                "in_stock": true
+            }
+        ]
     }
 ]
