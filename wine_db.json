@@ -1030,5 +1030,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "abc2c571-ed3f-4975-be81-a54d73f5007f",
+        "name": "Вино Cielo Freschello Bianco Sweet белое полусладкое",
+        "category": "Европа",
+        "our_reg": 1600,
+        "our_disc": 1600,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1430,
+                "disc": 1150,
+                "in_stock": true
+            }
+        ]
     }
 ]
