@@ -1246,5 +1246,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "b94962c2-f49c-4dd1-9913-2d2ef8b59fec",
+        "name": "Вино Сикоры Рислинг белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 2500,
+        "our_disc": 2500,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
