@@ -508,5 +508,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "6535b68e-011a-49ac-afe7-d5c06a9dba81",
+        "name": "Виски BUSHMILLS Бушмиллз Сингл Молт Эйджид солодовый 10 лет, 40%, п/у, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 5200,
+        "our_disc": 5200,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 5500,
+                "disc": 3600,
+                "in_stock": true
+            }
+        ]
     }
 ]
