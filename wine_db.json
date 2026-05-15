@@ -1459,5 +1459,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "cf32173e-d31e-4e7b-909b-4fc7b526b75a",
+        "name": "Вино игристое Шампань Lanson Le Black Label Creation Brut белое брют не в П/У",
+        "category": "Игристые",
+        "our_reg": 12200,
+        "our_disc": 9150,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 10000,
+                "disc": 8500,
+                "in_stock": true
+            }
+        ]
     }
 ]
