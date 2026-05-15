@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "id": "9db2009e-8be2-4eb3-bbc3-50fa13f8fcf0",
+        "name": "Вино PRIARA Пино Гриджио ординарное белое сухое",
+        "category": "Европа",
+        "our_reg": 2900,
+        "our_disc": 2900,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2600,
+                "disc": 2000,
+                "in_stock": true
+            }
+        ]
+    }
+]
