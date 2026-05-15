@@ -1306,5 +1306,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "ecd7db84-95af-4b42-aa5f-ca6114d5863e",
+        "name": "Вино Jean-Marc Brocard Chablis Sainte Claire белое сухое, 0.375л",
+        "category": "Европа",
+        "our_reg": 3700,
+        "our_disc": 3330,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 3600,
+                "disc": 3600,
+                "in_stock": true
+            }
+        ]
     }
 ]
