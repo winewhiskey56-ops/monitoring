@@ -208,5 +208,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "7b4f895a-e927-4d26-92a7-2923f80d6cc7",
+        "name": "Вино SANTA CAROLINA Каролина Ресерва Карменер ординарное красное сухое",
+        "category": "Европа",
+        "our_reg": 1600,
+        "our_disc": 1600,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1600,
+                "disc": 1170,
+                "in_stock": true
+            }
+        ]
     }
 ]
