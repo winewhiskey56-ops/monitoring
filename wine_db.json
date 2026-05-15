@@ -283,5 +283,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "2acfeaa2-f708-4793-bd38-ee9956578bba",
+        "name": "Вино безалкогольное HANS BAER Рислинг белое",
+        "category": "Европа",
+        "our_reg": 1500,
+        "our_disc": 1500,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1500,
+                "disc": 1000,
+                "in_stock": true
+            }
+        ]
     }
 ]
