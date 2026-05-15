@@ -974,6 +974,12 @@
                 "reg": 1150,
                 "disc": 990,
                 "in_stock": true
+            },
+            {
+                "shop": "Перекресток",
+                "reg": 1200,
+                "disc": 1200,
+                "in_stock": true
             }
         ]
     },
