@@ -448,5 +448,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "2fcff091-df1d-4db9-9e6a-ab9cb6b8cb3b",
+        "name": "Коньяк HINE РАР ординарный 4 года 40%, п/у, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 11000,
+        "our_disc": 11000,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 9400,
+                "disc": 7650,
+                "in_stock": true
+            }
+        ]
     }
 ]
