@@ -268,5 +268,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "475316ab-4629-4432-a2e6-37c6af58f4a1",
+        "name": "Вино HANS BAER Рислинг молодое белое полусухое",
+        "category": "Европа",
+        "our_reg": 1800,
+        "our_disc": 1260,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1900,
+                "disc": 1300,
+                "in_stock": true
+            }
+        ]
     }
 ]
