@@ -1681,5 +1681,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "64f3c5b2-fa44-4e6b-82c0-0a217f005369",
+        "name": "Коньяк Camus VS, 0.5л",
+        "category": "Крепкие напитки",
+        "our_reg": 4200,
+        "our_disc": 4200,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 4150,
+                "disc": 3300,
+                "in_stock": true
+            }
+        ]
     }
 ]
