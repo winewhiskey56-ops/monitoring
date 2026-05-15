@@ -493,5 +493,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "c58c8173-af9b-4ed6-a549-404609487756",
+        "name": "Коньяк MONNET VSOP ординарный 4 года 40%, п/у, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 5700,
+        "our_disc": 5700,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 5800,
+                "disc": 4500,
+                "in_stock": true
+            }
+        ]
     }
 ]
