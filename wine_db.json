@@ -568,5 +568,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "da2ccaca-41d1-4168-bf18-c9068e1909a9",
+        "name": "Виски JAMESON Ирландский купажированный 40%, 1L",
+        "category": "Крепкие напитки",
+        "our_reg": 2800,
+        "our_disc": 2800,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 3400,
+                "disc": 2700,
+                "in_stock": true
+            }
+        ]
     }
 ]
