@@ -73,5 +73,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "cfd489ab-210c-4a06-bd52-10e02c3eeffc",
+        "name": "Вино REMOLE FRESCOBALDI Тоскана белое сухое",
+        "category": "Европа",
+        "our_reg": 2200,
+        "our_disc": 1540,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2100,
+                "disc": 1600,
+                "in_stock": true
+            }
+        ]
     }
 ]
