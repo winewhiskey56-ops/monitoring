@@ -907,5 +907,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "ffc85dc3-2097-4258-b6a9-f816fafbe904",
+        "name": "Вино Hacienda Lopez de Haro Blanco белое сухое",
+        "category": "Европа",
+        "our_reg": 2400,
+        "our_disc": 2400,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
