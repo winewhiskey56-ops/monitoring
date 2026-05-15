@@ -1936,5 +1936,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "416d9144-2664-4c3b-9242-ff00f2849324",
+        "name": "Вино Veuve Ambal Гранд Кюве розовое игристое брют",
+        "category": "Игристые",
+        "our_reg": 3300,
+        "our_disc": 2970,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 3400,
+                "disc": 2600,
+                "in_stock": true
+            }
+        ]
     }
 ]
