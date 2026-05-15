@@ -1429,5 +1429,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "c7e7e1d3-dc32-4a76-b587-56bc9f9e0628",
+        "name": "Вино Rigo Rigo Chenin Blanc - Pinotage",
+        "category": "Новый Свет",
+        "our_reg": 1200,
+        "our_disc": 1200,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1150,
+                "disc": 1150,
+                "in_stock": true
+            }
+        ]
     }
 ]
