@@ -859,7 +859,7 @@
                 "shop": "Метро",
                 "reg": 0,
                 "disc": 0,
-                "in_stock": true
+                "in_stock": false
             }
         ]
     }
