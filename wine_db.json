@@ -2614,5 +2614,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "c05202f9-cdd7-48bc-af9c-326c05870797",
+        "name": "Коньяк марочный старый КС Camus ХО 40% 0,7л п/у",
+        "category": "Крепкие напитки",
+        "our_reg": 30000,
+        "our_disc": 30000,
+        "competitors": [
+            {
+                "shop": "О'кей",
+                "reg": 28000,
+                "disc": 23000,
+                "in_stock": true
+            }
+        ]
     }
 ]
