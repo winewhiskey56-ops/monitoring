@@ -952,5 +952,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "4933780c-97c0-43d5-87cf-92d298fb2b58",
+        "name": "Вино Pfefferer Pink розовое сухое",
+        "category": "Европа",
+        "our_reg": 2700,
+        "our_disc": 2025,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2560,
+                "disc": 2100,
+                "in_stock": true
+            }
+        ]
     }
 ]
