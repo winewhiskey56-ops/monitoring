@@ -817,5 +817,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "41048139-237d-4c66-8696-a6c4e2c56393",
+        "name": "Вино безалкогольное Felix Solis Vina Albali Cabernet-Tempranillo красное полусухое",
+        "category": "Европа",
+        "our_reg": 1400,
+        "our_disc": 1400,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1300,
+                "disc": 1300,
+                "in_stock": true
+            }
+        ]
     }
 ]
