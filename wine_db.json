@@ -58,5 +58,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "db764324-fbe6-4df7-a1fa-7e905002f5f4",
+        "name": "Вино TRE PASSO ординарное красное полусухое",
+        "category": "Европа",
+        "our_reg": 2500,
+        "our_disc": 2500,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2200,
+                "disc": 1700,
+                "in_stock": true
+            }
+        ]
     }
 ]
