@@ -2194,5 +2194,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "d0620328-c596-431f-b14f-4b3bd187cdf9",
+        "name": "Вино Jardin de la Taur Grenache-Syrah красное полусухое",
+        "category": "Европа",
+        "our_reg": 1700,
+        "our_disc": 1700,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1500,
+                "disc": 1400,
+                "in_stock": true
+            }
+        ]
     }
 ]
