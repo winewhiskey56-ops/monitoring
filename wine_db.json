@@ -2023,5 +2023,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "c9f35e06-114b-4ee6-be30-72645394dd7d",
+        "name": "Водка Арктика 40% 700мл",
+        "category": "Крепкие напитки",
+        "our_reg": 1500,
+        "our_disc": 1500,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1300,
+                "disc": 1300,
+                "in_stock": true
+            }
+        ]
     }
 ]
