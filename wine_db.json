@@ -553,5 +553,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "db6cdfa1-2512-4a60-8d7a-f6c9127d3129",
+        "name": "Виски LAMBAY Сингл Грейн Айриш зерновой 40%, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 3800,
+        "our_disc": 3040,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 4200,
+                "disc": 2900,
+                "in_stock": true
+            }
+        ]
     }
 ]
