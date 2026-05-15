@@ -2635,5 +2635,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "873e996f-8ccb-492b-b2ab-83bf7f5803ed",
+        "name": "Коньяк ординарный Monnet ВСОП 4 года 40% 0,5л п/у",
+        "category": "Крепкие напитки",
+        "our_reg": 5300,
+        "our_disc": 5300,
+        "competitors": [
+            {
+                "shop": "О'кей",
+                "reg": 5500,
+                "disc": 4000,
+                "in_stock": true
+            }
+        ]
     }
 ]
