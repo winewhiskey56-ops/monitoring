@@ -28,5 +28,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "612a3e07-7349-43e1-a6da-0bb0b3a127d1",
+        "name": "Вино CASA DEFFRA Колли Беричи Ризерва выдержанное красное полусухое",
+        "category": "Европа",
+        "our_reg": 2500,
+        "our_disc": 2250,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2500,
+                "disc": 1900,
+                "in_stock": true
+            }
+        ]
     }
 ]
