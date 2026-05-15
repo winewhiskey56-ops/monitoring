@@ -178,5 +178,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "606d9def-4975-4666-b78d-2f168a5b97c4",
+        "name": "Вино MATSU El Picaro ординарное красное сухое",
+        "category": "Европа",
+        "our_reg": 2200,
+        "our_disc": 1650,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2300,
+                "disc": 1600,
+                "in_stock": true
+            }
+        ]
     }
 ]
