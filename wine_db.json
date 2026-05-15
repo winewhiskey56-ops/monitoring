@@ -103,5 +103,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "9621c712-d1df-4e21-ab75-a98793ba6fc2",
+        "name": "Вино CIELO Пино Гриджо Розе Делле Венецие ординарное розовое полусухое",
+        "category": "Европа",
+        "our_reg": 1700,
+        "our_disc": 1530,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1600,
+                "disc": 1326,
+                "in_stock": true
+            }
+        ]
     }
 ]
