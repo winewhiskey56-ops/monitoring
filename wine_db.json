@@ -2287,5 +2287,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "206c87cf-ed9f-4f8b-a172-58ff81ad18dd",
+        "name": "Вино Ханс Баер Гевюрцтраминер ОРДИНАРНОЕ белое полусладкое",
+        "category": "Европа",
+        "our_reg": 2000,
+        "our_disc": 2000,
+        "competitors": [
+            {
+                "shop": "О'кей",
+                "reg": 1930,
+                "disc": 1400,
+                "in_stock": true
+            }
+        ]
     }
 ]
