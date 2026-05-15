@@ -538,5 +538,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "3c647e9f-3534-44c1-9dd3-e23ddf87ecb3",
+        "name": "Виски CHIVAS REGAL Шотландский купажированный 12 лет 40–43%, 0.75L",
+        "category": "Крепкие напитки",
+        "our_reg": 3500,
+        "our_disc": 3500,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 4200,
+                "disc": 3000,
+                "in_stock": true
+            }
+        ]
     }
 ]
