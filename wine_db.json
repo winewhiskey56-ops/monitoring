@@ -1369,5 +1369,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "3c813c6e-2267-4af5-a6ea-485a87ba93a8",
+        "name": "Вино Santa Carolina Reserva Chardonnay белое полусухое",
+        "category": "Новый Свет",
+        "our_reg": 1600,
+        "our_disc": 1600,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1500,
+                "disc": 1500,
+                "in_stock": true
+            }
+        ]
     }
 ]
