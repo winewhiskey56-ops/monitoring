@@ -1111,5 +1111,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "8e9dfd8b-1674-418e-be54-7ba1ffe2faf5",
+        "name": "Вино Paddle Creek Совиньон блан белое полусухое",
+        "category": "Новый Свет",
+        "our_reg": 2700,
+        "our_disc": 2700,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
