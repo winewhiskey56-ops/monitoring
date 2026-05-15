@@ -1849,5 +1849,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "45f4c896-4183-49c5-bd62-a532e95f1140",
+        "name": "Вино игристое Cielo e Terra Bio Bio Bubbles белое брют 11% 750мл",
+        "category": "Игристые",
+        "our_reg": 1900,
+        "our_disc": 1900,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1800,
+                "disc": 1470,
+                "in_stock": true
+            }
+        ]
     }
 ]
