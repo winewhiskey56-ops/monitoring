@@ -892,5 +892,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "34c77851-eb02-420b-b847-46ffe6777dfa",
+        "name": "Вино Demuerte White белое сухое",
+        "category": "Европа",
+        "our_reg": 2000,
+        "our_disc": 2000,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
