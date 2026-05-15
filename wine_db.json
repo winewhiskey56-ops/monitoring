@@ -238,5 +238,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "19a8e344-000e-466b-b1fd-613a4fb817f6",
+        "name": "Вино LA LINDA Мальбек ординарное красное сухое",
+        "category": "Новый Свет",
+        "our_reg": 2000,
+        "our_disc": 2000,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2200,
+                "disc": 1530,
+                "in_stock": true
+            }
+        ]
     }
 ]
