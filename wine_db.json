@@ -253,5 +253,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "88676b16-0e42-404f-b82a-bce7a07a8087",
+        "name": "Вино TRAPICHE Мальбек Мендоса ординарное красное сухое АНАЛОГИ",
+        "category": "Новый Свет",
+        "our_reg": 1500,
+        "our_disc": 1500,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1500,
+                "disc": 960,
+                "in_stock": true
+            }
+        ]
     }
 ]
