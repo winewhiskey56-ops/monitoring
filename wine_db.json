@@ -1822,5 +1822,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "aa031381-daf0-40d5-8ca8-130d5b379998",
+        "name": " Вино игристое Ruggeri Prosecco Valdobbiadene Giall Oro белое сухое 11% 750мл",
+        "category": "Игристые",
+        "our_reg": 3600,
+        "our_disc": 2880,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 2900,
+                "disc": 2900,
+                "in_stock": true
+            }
+        ]
     }
 ]
