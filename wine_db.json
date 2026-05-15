@@ -1133,6 +1133,12 @@
                 "reg": 9000,
                 "disc": 9000,
                 "in_stock": true
+            },
+            {
+                "shop": "О'кей",
+                "reg": 8600,
+                "disc": 6280,
+                "in_stock": true
             }
         ]
     },
