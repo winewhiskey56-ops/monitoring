@@ -1921,5 +1921,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "055d857c-2805-4f6d-a204-410348c2c08c",
+        "name": "Вино Veuve Ambal Гранд Кюве белое игристое брют",
+        "category": "Игристые",
+        "our_reg": 3200,
+        "our_disc": 3200,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 3200,
+                "disc": 2600,
+                "in_stock": true
+            }
+        ]
     }
 ]
