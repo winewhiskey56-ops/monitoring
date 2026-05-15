@@ -88,5 +88,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "93e9b9db-0d13-4698-b789-ae213d1b9520",
+        "name": "Вино CIELO Треббьяно Пино Гриджо белое полусухое",
+        "category": "Европа",
+        "our_reg": 1400,
+        "our_disc": 1260,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1700,
+                "disc": 1340,
+                "in_stock": true
+            }
+        ]
     }
 ]
