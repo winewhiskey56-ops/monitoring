@@ -937,5 +937,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "768384ff-31c7-45fe-8f3b-1a4fb4d76be5",
+        "name": "Вино Cielo 1908 Appassionante Rosso красное полусухое",
+        "category": "Европа",
+        "our_reg": 2200,
+        "our_disc": 1650,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2250,
+                "disc": 2250,
+                "in_stock": true
+            }
+        ]
     }
 ]
