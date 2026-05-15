@@ -643,5 +643,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "07ae918a-3c3c-4f1b-85ab-397ad2ba4345",
+        "name": "Ликер JAGERMEISTER десертный, 35%, 1L",
+        "category": "Крепкие напитки",
+        "our_reg": 2300,
+        "our_disc": 2300,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 3300,
+                "disc": 2000,
+                "in_stock": true
+            }
+        ]
     }
 ]
