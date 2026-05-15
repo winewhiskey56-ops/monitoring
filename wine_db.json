@@ -1606,5 +1606,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "23494c5c-c1cb-4b16-b38a-dfd409be8610",
+        "name": "Виски Bushmills Original, 1л",
+        "category": "Крепкие напитки",
+        "our_reg": 4800,
+        "our_disc": 4800,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2800,
+                "disc": 2500,
+                "in_stock": true
+            }
+        ]
     }
 ]
