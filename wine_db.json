@@ -1801,5 +1801,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "a1c1a5e6-90d4-4da0-9739-a146596a7525",
+        "name": "Вино игристое Medusa белое брют",
+        "category": "Игристые",
+        "our_reg": 1900,
+        "our_disc": 1330,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1800,
+                "disc": 1800,
+                "in_stock": true
+            }
+        ]
     }
 ]
