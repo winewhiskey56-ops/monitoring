@@ -473,6 +473,12 @@
                 "reg": 435,
                 "disc": 388,
                 "in_stock": true
+            },
+            {
+                "shop": "Магнит",
+                "reg": 560,
+                "disc": 560,
+                "in_stock": true
             }
         ]
     },
