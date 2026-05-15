@@ -1000,5 +1000,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "8604d0a7-f375-4b10-9ac4-91de0c7274f1",
+        "name": "Вино Cielo Freschello Rose розовое полусухое",
+        "category": "Европа",
+        "our_reg": 1500,
+        "our_disc": 1500,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1400,
+                "disc": 1170,
+                "in_stock": true
+            }
+        ]
     }
 ]
