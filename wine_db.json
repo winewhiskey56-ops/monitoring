@@ -1696,5 +1696,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "82638354-ee8e-4b84-b601-303515cd614c",
+        "name": "Коньяк Monnet VS в подарочной упаковке, 0.5л",
+        "category": "Крепкие напитки",
+        "our_reg": 4000,
+        "our_disc": 4000,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 3700,
+                "disc": 2800,
+                "in_stock": true
+            }
+        ]
     }
 ]
