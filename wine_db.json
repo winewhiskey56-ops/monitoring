@@ -1186,5 +1186,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "3bf8b0e1-630d-436c-8b0d-3f72f487ae21",
+        "name": "Вино Loco Cimbali Riesling белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 1800,
+        "our_disc": 1800,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1930,
+                "disc": 1930,
+                "in_stock": true
+            }
+        ]
     }
 ]
