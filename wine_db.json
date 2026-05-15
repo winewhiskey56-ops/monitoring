@@ -739,5 +739,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "d8b9aa07-c9a2-4852-96ff-0d3f11831af2",
+        "name": "Вино Luigi Bosca De Sangre White Blend белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 4500,
+        "our_disc": 4500,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
