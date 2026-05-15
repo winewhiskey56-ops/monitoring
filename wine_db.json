@@ -193,5 +193,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "0d63efba-ba4d-4592-ab43-b47f2629f672",
+        "name": "Вино SANTA CAROLINA Carolina Reserva Совиньон Блан ординарное белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 1600,
+        "our_disc": 1600,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1600,
+                "disc": 1200,
+                "in_stock": true
+            }
+        ]
     }
 ]
