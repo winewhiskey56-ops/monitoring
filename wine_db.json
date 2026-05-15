@@ -343,5 +343,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "105b3d3f-b636-4761-baec-b419caf01597",
+        "name": "Вино CAPE ORIGINAL Розе ординарное розовое сухое, 0.25L",
+        "category": "Новый Свет",
+        "our_reg": 400,
+        "our_disc": 400,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 500,
+                "disc": 400,
+                "in_stock": true
+            }
+        ]
     }
 ]
