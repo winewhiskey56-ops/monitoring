@@ -1090,5 +1090,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "9e2066ca-9c16-4e0f-add0-d3cbdfe851ab",
+        "name": "Вино Ed Knows АНАЛОГИ",
+        "category": "Новый Свет",
+        "our_reg": 1200,
+        "our_disc": 1200,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1050,
+                "disc": 850,
+                "in_stock": true
+            }
+        ]
     }
 ]
