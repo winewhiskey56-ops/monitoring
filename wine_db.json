@@ -2215,5 +2215,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "7ec08578-35ce-4b42-ab2a-810b6d7474c1",
+        "name": "Вино Pinot Grigio Muzzi Origin Wine Stellenbosch ординарное белое сухое",
+        "category": "Новый Свет",
+        "our_reg": 1500,
+        "our_disc": 1500,
+        "competitors": [
+            {
+                "shop": "Магнит",
+                "reg": 1400,
+                "disc": 1050,
+                "in_stock": true
+            }
+        ]
     }
 ]
