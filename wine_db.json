@@ -2230,5 +2230,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "38fda83b-7b6c-4e17-9657-d7e75770dbab",
+        "name": "Игристое вино Casa Defra Prosecco белое сухое, 200мл",
+        "category": "Игристые",
+        "our_reg": 900,
+        "our_disc": 900,
+        "competitors": [
+            {
+                "shop": "Перекресток",
+                "reg": 800,
+                "disc": 620,
+                "in_stock": true
+            }
+        ]
     }
 ]
