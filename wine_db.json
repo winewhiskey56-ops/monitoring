@@ -673,5 +673,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "4eeea6b1-1bca-4d5f-bd3c-01065a857158",
+        "name": "Джин HOPPERS  сухой дистиллированный 40%, 0.7L",
+        "category": "Крепкие напитки",
+        "our_reg": 1300,
+        "our_disc": 1300,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1450,
+                "disc": 990,
+                "in_stock": true
+            }
+        ]
     }
 ]
