@@ -1342,5 +1342,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "1f95e05d-a300-43b0-b0c4-018dbdd5bbda",
+        "name": "Вино Santa Carolina Reserva Rose розовое сухое",
+        "category": "Новый Свет",
+        "our_reg": 1700,
+        "our_disc": 1700,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1500,
+                "disc": 1500,
+                "in_stock": true
+            }
+        ]
     }
 ]
