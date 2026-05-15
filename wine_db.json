@@ -847,5 +847,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "fc4fb6ac-f715-462f-8317-5680b27379f8",
+        "name": "Вино Херес Valdespino Contrabandista Amontillado белое полусухое",
+        "category": "Европа",
+        "our_reg": 5000,
+        "our_disc": 5000,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": true
+            }
+        ]
     }
 ]
