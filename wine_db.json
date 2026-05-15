@@ -223,5 +223,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "1a110470-0b00-4471-abfe-a83c03b743de",
+        "name": "Вино CADMEN PARK Шардоне ординарное белое полусухое АНАЛОГ",
+        "category": "Новый Свет",
+        "our_reg": 1900,
+        "our_disc": 1900,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1700,
+                "disc": 925,
+                "in_stock": true
+            }
+        ]
     }
 ]
