@@ -1504,5 +1504,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "a0abebe9-8e96-4df7-bd09-7f2586b03e89",
+        "name": "Вино игристое Santa Carolina белое брют",
+        "category": "Игристые",
+        "our_reg": 1700,
+        "our_disc": 1700,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1700,
+                "disc": 1700,
+                "in_stock": true
+            }
+        ]
     }
 ]
