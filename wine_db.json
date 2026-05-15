@@ -418,5 +418,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "4edb8fea-61d8-4ca7-b9e1-4b807c39d436",
+        "name": "Водка ОНЕГИН 40%, 0.5L",
+        "category": "Крепкие напитки",
+        "our_reg": 1700,
+        "our_disc": 1700,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 1400,
+                "disc": 1100,
+                "in_stock": true
+            }
+        ]
     }
 ]
