@@ -373,5 +373,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "7b7c1611-5d06-4f26-8907-2f7f927ef9f4",
+        "name": "Вино игристое BRUNI Просекко Экстра Драй белое брют",
+        "category": "Игристые",
+        "our_reg": 1800,
+        "our_disc": 1440,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 2100,
+                "disc": 1500,
+                "in_stock": true
+            }
+        ]
     }
 ]
