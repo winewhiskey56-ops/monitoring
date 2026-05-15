@@ -1291,5 +1291,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "8ae59649-e1b9-49db-8e2f-81ba9aec9dc2",
+        "name": "Вино Crab&More Chardonnay белое полусухое",
+        "category": "Новый Свет",
+        "our_reg": 2300,
+        "our_disc": 2300,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 2100,
+                "disc": 1630,
+                "in_stock": true
+            }
+        ]
     }
 ]
