@@ -523,5 +523,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "e7b46d13-9e3a-4281-8ee9-613be3d4c227",
+        "name": "Виски JACK DANIEL'S Tennessee Whiskey зерновой, 40%, 1L",
+        "category": "Крепкие напитки",
+        "our_reg": 3100,
+        "our_disc": 3100,
+        "competitors": [
+            {
+                "shop": "Лента",
+                "reg": 4400,
+                "disc": 3100,
+                "in_stock": true
+            }
+        ]
     }
 ]
