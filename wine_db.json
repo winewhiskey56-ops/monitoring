@@ -862,5 +862,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "f7ea37c8-7b28-4f22-8e68-e0f581718086",
+        "name": "Вино Arzuaga Ribera del Duero La Planta красное сухое0",
+        "category": "Европа",
+        "our_reg": 3300,
+        "our_disc": 3300,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
