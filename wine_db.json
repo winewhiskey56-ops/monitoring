@@ -1075,5 +1075,20 @@
                 "in_stock": false
             }
         ]
+    },
+    {
+        "id": "c938ad89-3727-4b64-b7c2-7d8a2a7e79ca",
+        "name": "Вино Truffle Hunter Хантер Россо красное полусухое",
+        "category": "Европа",
+        "our_reg": 2200,
+        "our_disc": 2200,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 0,
+                "disc": 0,
+                "in_stock": false
+            }
+        ]
     }
 ]
