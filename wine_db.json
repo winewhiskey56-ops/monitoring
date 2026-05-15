@@ -979,5 +979,20 @@
                 "in_stock": true
             }
         ]
+    },
+    {
+        "id": "5a64b492-4cfd-45d0-8cc4-aa28104981a8",
+        "name": "Вино Cielo Пино Гриджио белое полусухое",
+        "category": "Европа",
+        "our_reg": 1800,
+        "our_disc": 1800,
+        "competitors": [
+            {
+                "shop": "Метро",
+                "reg": 1600,
+                "disc": 1600,
+                "in_stock": true
+            }
+        ]
     }
 ]
