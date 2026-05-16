@@ -20,13 +20,25 @@ genai.configure(api_key=GEMINI_KEY)
 
 def get_drive_service():
     import os
+    import json
     CREDS_FILE = "google_creds.json"
+    
     if not os.path.exists(CREDS_FILE):
         st.error(f"Файл {CREDS_FILE} не найден в корне проекта!")
         return None
+        
     try:
-        creds = Credentials.from_service_account_file(
-            CREDS_FILE, 
+        # Читаем файл как обычный текст
+        with open(CREDS_FILE, "r", encoding="utf-8") as f:
+            creds_data = json.load(f)
+        
+        # ЖЕЛЕЗОБЕТОННОЕ ЛЕЧЕНИЕ: заменяем текстовые '\n' на реальные переносы строк
+        if "private_key" in creds_data:
+            creds_data["private_key"] = creds_data["private_key"].replace("\\n", "\n")
+            
+        # Авторизуемся из исправленного словаря данных
+        creds = Credentials.from_service_account_info(
+            creds_data, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
