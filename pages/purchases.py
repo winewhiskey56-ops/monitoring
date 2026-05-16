@@ -35,7 +35,7 @@ if st.button("Найти цену в накладных"):
             creds = Credentials.from_service_account_info(creds_dict, scopes=['https://www.googleapis.com/auth/drive.readonly'])
             service = build('drive', 'v3', credentials=creds)
             
-            query = "'" + str(FOLDER_ID) + "' in parents and trashed = false"
+            query = f"'{FOLDER_ID}' in parents and trashed = false"
             results = service.files().list(q=query, fields="files(id, name)").execute()
             items = results.get('files', [])
             
@@ -49,7 +49,7 @@ if st.button("Найти цену в накладных"):
                 for idx, item in enumerate(items):
                     f_id = item['id']
                     f_name = item['name']
-                    status_text.info("Проверяю документ: " + str(f_name))
+                    status_text.info(f"Проверяю документ: {f_name}")
                     
                     request = service.files().get_media(fileId=f_id)
                     file_stream = io.BytesIO()
@@ -81,38 +81,36 @@ if st.button("Найти цену в накладных"):
                     except Exception:
                         text_content = ""
                         
-                    all_text_data.append("=== ФАЙЛ: " + str(f_name) + " ===\n" + str(text_content) + "\n")
+                    all_text_data.append(f"=== ФАЙЛ: {f_name} ===\n{text_content}\n")
                     progress_bar.progress((idx + 1) / len(items))
                 
                 status_text.empty()
                 progress_bar.empty()
                 
                 full_invoices_text = "\n".join(all_text_data)
-               if full_invoices_text.strip():
+                if full_invoices_text.strip():
                     with st.spinner("ИИ сканирует архивы..."):
-                        # Просим модель СРАЗУ возвращать чистый JSON-массив
+                        # Заставляем модель возвращать строго валидный JSON без Markdown-разметки
                         model = genai.GenerativeModel(
                             'gemini-1.5-flash',
                             generation_config={"response_mime_type": "application/json"}
                         )
                         
                         prompt = "Ты менеджер базы данных. Найди упоминания товара и его цену в текстах документов.\n"
-                        prompt += "Искомый товар: " + str(product_search) + "\n\n"
-                        prompt += "ТЕКСТЫ НАКЛАДНЫХ:\n" + str(full_invoices_text) + "\n\n"
+                        prompt += f"Искомый товар: {product_search}\n\n"
+                        prompt += f"ТЕКСТЫ НАКЛАДНЫХ:\n{full_invoices_text}\n\n"
                         prompt += "Если товар найден в нескольких файлах, выведи все упоминания (историю цен).\n"
                         prompt += "Ответь строго в формате JSON-массива объектов с ключами product, found_name, price, invoice, status."
                         
                         response = model.generate_content(prompt)
-                        
-                        # Теперь здесь гарантированно чистая JSON-строка без косяков с кавычками!
                         clean_text = response.text.strip()
                         
                         result_data = json.loads(clean_text)
                         if result_data:
-                            st.success("История цен по запросу: " + str(product_search))
+                            st.success(f"История цен по запросу: {product_search}")
                             st.dataframe(pd.DataFrame(result_data), use_container_width=True)
                         else:
                             st.info("Позиция с таким названием не обнаружена в загруженных накладных.")
                             
         except Exception as top_err:
-            st.error("Ошибка выполнения поиска: " + str(top_err))
+            st.error(f"Ошибка выполнения поиска: {top_err}")
