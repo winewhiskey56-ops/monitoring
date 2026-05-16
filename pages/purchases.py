@@ -24,16 +24,24 @@ def get_drive_service():
     CREDS_FILE = "google_creds.json"
     
     if not os.path.exists(CREDS_FILE):
-        st.error(f"Файл {CREDS_FILE} не найден в корне проекта!")
+        st.error(f"Файл {CREDS_FILE} не найден!")
         return None
         
     try:
         with open(CREDS_FILE, "r", encoding="utf-8") as f:
-            raw_data = f.read()
+            creds_data = json.load(f)
         
-        # Принудительно чистим строку от любых косяков отображения
-        raw_data = raw_data.replace('\\n', '\n')
-        creds_data = json.loads(raw_data)
+        # Интеллектуальное восстановление структуры PEM-формата для Google
+        key = creds_data["private_key"]
+        if "\n" not in key and "\\n" not in key:
+            header = "-----BEGIN PRIVATE KEY-----"
+            footer = "-----END PRIVATE KEY-----"
+            # Извлекаем чистую зашифрованную массу без шапки и хвоста
+            core = key.replace(header, "").replace(footer, "").strip()
+            # Нарезаем строку на правильные куски по 64 символа, как требует стандарт PEM
+            chunks = [core[i:i+64] for i in range(0, len(core), 64)]
+            # Собираем ключ обратно с настоящими системными переносами строк
+            creds_data["private_key"] = header + "\n" + "\n".join(chunks) + "\n" + footer
             
         creds = Credentials.from_service_account_info(
             creds_data, 
