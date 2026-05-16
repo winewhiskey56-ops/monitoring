@@ -4,3 +4,5 @@ PyGithub
 google-auth
 google-api-python-client
 google-generativeai
+openpyxl
+pypdf
