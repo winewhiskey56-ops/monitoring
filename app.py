@@ -5,15 +5,7 @@ import uuid
 import base64
 from github import Github
 from datetime import datetime
-import streamlit as st
 
-# Прописываем страницы приложения
-main_page = st.Page("app.py", title="Главная панель", icon="🍷", default=True)
-purchases_page = st.Page("pages/purchases.py", title="Анализ цен номенклатуры", icon="🔍")
-
-# Запускаем меню
-pg = st.navigation([main_page, purchases_page])
-pg.run()
 
 # --- КОНФИГУРАЦИЯ GITHUB ---
 REPO_NAME = "winewhiskey56-ops/monitoring"
