@@ -1,2 +1,8 @@
 chromium
 chromium-driver
+streamlit
+pandas
+PyGithub
+google-auth
+google-api-python-client
+google-generativeai
