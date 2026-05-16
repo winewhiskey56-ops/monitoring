@@ -80,7 +80,7 @@ if st.button("Найти цену в накладных"):
                             text_content = "\n".join(pdf_text)
                         else:
                             text_content = file_bytes.decode('utf-8', errors='ignore')
-                    except:
+                    except Exception:
                         text_content = ""
                         
                     all_text_data.append("=== ФАЙЛ: " + str(f_name) + " ===\n" + str(text_content) + "\n")
