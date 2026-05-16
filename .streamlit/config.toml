@@ -2,4 +2,4 @@
 magicEnabled = false
 
 [client]
-showSidebarNavigation = true
+showSidebarNavigation = false
