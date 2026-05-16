@@ -8,112 +8,98 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import google.generativeai as genai
 
-# Принудительно отключаем влияние Streamlit Magic на логические функции
-def run_invoices_processor():
-    if "GEMINI_API_KEY" not in st.secrets:
-        st.error("Нет GEMINI_API_KEY в Secrets")
-        return
-        
-    st.title("📊 Анализ цен")
-    
-    folder_input_id = st.text_input("ID папки Google Диска:", key="folder_id_input")
-    raw_products_list = st.text_area("Список товаров для поиска:", key="products_text_input")
-    
-    if st.button("Запустить поиск позиций"):
-        if not folder_input_id:
-            st.error("Укажите ID папки")
-            return
-            
-        if "gcp_service_account" not in st.secrets:
-            st.error("В Secrets нет gcp_service_account")
-            return
+st.title("📊 Интеллектуальный анализ закупочных цен")
 
-        # 1. Авторизация в Google Drive
+if "GEMINI_API_KEY" in st.secrets:
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+else:
+    st.error("В Secrets не найден GEMINI_API_KEY!")
+
+folder_id = st.text_input("ID папки Google Диска со счетами:")
+products_input = st.text_area("Введите список товаров (каждый товар с новой строки):", height=200)
+
+if st.button("Запустить анализ цен"):
+    if not folder_id:
+        st.warning("Пожалуйста, введите ID папки.")
+    elif "gcp_service_account" not in st.secrets:
+        st.error("В Secrets не найден блок [gcp_service_account]!")
+    else:
         try:
-            gcp_creds = Credentials.from_service_account_info(
-                dict(st.secrets["gcp_service_account"]), 
-                scopes=['https://www.googleapis.com/auth/drive.readonly']
-            )
-            drive_client = build('drive', 'v3', credentials=gcp_creds)
-        except Exception as auth_err:
-            st.error(f"Ошибка подключения к Google: {auth_err}")
-            return
-
-        # 2. Получение списка файлов
-        try:
-            drive_query = f"'{folder_input_id}' in parents and trashed = false"
-            files_request = drive_client.files().list(q=drive_query, fields="files(id, name)").execute()
-            found_files = files_request.get('files', [])
-        except Exception as list_err:
-            st.error(f"Ошибка получения списка файлов: {list_err}")
-            return
-
-        if not found_files:
-            st.warning("Файлы в папке не найдены.")
-            return
-
-        compiled_invoices_data = []
-        download_progress = st.progress(0)
-        
-        # 3. Скачивание и извлечение текста
-        for idx, file_item in enumerate(found_files):
-            file_id = file_item['id']
-            file_name = file_item['name']
+            # 1. Авторизация в Google Диflow
+            creds_dict = dict(st.secrets["gcp_service_account"])
+            creds = Credentials.from_service_account_info(creds_dict, scopes=['[https://www.googleapis.com/auth/drive.readonly](https://www.googleapis.com/auth/drive.readonly)'])
+            service = build('drive', 'v3', credentials=creds)
             
-            try:
-                media_request = drive_client.files().get_media(fileId=file_id)
-                binary_stream = io.BytesIO()
-                file_downloader = MediaIoBaseDownload(binary_stream, media_request)
+            # 2. Получение списка файлов из папки
+            query = f"'{folder_id}' in parents and trashed = false"
+            results = service.files().list(q=query, fields="files(id, name)").execute()
+            items = results.get('files', [])
+            
+            if not items:
+                st.warning("В указанной папке не найдено файлов.")
+            else:
+                all_text_data = []
+                progress_bar = st.progress(0)
+                status_text = st.empty()
                 
-                download_finished = False
-                while not download_finished:
-                    _, download_finished = file_downloader.next_chunk()
-                
-                file_bytes_content = binary_stream.getvalue()
-                lower_file_name = file_name.lower()
-                extracted_text = ""
-
-                if lower_file_name.endswith('.xlsx') or lower_file_name.endswith('.xls'):
-                    excel_sheets = pd.read_excel(io.BytesIO(file_bytes_content), sheet_name=None)
-                    extracted_text = "\n".join([sheet_df.to_string() for sheet_df in excel_sheets.values()])
-                elif lower_file_name.endswith('.pdf'):
-                    extracted_text = "\n".join([pdf_page.extract_text() for pdf_page in PdfReader(io.BytesIO(file_bytes_content)).pages if pdf_page.extract_text()])
-                else:
-                    extracted_text = file_bytes_content.decode('utf-8', errors='ignore')
-                
-                # Сохраняем структурировано, завернув в безопасный словарь
-                compiled_invoices_data.append(f"Документ: {file_name}\n{extracted_text}\n---")
-            except Exception as read_err:
-                compiled_invoices_data.append(f"Ошибка чтения файла {file_name}: {read_err}")
-                
-            download_progress.progress((idx + 1) / len(found_files))
-
-        # 4. Отправка собранного контента в ИИ
-        full_text_payload = "\n".join(compiled_invoices_data)
-        
-        if len(full_text_payload.strip()) > 0:
-            with st.spinner("ИИ сопоставляет номенклатуру..."):
-                try:
-                    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-                    ai_model = genai.GenerativeModel('gemini-1.5-flash')
+                # 3. Скачивание файлов и чтение Excel / PDF / TXT
+                for idx, item in enumerate(items):
+                    f_id = item['id']
+                    f_name = item['name']
+                    status_text.info(f"Обработка ({idx+1}/{len(items)}): {f_name}")
                     
-                    ai_prompt = (
-                        "Ты профессиональный закупщик. Найди цены для списка номенклатуры.\n"
-                        "Список для поиска:\n" + str(raw_products_list) + "\n\n"
-                        "Данные документов:\n" + str(full_text_payload) + "\n\n"
-                        "Ответь исключительно в формате JSON массива объектов без markdown разметки. "
-                        "Ключи: product, found_name, price, invoice, status"
-                    )
+                    request = service.files().get_media(fileId=f_id)
+                    file_stream = io.BytesIO()
+                    downloader = MediaIoBaseDownload(file_stream, request)
+                    done = False
+                    while not done:
+                        _, done = downloader.next_chunk()
+                        
+                    file_bytes = file_stream.getvalue()
+                    lower_name = f_name.lower()
+                    text_content = ""
                     
-                    ai_response = ai_model.generate_content(ai_prompt)
-                    clean_json_string = ai_response.text.strip().replace("```json", "").replace("
-```", "")
-                    
-                    parsed_results = json.loads(clean_json_string)
-                    result_dataframe = pd.DataFrame(parsed_results)
-                    st.dataframe(result_dataframe, use_container_width=True)
-                except Exception as ai_err:
-                    st.error(f"Ошибка обработки ИИ: {ai_err}")
-
-# Запуск изолированной функции
-run_invoices_processor()
+                    try:
+                        if lower_name.endswith('.xlsx') or lower_name.endswith('.xls'):
+                            df_dict = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None)
+                            text_content = "\n".join([df.to_string(index=False) for df in df_dict.values()])
+                        elif lower_name.endswith('.pdf'):
+                            reader = PdfReader(io.BytesIO(file_bytes))
+                            text_content = "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+                        else:
+                            text_content = file_bytes.decode('utf-8', errors='ignore')
+                    except Exception as e:
+                        text_content = f"Ошибка чтения контента: {e}"
+                        
+                    all_text_data.append(f"=== НАКЛАДНОЙ ФАЙЛ: {f_name} ===\n{text_content}\n")
+                    progress_bar.progress((idx + 1) / len(items))
+                
+                status_text.success("Все накладные успешно собраны!")
+                
+                # 4. Передача собранного массива текстов в Gemini за один раз
+                full_invoices_text = "\n".join(all_text_data)
+                if full_invoices_text.strip():
+                    with st.spinner("ИИ сопоставляет позиции алкоголя и вытаскивает цены..."):
+                        model = genai.GenerativeModel('gemini-1.5-flash')
+                        
+                        prompt = (
+                            "Ты — профессиональный менеджер по закупкам.\n"
+                            "Найди актуальные закупочные цены для списка товаров из предоставленных текстов накладных.\n"
+                            "Используй умный гибкий поиск (названия могут немного отличаться, объемы 0.7 и 0.75 аналогичны).\n\n"
+                            "СПИСОК ТОВАРОВ ДЛЯ ПРОВЕРКИ:\n" + str(products_input) + "\n\n"
+                            "ТЕКСТ НАКЛАДНЫХ С ДИСКА:\n" + str(full_invoices_text) + "\n\n"
+                            "Выдай ответ СТРОГО в формате JSON-массива объектов, без markdown разметки (без слов ```json в начале).\n"
+                            "Структура ответа:\n"
+                            "[\n"
+                            "  {\"product\": \"из списка\", \"found_name\": \"из накладной\", \"price\": 100.0, \"invoice\": \"файл.xlsx\", \"status\": \"Найдено\"}\n"
+                            "]"
+                        )
+                        
+                        response = model.generate_content(prompt)
+                        clean_text = response.text.strip().replace("```json", "").replace("```", "")
+                        
+                        result_data = json.loads(clean_text)
+                        st.dataframe(pd.DataFrame(result_data), use_container_width=True)
+                        
+        except Exception as top_err:
+            st.error(f"Произошла общая ошибка выполнения: {top_err}")
