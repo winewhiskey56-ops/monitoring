@@ -1,131 +1,147 @@
 import streamlit as st
-import os
 import io
+import json
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import google.generativeai as genai
-import base64
-import json
 
-# --- НАСТРОЙКИ ---
-GEMINI_KEY = st.secrets["GEMINI_API_KEY"]
-FOLDER_ID = st.secrets["FOLDER_ID"]
-CREDS_FILE = "google_creds.json" # Файл ключа от Google Service Account
-
-# Инициализируем Gemini
-genai.configure(api_key=GEMINI_KEY)
-
-# --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
+# Инициализируем ИИ (используем стабильную и быструю модель Flash)
+if "GEMINI_API_KEY" in st.secrets:
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+else:
+    st.error("В Secrets не найден GEMINI_API_KEY!")
 
 def get_drive_service():
-    import streamlit as st
-    from google.oauth2.service_account import Credentials
-    from googleapiclient.discovery import build
-
     try:
-        # Проверяем, настроены ли секреты в панели Streamlit
         if "gcp_service_account" not in st.secrets:
-            st.error("Критическая ошибка: В настройках Secrets на сайте Streamlit не найден блок [gcp_service_account]!")
+            st.error("В настройках Secrets не найден блок [gcp_service_account]!")
             return None
-            
-        # Авторизуемся напрямую из секретов сайта
         creds = Credentials.from_service_account_info(
             dict(st.secrets["gcp_service_account"]), 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации Google Диска: {e}")
+        st.error(f"Ошибка авторизации Google: {e}")
         return None
-        
-# --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
-def analyze_invoices_with_ai(service, wine_name):
+
+# Кэшируем загрузку данных с Диска, чтобы не качать файлы при каждом клике
+@st.cache_data(ttl=600)  # Кэш на 10 минут
+def load_all_invoices_text(folder_id):
+    service = get_drive_service()
+    if not service:
+        return ""
+    
     try:
-        # 1. Получаем список всех файлов в папке Гугл Диска
-        query = f"'{FOLDER_ID}' in parents and trashed = false"
-        results = service.files().list(q=query, fields="files(id, name, mimeType, webViewLink)").execute()
-        files = results.get('files', [])
+        # Ищем все файлы в указанной папке (PDF, Excel, TXT и т.д.)
+        query = f"'{folder_id}' in parents and trashed = false"
+        results = service.files().list(q=query, fields="files(id, name, mimeType)").execute()
+        items = results.get('files', [])
         
-        if not files:
-            return "📁 В указанной папке на Google Drive нет файлов.", []
+        if not items:
+            st.warning("В указанной папке Google Диска не найдено файлов!")
+            return ""
             
-        st.info(f"🔍 Проверяю документы на диске (всего файлов: {len(files)})...")
+        all_text_content = []
+        progress_bar = st.progress(0)
+        st.info(f"Начался сбор накладных из Диска... Найдено файлов: {len(items)}")
         
-        # Запускаем модель Gemini Flash (она идеально подходит для работы с текстом и фото)
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        
-        found_records = []
-        source_files = []
-        
-        # 2. Проходим по каждому файлу
-        for f in files:
-            # Скачиваем файл в память приложения
-            request = service.files().get_media(fileId=f['id'])
+        for idx, item in enumerate(items):
+            file_id = item['id']
+            file_name = item['name']
+            
+            # Скачиваем файл в память
+            request = service.files().get_media(fileId=file_id)
             file_stream = io.BytesIO()
             downloader = MediaIoBaseDownload(file_stream, request)
             done = False
-            while not done:
-                _, done = downloader.next_chunk()
+            while done is False:
+                status, done = downloader.next_chunk()
+                
+            file_stream.seek(0)
             
-            file_bytes = file_stream.getvalue()
-            
-            # Формируем запрос для Gemini
-            prompt = f"""
-            Ты — профессиональный бухгалтер-аналитик в винной сфере. 
-            Твоя задача — найти в прикрепленном документе упоминание товара: "{wine_name}".
-            Если товар найден, выпиши строго по пунктам:
-            1. Дата закупки (или дата счета)
-            2. Поставщик
-            3. Количество закупленного товара
-            4. Цена за одну бутылку (закупочная стоимость)
-            
-            Если этого товара в документе нет, ответь одной фразой: "Товар не найден".
-            """
-            
-            # Передаем файл в Gemini в зависимости от формата
+            # Читаем как текст (для простоты структуры, ИИ отлично понимает сырые данные)
+            # Если файлы бинарные (PDF/XLSX), Google Drive API умеет их конвертировать,
+            # но пока заберем текстовую составляющую или метаданные.
             try:
-                response = model.generate_content([
-                    prompt,
-                    {"mime_type": f['mimeType'], "data": file_bytes}
-                ])
+                text_data = file_stream.read().decode('utf-8', errors='ignore')
+            except:
+                text_data = f"[Файл: {file_name} (бинарные данные)]"
                 
-                answer = response.text
-                if "Товар не найден" not in answer:
-                    found_records.append(f"📄 **Файл: {f['name']}**\n{answer}")
-                    source_files.append({"name": f['name'], "link": f['webViewLink']})
-            except Exception as e:
-                # Если файл слишком тяжелый или формат не поддерживается, пропускаем его
-                continue
-                
-        if found_records:
-            full_report = "\n\n---\n\n".join(found_records)
-            return full_report, source_files
-        else:
-            return f"❌ Ни в одном документе упоминаний вина «{wine_name}» не обнаружено.", []
+            all_text_content.append(f"=== НАЧАЛО НАКЛАДНОЙ: {file_name} ===\n{text_data}\n=== КОНЕЦ НАКЛАДНОЙ ===")
+            progress_bar.progress((idx + 1) / len(items))
             
+        return "\n\n".join(all_text_content)
     except Exception as e:
-        return f"🔴 Ошибка при работе с диском или ИИ: {e}", []
+        st.error(f"Ошибка при сборе накладных: {e}")
+        return ""
 
-# --- ИНТЕРФЕЙС СТРАНИЦЫ ---
-st.title("🔎 Поиск закупочных цен по счетам (Gemini AI)")
-st.write("Пиши название вина, а искусственный интеллект сам просмотрит все PDF, сканы и фото на Google Диске.")
+def analyze_prices_with_ai(products_list, invoices_text):
+    if not invoices_text:
+        st.error("Текст накладных пуст. Нечего анализировать.")
+        return None
+        
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    
+    prompt = f"""
+    Ты — профессиональный аудитор и менеджер по закупкам в винотеке. 
+    Твоя задача — найти закупочные цены для списка товаров из предоставленных текстов накладных.
+    
+    Используй гибкий интеллектуальный поиск: названия могут немного отличаться (русс/англ, сокращения, объемы 0.7 и 0.75л). 
+    Если товар найден, бери самую свежую (последнюю по дате или тексту) цену.
 
-wine_query = st.text_input("Введите название вина для поиска (например: Розе, Шато):", "")
+    СПИСОК ТОВАРОВ ДЛЯ ПОИСКА:
+    {products_list}
 
-if st.button("🚀 Найти в документах", type="primary"):
-    if not wine_query:
-        st.warning("Введите название товара!")
+    ТЕКСТ НАКЛАДНЫХ С ДИСКА:
+    {invoices_text}
+
+    Выдай ответ СТРОГО в формате JSON-массива объектов, без markdown-разметки (без ```json), чтобы код мог его прочитать.
+    Формат ответа:
+    [
+      {{"product": "Название из твоего списка", "found_name": "Название из накладной", "price": 1500.0, "invoice": "имя_файла.txt", "status": "Найдено"}},
+      {{"product": "Название 2", "found_name": "-", "price": 0.0, "invoice": "-", "status": "Не найдено"}}
+    ]
+    """
+    
+    try:
+        response = model.generate_content(prompt)
+        # Чистим ответ от случайных кавычек ИИ
+        clean_text = response.text.strip().replace("
+```json", "").replace("```", "")
+        return json.loads(clean_text)
+    except Exception as e:
+        st.error(f"Ошибка ИИ-анализа: {e}")
+        return None
+
+# --- ИНТЕРФЕЙС СТРИМЛИТА ---
+st.title("📊 Интеллектуальный анализ закупочных цен")
+
+# Сюда вставляешь ID папки со своего Гугл Диска (из ссылки)
+FOLDER_ID = st.text_input("ID папки Google Диска со счетами:", value="ВСТАВЬ_СЮДА_ID_ПАПКИ")
+
+# Поле для ввода списка товаров
+products_input = st.text_area(
+    "Введите список товаров для проверки (каждый товар с новой строки):",
+    value="Виски Macallan 12\nВодка Белуга\nВино Шато Марго",
+    height=200
+)
+
+if st.button("Запустить мега-поиск цен"):
+    if FOLDER_ID == "ВСТАВЬ_СЮДА_ID_ПАПКИ" or not FOLDER_ID:
+        st.warning("Пожалуйста, введите реальный ID папки Диска.")
     else:
-        drive_service = get_drive_service()
-        if drive_service:
-            with st.spinner("ИИ анализирует накладные... Это может занять около минуты."):
-                report, links = analyze_invoices_with_ai(drive_service, wine_query)
+        # Шаг 1: Быстро качаем всё в память один раз
+        with st.spinner("Скачиваем и индексируем накладные..."):
+            invoices_database = load_all_invoices_text(FOLDER_ID)
+            
+        if invoices_database:
+            # Шаг 2: Отдаем ИИ массив данных на массовый разбор
+            with st.spinner("ИИ сопоставляет позиции и ищет цены..."):
+                results = analyze_prices_with_ai(products_input, invoices_database)
                 
-                st.subheader("📊 Результаты анализа:")
-                st.markdown(report)
-                
-                if links:
-                    st.subheader("🔗 Ссылки на оригиналы документов:")
-                    for l in links:
-                        st.markdown(f"[{l['name']}]({l['link']})")
+            if results:
+                st.success("Анализ завершен!")
+                # Выводим красивую итоговую таблицу
+                st.table(results)
