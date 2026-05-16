@@ -20,36 +20,21 @@ genai.configure(api_key=GEMINI_KEY)
 
 def get_drive_service():
     import os
-    import json
     CREDS_FILE = "google_creds.json"
     
     if not os.path.exists(CREDS_FILE):
-        st.error(f"Файл {CREDS_FILE} не найден!")
+        st.error(f"Критическая ошибка: Файл {CREDS_FILE} не найден в корне проекта!")
         return None
         
     try:
-        with open(CREDS_FILE, "r", encoding="utf-8") as f:
-            creds_data = json.load(f)
-        
-        # Интеллектуальное восстановление структуры PEM-формата для Google
-        key = creds_data["private_key"]
-        if "\n" not in key and "\\n" not in key:
-            header = "-----BEGIN PRIVATE KEY-----"
-            footer = "-----END PRIVATE KEY-----"
-            # Извлекаем чистую зашифрованную массу без шапки и хвоста
-            core = key.replace(header, "").replace(footer, "").strip()
-            # Нарезаем строку на правильные куски по 64 символа, как требует стандарт PEM
-            chunks = [core[i:i+64] for i in range(0, len(core), 64)]
-            # Собираем ключ обратно с настоящими системными переносами строк
-            creds_data["private_key"] = header + "\n" + "\n".join(chunks) + "\n" + footer
-            
-        creds = Credentials.from_service_account_info(
-            creds_data, 
+        # Прямое чтение целого файла, как требует Google
+        creds = Credentials.from_service_account_file(
+            CREDS_FILE, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации: {e}")
+        st.error(f"Ошибка авторизации Google: {e}")
         return None
         
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
