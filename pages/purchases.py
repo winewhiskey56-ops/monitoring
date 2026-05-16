@@ -15,9 +15,7 @@ if "GEMINI_API_KEY" in st.secrets:
 else:
     st.error("В Secrets не найден GEMINI_API_KEY!")
 
-FOLDER_ID = st.secrets.get("google_folder_id")
-if not FOLDER_ID:
-    FOLDER_ID = st.secrets.get("folder_id")
+FOLDER_ID = st.secrets.get("google_folder_id") or st.secrets.get("folder_id")
 
 if not FOLDER_ID:
     st.error("Ошибка: В st.secrets не найден ID папки")
