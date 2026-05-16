@@ -112,6 +112,9 @@ def generate_recommendation(wine):
     # Идеальный вариант: быть немного ниже конкурента
     ideal_target = c_price - 10 
     
+    # СТРОГО ФИКСИРОВАННЫЕ СКИДКИ МАГАЗИНА
+    ALLOWED_DISCOUNTS = [10, 15, 20, 25, 30, 35, 40, 45]
+    
     # Вспомогательная функция для поиска подходящих промо-акций по эффективной цене за 1 шт
     def check_promo_options(target_p):
         options = []
@@ -131,9 +134,8 @@ def generate_recommendation(wine):
         if cheapest['disc'] == cheapest['reg'] and ideal_target <= our_reg:
             return f"🎯 **Вариант 1 (Идеал): Снижение базовой цены**\n\nКонкурент ({cheapest['shop']}) торгует без скидок за {c_price:.0f}₽. Ставим цену чуть ниже.\n* **Рекомендуемая цена:** {ideal_target:.0f}₽ (Без скидки)\n* **Наценка:** {ideal_target - pur_price:.0f}₽"
         
-        # Ищем стандартную скидку под этот идеал
-        discounts = [10, 15, 20, 25, 30, 35, 40, 45]
-        for d in discounts:
+        # Ищем стандартную скидку под этот идеал (СТРОГО из разрешенных)
+        for d in ALLOWED_DISCOUNTS:
             p = our_reg * (1 - d / 100.0)
             if p >= min_retail_price and p <= ideal_target:
                 return f"⚔️ **Вариант 1 (Идеал): Фиксированная скидка**\n\nУспешно бьем цену конкурента ({cheapest['shop']}: {c_price:.0f}₽).\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
@@ -147,8 +149,8 @@ def generate_recommendation(wine):
     # --- СТРАТЕГИЯ 2: Погрешность +10% (Если идеал уходит в минус, но +10% к цене конкурента проходит маржу) ---
     error_target = c_price * 1.10
     if error_target >= min_retail_price:
-        discounts = [10, 15, 20, 25, 30, 35, 40, 45]
-        for d in discounts:
+        # ИСПРАВЛЕНО: Теперь здесь тоже перебираются ТОЛЬКО фиксированные скидки магазина
+        for d in ALLOWED_DISCOUNTS:
             p = our_reg * (1 - d / 100.0)
             if p >= min_retail_price and p <= error_target:
                 return f"⚖️ **Вариант 2: Допустимая погрешность (+10%)**\n\nСделать цену ниже конкурента ({c_price:.0f}₽) нельзя из-за лимита закупки. Ставим цену в пределах +10% от его стоимости.\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
@@ -159,8 +161,22 @@ def generate_recommendation(wine):
             return f"🎁 **Вариант 2: Допустимая погрешность через объем**\n\nУдерживаем цену в пределах +10% от конкурента за счет пакетной акции.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
 
     # --- СТРАТЕГИЯ 3: Максимально возможная скидка (Критическая зона защиты маржи) ---
-    max_d = get_perc(our_reg, min_retail_price)
-    return f"🛑 **Вариант 3: Максимально возможная скидка (Защита маржи)**\n\nКонкурент демпингует ниже нашего закупа ({c_price:.0f}₽ в {cheapest['shop']}). Устанавливаем минимально допустимый предел с маржой 30%.\n* **Рекомендуемая цена:** {min_retail_price:.0f}₽\n* **Скидка на ценнике:** {max_d:.0f}%\n* **Наценка:** {min_retail_price - pur_price:.0f}₽ (Строго 30%)\n* **Внимание:** Ниже опускаться запрещено!"
+    # ИСПРАВЛЕНО: Вместо математически точного процента ищем МАКСИМАЛЬНУЮ ФИКСИРОВАННУЮ скидку, которая не уходит в минус
+    best_safety_discount = None
+    best_safety_price = min_retail_price
+    
+    for d in ALLOWED_DISCOUNTS:
+        p = our_reg * (1 - d / 100.0)
+        if p >= min_retail_price:
+            best_safety_discount = d
+            best_safety_price = p
+        else:
+            break # Так как скидки идут по возрастанию, дальше проверять нет смысла
+            
+    if best_safety_discount is not None:
+        return f"🛑 **Вариант 3: Максимально возможная скидка (Защита маржи)**\n\nКонкурент демпингует ниже нашего закупа ({c_price:.0f}₽ в {cheapest['shop']}). Устанавливаем максимально возможную скидку из нашей матрицы без ухода в минус.\n* **Рекомендуемая скидка:** {best_safety_discount}%\n* **Новая цена:** {best_safety_price:.0f}₽\n* **Наценка:** {best_safety_price - pur_price:.0f}₽\n* **Внимание:** Порог маржи 30% соблюден."
+    else:
+        return f"🛑 **Вариант 3: Блокировка скидки (Защита маржи)**\n\nКонкурент демпингует ({c_price:.0f}₽), а даже минимальная скидка 10% уводит нас ниже маржи. Продаем строго по минимальному порогу.\n* **Рекомендуемая цена:** {min_retail_price:.0f}₽ (Скидка 0%)\n* **Наценка:** {min_retail_price - pur_price:.0f}₽ (Ровно 30%)"
 
 # --- ОСНОВНОЙ ИНТЕРФЕЙС ---
 st.set_page_config(layout="wide", page_title="Wine Monitoring System")
