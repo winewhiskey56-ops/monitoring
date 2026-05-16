@@ -88,11 +88,11 @@ if st.button("Найти цену в накладных"):
                 progress_bar.empty()
                 
                 full_invoices_text = "\n".join(all_text_data)
-                if full_invoices_text.strip():
+               if full_invoices_text.strip():
                     with st.spinner("ИИ сканирует архивы..."):
-                        # Заставляем модель возвращать строго валидный JSON без Markdown-разметки
+                        # Меняем модель на актуальную gemini-2.5-flash
                         model = genai.GenerativeModel(
-                            'gemini-1.5-flash',
+                            'gemini-2.5-flash',
                             generation_config={"response_mime_type": "application/json"}
                         )
                         
