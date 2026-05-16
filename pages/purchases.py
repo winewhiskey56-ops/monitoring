@@ -19,19 +19,24 @@ genai.configure(api_key=GEMINI_KEY)
 # --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
 
 def get_drive_service():
+    import streamlit as st
+    from google.oauth2.service_account import Credentials
+    from googleapiclient.discovery import build
+
     try:
-        # Официальный метод авторизации Streamlit через секреты
+        # Проверяем, настроены ли секреты в панели Streamlit
         if "gcp_service_account" not in st.secrets:
-            st.error("Критическая ошибка: В Secrets не найден блок [gcp_service_account]!")
+            st.error("Критическая ошибка: В настройках Secrets на сайте Streamlit не найден блок [gcp_service_account]!")
             return None
             
+        # Авторизуемся напрямую из секретов сайта
         creds = Credentials.from_service_account_info(
             dict(st.secrets["gcp_service_account"]), 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации: {e}")
+        st.error(f"Ошибка авторизации Google Диска: {e}")
         return None
         
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
