@@ -20,25 +20,44 @@ genai.configure(api_key=GEMINI_KEY)
 
 def get_drive_service():
     import os
-    import json
+    import re
     
     CREDS_FILE = "google_creds.json"
     
-    # Проверяем, загружен ли файл в репозиторий
     if not os.path.exists(CREDS_FILE):
         st.error(f"Файл {CREDS_FILE} не найден на GitHub!")
         return None
         
     try:
-        # Читаем файл как сырой текст
+        # Читаем файл просто как сплошной текст, не как JSON
         with open(CREDS_FILE, "r", encoding="utf-8") as f:
-            raw_text = f.read()
+            text = f.read()
         
-        # Принудительно чистим строку от поломанных переносов строк
-        fixed_text = raw_text.replace("\\n", "\n")
-        creds_data = json.loads(fixed_text)
+        # Вытаскиваем приватный ключ с помощью регулярного выражения
+        pk_match = re.search(r'"private_key"\s*:\s*"([^"]+)"', text)
+        # Вытаскиваем email сервисного аккаунта
+        email_match = re.search(r'"client_email"\s*:\s*"([^"]+)"', text)
         
-        # Авторизуемся в Google
+        if not pk_match or not email_match:
+            st.error("Не удалось найти 'private_key' или 'client_email' внутри файла google_creds.json!")
+            return None
+            
+        private_key = pk_match.group(1)
+        client_email = email_match.group(1)
+        
+        # Исправляем отображение переносов строк в ключе
+        private_key = private_key.replace("\\n", "\n")
+        
+        # Собираем минимально необходимый словарь вручную
+        creds_data = {
+            "type": "service_account",
+            "project_id": "fifth-honor-496507-f0",
+            "private_key": private_key,
+            "client_email": client_email,
+            "token_uri": "https://oauth2.googleapis.com/token"
+        }
+        
+        # Авторизуемся
         creds = Credentials.from_service_account_info(
             creds_data, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
