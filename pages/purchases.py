@@ -20,6 +20,66 @@ FOLDER_ID = st.secrets.get("google_folder_id") or st.secrets.get("folder_id")
 if not FOLDER_ID:
     st.error("Ошибка: В st.secrets не найден ID папки")
 
+# --- МАГИЯ СКОРОСТИ: КЭШИРОВАНИЕ ЗАГРУЗКИ И ПАРСИНГА ДОКУМЕНТОВ ---
+# Данные сохраняются в памяти на 1 час (3600 секунд)
+@st.cache_data(ttl=3600, show_spinner="Полное сканирование Google Диска... Это происходит ОДИН РАЗ, затем поиск будет мгновенным.")
+def load_and_parse_all_invoices(folder_id, gcp_secrets):
+    creds = Credentials.from_service_account_info(dict(gcp_secrets), scopes=['https://www.googleapis.com/auth/drive.readonly'])
+    service = build('drive', 'v3', credentials=creds)
+    
+    query = f"'{folder_id}' in parents and trashed = false"
+    results = service.files().list(q=query, fields="files(id, name)").execute()
+    items = results.get('files', [])
+    
+    parsed_documents = []
+    
+    if not items:
+        return parsed_documents
+
+    for item in items:
+        f_id = item['id']
+        f_name = item['name']
+        
+        try:
+            request = service.files().get_media(fileId=f_id)
+            file_stream = io.BytesIO()
+            downloader = MediaIoBaseDownload(file_stream, request)
+            done = False
+            while not done:
+                _, done = downloader.next_chunk()
+                
+            file_bytes = file_stream.getvalue()
+            lower_name = f_name.lower()
+            text_content = ""
+            
+            if lower_name.endswith('.xlsx') or lower_name.endswith('.xls'):
+                df_dict = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None)
+                sheets_text = []
+                for df in df_dict.values():
+                    sheets_text.append(df.to_string(index=False))
+                text_content = "\n".join(sheets_text)
+            elif lower_name.endswith('.pdf'):
+                reader = PdfReader(io.BytesIO(file_bytes))
+                pdf_text = []
+                for page in reader.pages:
+                    if page.extract_text():
+                        pdf_text.append(page.extract_text())
+                text_content = "\n".join(pdf_text)
+            else:
+                text_content = file_bytes.decode('utf-8', errors='ignore')
+                
+            if text_content.strip():
+                parsed_documents.append({"name": f_name, "text": text_content})
+        except Exception:
+            continue # Пропускаем битые файлы
+            
+    return parsed_documents
+
+# Кнопка для ручного сброса кэша (если залил свежую накладную и хочешь увидеть её сразу)
+if st.sidebar.button("🔄 Обновить базу накладных (сбросить кэш)"):
+    st.cache_data.clear()
+    st.sidebar.success("Кэш очищен! Следующий поиск обновит данные с Диска.")
+
 product_search = st.text_input("Введите название товара для проверки цены:")
 
 if st.button("Найти цену в накладных"):
@@ -31,83 +91,36 @@ if st.button("Найти цену в накладных"):
         st.error("В Secrets не найден блок [gcp_service_account]!")
     else:
         try:
-            creds_dict = dict(st.secrets["gcp_service_account"])
-            creds = Credentials.from_service_account_info(creds_dict, scopes=['https://www.googleapis.com/auth/drive.readonly'])
-            service = build('drive', 'v3', credentials=creds)
+            # Загружаем документы (быстро возьмутся из кэша, если уже скачивались)
+            all_docs = load_and_parse_all_invoices(FOLDER_ID, st.secrets["gcp_service_account"])
             
-            query = f"'{FOLDER_ID}' in parents and trashed = false"
-            results = service.files().list(q=query, fields="files(id, name)").execute()
-            items = results.get('files', [])
-            
-            if not items:
-                st.warning("В вашей папке на Google Диске пока нет файлов.")
+            if not all_docs:
+                st.warning("В вашей папке на Google Диске нет доступных файлов или не удалось их прочесть.")
             else:
-                all_text_data = []
-                progress_bar = st.progress(0)
-                status_text = st.empty()
-                
-                # Поисковый запрос в нижнем регистре для точного сравнения
                 search_term = product_search.lower().strip()
+                filtered_texts = []
                 
-                for idx, item in enumerate(items):
-                    f_id = item['id']
-                    f_name = item['name']
-                    status_text.info(f"Сканирую документ: {f_name}")
-                    
-                    request = service.files().get_media(fileId=f_id)
-                    file_stream = io.BytesIO()
-                    downloader = MediaIoBaseDownload(file_stream, request)
-                    done = False
-                    while not done:
-                        _, done = downloader.next_chunk()
-                        
-                    file_bytes = file_stream.getvalue()
-                    lower_name = f_name.lower()
-                    text_content = ""
-                    
-                    try:
-                        if lower_name.endswith('.xlsx') or lower_name.endswith('.xls'):
-                            df_dict = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None)
-                            sheets_text = []
-                            for df in df_dict.values():
-                                sheets_text.append(df.to_string(index=False))
-                            text_content = "\n".join(sheets_text)
-                        elif lower_name.endswith('.pdf'):
-                            reader = PdfReader(io.BytesIO(file_bytes))
-                            pdf_text = []
-                            for page in reader.pages:
-                                if page.extract_text():
-                                    pdf_text.append(page.extract_text())
-                            text_content = "\n".join(pdf_text)
-                        else:
-                            text_content = file_bytes.decode('utf-8', errors='ignore')
-                    except Exception:
-                        text_content = ""
-                    
-                    # ПЕРВИЧНЫЙ ФИЛЬТР: Добавляем файл для ИИ, только если внутри есть поисковое слово
-                    if text_content and search_term in text_content.lower():
-                        all_text_data.append(f"=== ФАЙЛ: {f_name} ===\n{text_content}\n")
-                        
-                    progress_bar.progress((idx + 1) / len(items))
+                # Быстрый поиск совпадений по кэшированному тексту в памяти
+                for doc in all_docs:
+                    if search_term in doc["text"].lower():
+                        filtered_texts.append(f"=== ФАЙЛ: {doc['name']} ===\n{doc['text']}\n")
                 
-                status_text.empty()
-                progress_bar.empty()
-                
-                if not all_text_data:
+                if not filtered_texts:
                     st.info(f"Совпадений по ключевому слову '{product_search}' не найдено ни в одном документе.")
                 else:
-                    full_invoices_text = "\n".join(all_text_data)
-                    with st.spinner(f"ИИ анализирует подходящие документы ({len(all_text_data)} шт.)..."):
+                    full_invoices_text = "\n".join(filtered_texts)
+                    with st.spinner(f"ИИ анализирует накладные со снайперской точностью ({len(filtered_texts)} шт.)..."):
                         model = genai.GenerativeModel(
                             'gemini-2.5-flash',
                             generation_config={"response_mime_type": "application/json"}
                         )
                         
-                        prompt = "Ты менеджер базы данных. Найди упоминания товара и его цену в текстах документов.\n"
+                        prompt = "Ты менеджер базы данных винного магазина. Найди упоминания товара, его цену и дату документа.\n"
                         prompt += f"Искомый товар: {product_search}\n\n"
                         prompt += f"ТЕКСТЫ НАКЛАДНЫХ:\n{full_invoices_text}\n\n"
+                        prompt += "ОБЯЗАТЕЛЬНО найди в тексте каждого документа дату его составления/проведения (обычно вверху накладной рядом с номером).\n"
                         prompt += "Если товар найден в нескольких файлах, выведи все упоминания (историю цен).\n"
-                        prompt += "Ответь строго в формате JSON-массива объектов с ключами product, found_name, price, invoice, status."
+                        prompt += "Ответь строго в формате JSON-массива объектов с ключами: product, found_name, price, date, invoice, status. В ключе date укажи найденную дату документа."
                         
                         response = model.generate_content(prompt)
                         clean_text = response.text.strip()
@@ -115,7 +128,14 @@ if st.button("Найти цену в накладных"):
                         result_data = json.loads(clean_text)
                         if result_data:
                             st.success(f"История цен по запросу: {product_search}")
-                            st.dataframe(pd.DataFrame(result_data), use_container_width=True)
+                            
+                            # Превращаем в датафрейм и красиво сортируем колонки
+                            df_result = pd.DataFrame(result_data)
+                            columns_order = ["product", "found_name", "price", "date", "invoice", "status"]
+                            # На случай, если ИИ пропустил какую-то колонку
+                            existing_columns = [col for col in columns_order if col in df_result.columns]
+                            
+                            st.dataframe(df_result[existing_columns], use_container_width=True)
                         else:
                             st.info("Позиция с таким названием не обнаружена в выбранных накладных.")
                             
