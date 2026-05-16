@@ -6,6 +6,9 @@ import base64
 from github import Github
 from datetime import datetime
 
+# --- НАСТРОЙКА ИНТЕРФЕЙСА (СТРОГО НА ПЕРВОЙ СТРОКЕ ДО ОСТАЛЬНОГО КОДА) ---
+st.set_page_config(layout="wide", page_title="Wine Monitoring System")
+
 # --- КОНФИГУРАЦИЯ GITHUB ---
 REPO_NAME = "winewhiskey56-ops/monitoring"
 FILE_PATH = "wine_db.json"
@@ -197,10 +200,9 @@ def generate_recommendation(wine):
             rec_detail = f"🛑 **Вариант 3: Блокировка скидки (Защита маржи)**\n\nКонкурент демпингует ({c_price:.0f}₽), а даже минимальная скидка 10% уводит нас ниже маржи. Продаем строго по минимальному порогу.\n* **Рекомендуемая цена:** {min_retail_price:.0f}₽ (Скидка 0%)\n* **Наценка:** {min_retail_price - pur_price:.0f}₽"
 
     # --- ПРОВЕРКА: ЕСЛИ ПОЛЬЗОВАТЕЛЬ УЖЕ УСТАНОВИЛ РЕКОМЕНДОВАННУЮ ЦЕНУ ---
-    # Для пакетных акций проверяем соответствие эффективной цены
     if rec_type.startswith("promo_"):
         promo_name = rec_type.replace("promo_", "")
-        if abs(our_disc - target_price) <= 5: # Погрешность округления 5 рублей
+        if abs(our_disc - target_price) <= 5: 
             return f"🎉 **Отлично!** У тебя уже выставлена цена {our_disc:.0f}₽, что идеально соответствует пакетной акции {promo_name} под этого конкурента. Менять ничего не нужно!"
     else:
         if int(our_disc) == int(target_price):
