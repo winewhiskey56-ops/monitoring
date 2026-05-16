@@ -1,12 +1,14 @@
 import streamlit as st
 import io
 import json
+import pandas as pd
+from pypdf import PdfReader
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import google.generativeai as genai
 
-# Инициализируем ИИ
+# Инициализация ИИ Gemini
 if "GEMINI_API_KEY" in st.secrets:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 else:
@@ -26,7 +28,35 @@ def get_drive_service():
         st.error(f"Ошибка авторизации Google: {e}")
         return None
 
-# Кэшируем загрузку данных с Диска
+# Функция для правильного извлечения текста из разных форматов файлов
+def extract_text_from_bytes(file_bytes, file_name):
+    lower_name = file_name.lower()
+    try:
+        # 1. Если это Excel (XLSX или XLS)
+        if lower_name.endswith('.xlsx') or lower_name.endswith('.xls'):
+            df_dict = pd.read_excel(io.BytesIO(file_bytes), sheet_name=None)
+            excel_text = []
+            for sheet, df in df_dict.items():
+                excel_text.append(f"Лист: {sheet}\n" + df.to_string(index=False))
+            return "\n".join(excel_text)
+            
+        # 2. Если это PDF
+        elif lower_name.endswith('.pdf'):
+            reader = PdfReader(io.BytesIO(file_bytes))
+            pdf_text = []
+            for page in reader.pages:
+                text = page.extract_text()
+                if text:
+                    pdf_text.append(text)
+            return "\n".join(pdf_text)
+            
+        # 3. Если это обычный текст или CSV
+        else:
+            return file_bytes.decode('utf-8', errors='ignore')
+    except Exception as e:
+        return f"[Ошибка чтения содержимого файла {file_name}: {e}]"
+
+# Кэшируем сбор данных с Диска на 10 минут
 @st.cache_data(ttl=600)
 def load_all_invoices_text(folder_id):
     service = get_drive_service()
@@ -44,91 +74,93 @@ def load_all_invoices_text(folder_id):
             
         all_text_content = []
         progress_bar = st.progress(0)
-        st.info(f"Начался сбор накладных из Диска... Найдено файлов: {len(items)}")
+        status_text = st.empty()
         
         for idx, item in enumerate(items):
             file_id = item['id']
             file_name = item['name']
+            status_text.info(f"Обработка файла ({idx+1}/{len(items)}): {file_name}")
             
+            # Скачиваем файл с Диска в бинарный поток
             request = service.files().get_media(fileId=file_id)
             file_stream = io.BytesIO()
             downloader = MediaIoBaseDownload(file_stream, request)
             done = False
             while done is False:
-                status, done = downloader.next_chunk()
+                _, done = downloader.next_chunk()
                 
-            file_stream.seek(0)
+            file_bytes = file_stream.getvalue()
             
-            try:
-                text_data = file_stream.read().decode('utf-8', errors='ignore')
-            except:
-                text_data = f"[Файл: {file_name} (бинарные данные)]"
-                
-            all_text_content.append(f"=== НАЧАЛО НАКЛАДНОЙ: {file_name} ===\n{text_data}\n=== КОНЕЦ НАКЛАДНОЙ ===")
+            # Вытаскиваем нормальный текст в зависимости от расширения
+            parsed_text = extract_text_from_bytes(file_bytes, file_name)
+            
+            all_text_content.append(f"=== НАЧАЛО НАКЛАДНОЙ: {file_name} ===\n{parsed_text}\n=== КОНЕЦ НАКЛАДНОЙ ===")
             progress_bar.progress((idx + 1) / len(items))
             
+        status_text.success("Все накладные успешно загружены и обработаны!")
         return "\n\n".join(all_text_content)
     except Exception as e:
-        st.error(f"Ошибка при сборе накладных: {e}")
+        st.error(f"Ошибка при сборе накладных с Диска: {e}")
         return ""
 
 def analyze_prices_with_ai(products_list, invoices_text):
     if not invoices_text:
-        st.error("Текст накладных пуст. Нечего анализировать.")
+        st.error("База накладных пуста. Нечего анализировать.")
         return None
         
     model = genai.GenerativeModel('gemini-1.5-flash')
     
-    # Чтобы избежать SyntaxError из-за фигурных скобок JSON внутри f-строки,
-    # мы собираем промпт обычной склейкой текста
+    # Полностью безопасная сборка промпта БЕЗ f-строк, чтобы избежать SyntaxError
     prompt = (
-        "Ты — профессиональный аудитор и менеджер по закупкам в винотеке.\n"
-        "Твоя задача — найти закупочные цены для списка товаров из предоставленных текстов накладных.\n\n"
-        "Используй гибкий интеллектуальный поиск: названия могут немного отличаться (русс/англ, сокращения, объемы 0.7 и 0.75л).\n"
-        "Если товар найден, бери самую свежую (последнюю по дате или тексту) цену.\n\n"
-        "СПИСОК ТОВАРОВ ДЛЯ ПОИСКА:\n" + str(products_list) + "\n\n"
-        "ТЕКСТ НАКЛАДНЫХ С ДИСКА:\n" + str(invoices_text) + "\n\n"
-        "Выдай ответ СТРОГО в формате JSON-массива объектов, без markdown-разметки (без триггеров ```json), чтобы код мог его прочитать.\n"
-        "Пример формата ответа:\n"
+        "Ты — профессиональный аудитор и эксперт по закупкам в винной индустрии.\n"
+        "Твоя задача — сопоставить список запрашиваемых товаров с текстами накладных и найти их закупочные цены.\n\n"
+        "ПРАВИЛА ПОИСКА:\n"
+        "1. Используй умный контекстный поиск. Названия могут отличаться (например, 'Macallan 12 Y.O.' в списке и 'Макаллан Шато 12л 0.7' в накладной — это одно и то же).\n"
+        "2. Игнорируй мелкие различия в дефисах, кавычках, регистрах букв и языках.\n"
+        "3. Если один и тот же товар встречается в нескольких накладных, выведи строку с САМОЙ СВЕЖЕЙ ценой (ориентируйся по датам в названиях файлов или внутри текста).\n\n"
+        "СПИСОК ТОВАРОВ ДЛЯ ПРОВЕРКИ:\n" + str(products_list) + "\n\n"
+        "ТЕКСТЫ НАКЛАДНЫХ ДЛЯ АНАЛИЗА:\n" + str(invoices_text) + "\n\n"
+        "ОТВЕТ ВЫДАЙ СТРОГО В ФОРМАТЕ JSON-массива (без слов ```json в начале). Структура ответа:\n"
         "[\n"
-        "  {\"product\": \"Название из списка\", \"found_name\": \"Название из накладной\", \"price\": 1500.0, \"invoice\": \"имя_файла.txt\", \"status\": \"Найдено\"}\n"
+        "  {\"product\": \"Название из запроса\", \"found_name\": \"Название из накладной\", \"price\": 1500.0, \"invoice\": \"имя_файла.xlsx\", \"status\": \"Найдено\"}\n"
         "]"
     )
     
     try:
         response = model.generate_content(prompt)
-        # Очищаем ответ ИИ от возможных markdown-тегов
         clean_text = response.text.strip().replace("
 ```json", "").replace("```", "")
         return json.loads(clean_text)
     except Exception as e:
-        st.error(f"Ошибка ИИ-анализа: {e}")
-        # Выведем сырой ответ в логи для отладки, если JSON упадет
-        st.text(f"Сырой ответ ИИ: {response.text if 'response' in locals() else 'нет ответа'}")
+        st.error(f"Ошибка парсинга ответа ИИ: {e}")
+        if 'response' in locals():
+            st.text_area("Сырой ответ ИИ для отладки:", value=response.text, height=150)
         return None
 
 # --- ИНТЕРФЕЙС СТРИМЛИТА ---
-st.title("📊 Интеллектуальный анализ закупочных цен")
+st.title("📊 Умный экспресс-анализ закупочных цен")
 
-FOLDER_ID = st.text_input("ID папки Google Диска со счетами:", value="")
+FOLDER_ID = st.text_input("ID папки Google Диска со счетами (XLSX, PDF, TXT):", value="")
 
 products_input = st.text_area(
-    "Введите список товаров для проверки (каждый товар с новой строки):",
-    value="Виски Macallan 12\nВодка Белуга",
+    "Введите список позиций алкоголя (каждая с новой строки):",
+    value="Виски Macallan 12\nВодка Белуга\nAperol Spritz",
     height=200
 )
 
-if st.button("Запустить мега-поиск цен"):
+if st.button("Запустить сканирование цен"):
     if not FOLDER_ID:
-        st.warning("Пожалуйста, введите реальный ID папки Диска.")
+        st.warning("Пожалуйста, введите ID папки Google Диска.")
     else:
-        with st.spinner("Скачиваем и индексируем накладные..."):
-            invoices_database = load_all_invoices_text(FOLDER_ID)
+        # 1. Загружаем и парсим все файлы (благодаря кэшу это сработает быстро при повторных кликах)
+        invoices_database = load_all_invoices_text(FOLDER_ID)
             
         if invoices_database:
-            with st.spinner("ИИ сопоставляет позиции и ищет цены..."):
+            # 2. Отправляем весь массив данных в Gemini за один заход
+            with st.spinner("ИИ сопоставляет позиции и рассчитывает цены..."):
                 results = analyze_prices_with_ai(products_input, invoices_database)
                 
             if results:
-                st.success("Анализ завершен!")
-                st.table(results)
+                st.success("Массовый анализ успешно завершен!")
+                # Переводим в DataFrame для красивого отображения таблицы в Streamlit
+                st.dataframe(pd.DataFrame(results), use_container_width=True)
