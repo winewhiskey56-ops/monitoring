@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "fifth-honor-496507-f0",
+  "private_key_id": "1262dc0bf26c77741fb1b58893e7b302b3c247b9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCrexi2jwCdklCQ\nvf3u6aGTiPKfBFzrpZrIOtzAqerR7EITVk4IaIi/0pQlE5KxFeZL2x0zxGiF0dbk\nKDfMlmYZXnnV8y5wrqEPeI/HSVQgl8JYiNPdnVQz7qkgm43rtINtODYizINwx+tO\nb4cea+AEep5Rzd7bap3F4NsTh96Ccq36icC6sDsqdcrr+eONIsLcgkWQ9QJxWxuG\n7s9efbF/1C70tHs0IUn7KeA/UpQy0A8rluq4tqmO6CNny/F0qJ6wBBTS3cuUwafr\n4RjlmpbxsMGQhg9hmwW+zqp7TeMrVoeyfPB3LH6ITw1V8bLGiiXWFo9HQ97SRl2j\nnGVo/AWtAgMBAAECggEAAUETOzKXOeUkuwpIsy347+VOhk833BldT8hDw7z6agf6\nVmiJMD040tOtdbVLm16iTT0QXPKQznnBwprGCF8JPCJEGIaAznODMLkcWW7LM2R+\nGBECy6985YGssapcQrRn9FfhktDqx9u5It0PS0UADHMBJBlctJTLtp4gZrzVqcqT\nMfgjHokUnAT+zjQaTO7zNYIRvzMKAWgpxAJsPzgGSsy7SaZgEZjrU+gVjNDvBUOE\nTQCwGPon07w2siaWbILlVNV7/RnvSLCmLd0Ork011yMJ3G2kZoK6E/DG9SoAbkjl\ng4A145Acopx1kqia/wTZzu/NONviOGctMi8ZBkJNGQKBgQDgwP+F4hy0QosM4Nwt\nrSqW7au31wt5ciOpFiMx2ZZupRxOIe9IybheIsl51Q0Oq99O523kD0BolcEXKLk4\nWQpCmUSBtspeK8CKbPwv9MCjjyJc/q8cUR3ke3LCzWkrI7oN47FxFUYStl/kUiXR\n6S9C0UBPiTlFu8JSGP38OCf8gwKBgQDDUhuhB3fbDu//oOJWQZJD5lKAOxg/Dm/J\n7834gNeAAsLee7fROocMKShvMQuSmHS43ihwO06opGQO5nF7R8ataaDe/dpA7SJ5\ny38lGX/LUmut2D8vguQR89v1mLrr3C0jyZn5/BHA4svQHgyB//k+R/uMpwUJclfA\nwaZPium+DwKBgB1c2YUyPzHFp8js75cAEppZPp/r9lHNeZ8zhzGSDbcy1vnWMR6/\nS9jwjoXeMbCC/8+dKJws6es/9VQDO/+CknaU84BG0zVuXd830dKqFSjJIGIp29LF\nPjSFdD7C+0RpjHsYDiyJ7Pew3+JCYTKFVmlSUSaS9OqJVx/GqBf1djPlAoGAB4sN\nPBvQuioKhMHO2+vuXSbw+rjNh+nj0VWsi7NWH0B8DCGVCMSM4KBaSmkHfGLc5yLV\nRvhTYlnu71BhA5TTDHFu4A3Htwgxc6izQViJwe1t8SnPzuLsMfFMBmEenutC5wXr\nJ2dfvCZGHsR6US70jj4zbcwpeqLq1qvj42CHBGsCgYBKbEx0mehmMkM8zTxUrHhY\n60mduyDFZChaxMxGA1YYIVlpZ0EtcO2X6jDdoW8WznD9QFOdGp1kirFKmjmerxnp\n4yQcBy/mvZGzjchxgrWB1EU0bRHBcGJN78BI/9SLFvkdwOCz7v3C5HlQeNcEY6/N\nzDFO6DLV+FdahH0eCG3KoQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "streamlit-drive-reader@fifth-honor-496507-f0.iam.gserviceaccount.com",
+  "client_id": "105659136658220128051",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/streamlit-drive-reader%40fifth-honor-496507-f0.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
