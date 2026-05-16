@@ -12,6 +12,16 @@
                 "disc": 2000,
                 "in_stock": true
             }
+        ],
+        "purchase_price": 1465,
+        "stock": "3+",
+        "history": [
+            {
+                "date": "2026-05-16 10:56",
+                "changes": [
+                    "Закупка: 0 -> 1465"
+                ]
+            }
         ]
     },
     {
@@ -45,7 +55,10 @@
                 "disc": 2000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "612a3e07-7349-43e1-a6da-0bb0b3a127d1",
@@ -66,7 +79,10 @@
                 "disc": 1900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "1cc3740e-cf2b-462e-bfd4-b98ac5b41505",
@@ -87,7 +103,10 @@
                 "disc": 1700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "db764324-fbe6-4df7-a1fa-7e905002f5f4",
@@ -102,7 +121,10 @@
                 "disc": 1700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "cfd489ab-210c-4a06-bd52-10e02c3eeffc",
@@ -117,7 +139,10 @@
                 "disc": 1600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "93e9b9db-0d13-4698-b789-ae213d1b9520",
@@ -132,7 +157,10 @@
                 "disc": 1340,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "9621c712-d1df-4e21-ab75-a98793ba6fc2",
@@ -159,7 +187,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "9d1cb216-1447-4f40-a7c4-65df67f59443",
@@ -174,7 +205,10 @@
                 "disc": 1530,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "6e3d5e74-9fe7-4ec6-8cfd-4705c7da18c7",
@@ -213,7 +247,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e1516b8e-70db-4f15-ae98-ee4d0a54966f",
@@ -228,7 +265,10 @@
                 "disc": 700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "b85619d6-eda6-43dc-82de-c99546a545eb",
@@ -255,7 +295,10 @@
                 "disc": 2800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "606d9def-4975-4666-b78d-2f168a5b97c4",
@@ -294,7 +337,10 @@
                 "disc": 1500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "0d63efba-ba4d-4592-ab43-b47f2629f672",
@@ -315,7 +361,10 @@
                 "disc": 1500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "7b4f895a-e927-4d26-92a7-2923f80d6cc7",
@@ -342,7 +391,10 @@
                 "disc": 1020,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "1a110470-0b00-4471-abfe-a83c03b743de",
@@ -369,7 +421,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "19a8e344-000e-466b-b1fd-613a4fb817f6",
@@ -390,7 +445,10 @@
                 "disc": 1000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "88676b16-0e42-404f-b82a-bce7a07a8087",
@@ -417,7 +475,10 @@
                 "disc": 1000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "475316ab-4629-4432-a2e6-37c6af58f4a1",
@@ -444,7 +505,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "2acfeaa2-f708-4793-bd38-ee9956578bba",
@@ -465,7 +529,10 @@
                 "disc": 1329,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "db7d1631-ce65-4db4-b995-827e12a59d38",
@@ -498,7 +565,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "fec07f14-918c-4064-ad1c-6c0fcdab844a",
@@ -513,7 +583,10 @@
                 "disc": 1500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "9b043555-c686-40e6-806d-377d6bfba6d7",
@@ -534,7 +607,10 @@
                 "disc": 950,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "105b3d3f-b636-4761-baec-b419caf01597",
@@ -549,7 +625,10 @@
                 "disc": 400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "8fa5ed98-8ee8-4a37-abba-9cb87e8c0fac",
@@ -570,7 +649,10 @@
                 "disc": 560,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "7b7c1611-5d06-4f26-8907-2f7f927ef9f4",
@@ -603,7 +685,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "b6273a8c-898b-40a2-9ed7-207facc794b4",
@@ -618,7 +703,10 @@
                 "disc": 1326,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4c28d958-45d3-4fef-90f1-a6881552d158",
@@ -657,7 +745,10 @@
                 "disc": 1200,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4edb8fea-61d8-4ca7-b9e1-4b807c39d436",
@@ -684,7 +775,10 @@
                 "disc": 1000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e427b174-2ad0-46bb-a20e-4a137e0e58f0",
@@ -717,7 +811,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "2fcff091-df1d-4db9-9e6a-ab9cb6b8cb3b",
@@ -738,7 +835,10 @@
                 "disc": 7700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4202273b-21f9-48b2-b5df-be688bb8e58a",
@@ -765,7 +865,10 @@
                 "disc": 5900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "70432e21-67c2-490a-b53c-56c539b07074",
@@ -786,7 +889,10 @@
                 "disc": 4100,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c58c8173-af9b-4ed6-a549-404609487756",
@@ -813,7 +919,10 @@
                 "disc": 4300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "6535b68e-011a-49ac-afe7-d5c06a9dba81",
@@ -834,7 +943,10 @@
                 "disc": 3600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e7b46d13-9e3a-4281-8ee9-613be3d4c227",
@@ -867,7 +979,10 @@
                 "disc": 2800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "3c647e9f-3534-44c1-9dd3-e23ddf87ecb3",
@@ -894,7 +1009,10 @@
                 "disc": 3000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "db6cdfa1-2512-4a60-8d7a-f6c9127d3129",
@@ -909,7 +1027,10 @@
                 "disc": 2900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "da2ccaca-41d1-4168-bf18-c9068e1909a9",
@@ -936,7 +1057,10 @@
                 "disc": 2700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "3d221526-4a0d-4790-a3d4-b7d2d9044bae",
@@ -963,7 +1087,10 @@
                 "disc": 2400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "0d4b2c64-c94d-4cf2-a193-e56d61097d2d",
@@ -990,7 +1117,10 @@
                 "disc": 3400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "1b558851-1aa0-4ad9-b528-675074b2fdbc",
@@ -1017,7 +1147,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "889db2a2-abdf-40d1-87a3-f8a4ccd2df99",
@@ -1038,7 +1171,10 @@
                 "disc": 1500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "07ae918a-3c3c-4f1b-85ab-397ad2ba4345",
@@ -1065,7 +1201,10 @@
                 "disc": 2200,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4aa9e433-e505-4bba-8268-0b002b53a86c",
@@ -1086,7 +1225,10 @@
                 "disc": 2200,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4eeea6b1-1bca-4d5f-bd3c-01065a857158",
@@ -1119,7 +1261,10 @@
                 "disc": 1000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "f436a0e2-0cfa-4652-b621-b841ba7f555d",
@@ -1146,7 +1291,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "82e38e3d-892d-47bd-b03f-392a41784ec2",
@@ -1179,7 +1327,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "b1654044-a47c-47d6-848f-3ab8b7664799",
@@ -1194,7 +1345,10 @@
                 "disc": 2029,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "d8b9aa07-c9a2-4852-96ff-0d3f11831af2",
@@ -1209,7 +1363,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "2891a8b6-c583-4868-923a-29521341beb7",
@@ -1230,7 +1387,10 @@
                 "disc": 1850,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4ef069fe-313b-415c-89b2-a63f1be2c7fb",
@@ -1245,7 +1405,10 @@
                 "disc": 1449,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "560c9b9d-758d-4552-80e0-38a596fe18e8",
@@ -1266,7 +1429,10 @@
                 "disc": 6280,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "41048139-237d-4c66-8696-a6c4e2c56393",
@@ -1281,7 +1447,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "41bc478a-37cc-4535-961c-8b13b82acc26",
@@ -1296,7 +1465,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "fc4fb6ac-f715-462f-8317-5680b27379f8",
@@ -1311,7 +1483,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "f7ea37c8-7b28-4f22-8e68-e0f581718086",
@@ -1326,7 +1501,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "19de88c5-e984-4daa-8174-66f7ae10972a",
@@ -1341,7 +1519,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "34c77851-eb02-420b-b847-46ffe6777dfa",
@@ -1356,7 +1537,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "ffc85dc3-2097-4258-b6a9-f816fafbe904",
@@ -1371,7 +1555,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e52d3c73-f002-44e1-a208-8fc76a4a581c",
@@ -1386,7 +1573,10 @@
                 "disc": 2599,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "768384ff-31c7-45fe-8f3b-1a4fb4d76be5",
@@ -1407,7 +1597,10 @@
                 "disc": 1700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4933780c-97c0-43d5-87cf-92d298fb2b58",
@@ -1428,7 +1621,10 @@
                 "disc": 2400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "5a64b492-4cfd-45d0-8cc4-aa28104981a8",
@@ -1461,7 +1657,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "8604d0a7-f375-4b10-9ac4-91de0c7274f1",
@@ -1476,7 +1675,10 @@
                 "disc": 1170,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "8f90c0b8-e5c3-44ca-b99a-56efb7f35c76",
@@ -1491,7 +1693,10 @@
                 "disc": 1150,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "abc2c571-ed3f-4975-be81-a54d73f5007f",
@@ -1506,7 +1711,10 @@
                 "disc": 1150,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "431de89d-f674-44b8-b55d-530e76d4d261",
@@ -1521,7 +1729,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "aa01501f-6bb5-4cba-93e8-dde604376c42",
@@ -1536,7 +1747,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c938ad89-3727-4b64-b7c2-7d8a2a7e79ca",
@@ -1551,7 +1765,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "9e2066ca-9c16-4e0f-add0-d3cbdfe851ab",
@@ -1566,7 +1783,10 @@
                 "disc": 850,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "8e9dfd8b-1674-418e-be54-7ba1ffe2faf5",
@@ -1581,7 +1801,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "52e624b1-2e8b-489f-b654-5353b16457c6",
@@ -1596,7 +1819,10 @@
                 "disc": 1550,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "cec528ac-395b-4b24-ab49-e36428b1c1bc",
@@ -1623,7 +1849,10 @@
                 "disc": 1250,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "64f67dc7-481c-4da2-9429-ee596a2b5bfd",
@@ -1638,7 +1867,10 @@
                 "disc": 2700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "b59aaf31-b082-49d1-8086-179c39c3180a",
@@ -1653,7 +1885,10 @@
                 "disc": 2050,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "3bf8b0e1-630d-436c-8b0d-3f72f487ae21",
@@ -1668,7 +1903,10 @@
                 "disc": 1930,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "db3de48c-71f6-4b69-a3d7-8e4f6e0534bf",
@@ -1689,7 +1927,10 @@
                 "disc": 940,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "7d6fc640-6260-45d0-a30a-ab83e91bb952",
@@ -1710,7 +1951,10 @@
                 "disc": 1100,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c30b1ef4-1ee2-46fe-819b-174d89244c7a",
@@ -1725,7 +1969,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "b94962c2-f49c-4dd1-9913-2d2ef8b59fec",
@@ -1746,7 +1993,10 @@
                 "disc": 1700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "684ac3f4-68e8-4673-bc58-2b22be2259cf",
@@ -1761,7 +2011,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "0cd2a333-d1d4-4310-a633-dbf464e1293d",
@@ -1776,7 +2029,10 @@
                 "disc": 1630,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "8ae59649-e1b9-49db-8e2f-81ba9aec9dc2",
@@ -1791,7 +2047,10 @@
                 "disc": 1630,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "ecd7db84-95af-4b42-aa5f-ca6114d5863e",
@@ -1806,7 +2065,10 @@
                 "disc": 3600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "ab0bde29-c5ac-45d0-9aad-e67828d3e58b",
@@ -1821,7 +2083,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "1f95e05d-a300-43b0-b0c4-018dbdd5bbda",
@@ -1836,7 +2101,10 @@
                 "disc": 1500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "3c813c6e-2267-4af5-a6ea-485a87ba93a8",
@@ -1851,7 +2119,10 @@
                 "disc": 1500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "2c8d46eb-b563-4e47-8afa-60408998a2c8",
@@ -1866,7 +2137,10 @@
                 "disc": 1150,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "b66a9458-e50f-4b1b-a12d-64f38f521318",
@@ -1881,7 +2155,10 @@
                 "disc": 1020,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "37580d05-854c-47f9-96e1-772fe6e90f14",
@@ -1896,7 +2173,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c7e7e1d3-dc32-4a76-b587-56bc9f9e0628",
@@ -1911,7 +2191,10 @@
                 "disc": 1150,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "4fe3581b-634a-4f8b-a581-80d4ab9c9b60",
@@ -1926,7 +2209,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "cf32173e-d31e-4e7b-909b-4fc7b526b75a",
@@ -1947,7 +2233,10 @@
                 "disc": 8000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "97be2232-31ba-4ec1-9b6e-a727c3308888",
@@ -1968,7 +2257,10 @@
                 "disc": 1600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "9d8b2d19-e3bc-4e6c-a343-105ad51e9edf",
@@ -1983,7 +2275,10 @@
                 "disc": 1760,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "a0abebe9-8e96-4df7-bd09-7f2586b03e89",
@@ -2004,7 +2299,10 @@
                 "disc": 1600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e39c0979-bb94-4fed-a087-9ab2b1e34bad",
@@ -2019,7 +2317,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "997b28c8-a1bd-49b5-8cb0-bd04b235b515",
@@ -2034,7 +2335,10 @@
                 "disc": 0,
                 "in_stock": false
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e08ffd2c-23cf-4428-a8b0-85058cdf6788",
@@ -2055,7 +2359,10 @@
                 "disc": 1250,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "23494c5c-c1cb-4b16-b38a-dfd409be8610",
@@ -2076,7 +2383,10 @@
                 "disc": 2600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "04a48bfa-4c96-4e48-a54a-53ab66cc29d2",
@@ -2091,7 +2401,10 @@
                 "disc": 6000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "285a3ab7-d013-4664-bb88-2f755fdd0d0f",
@@ -2118,7 +2431,10 @@
                 "disc": 4900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "64f3c5b2-fa44-4e6b-82c0-0a217f005369",
@@ -2139,7 +2455,10 @@
                 "disc": 3300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "82638354-ee8e-4b84-b601-303515cd614c",
@@ -2160,7 +2479,10 @@
                 "disc": 2900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c45f31f4-ec23-4a27-b3a6-a07b7c3634a0",
@@ -2175,7 +2497,10 @@
                 "disc": 2400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "755c8698-c69a-4dd4-8942-a111bd961740",
@@ -2190,7 +2515,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "16cb29bd-bd97-44ce-a4ca-abc9b1118e9a",
@@ -2205,7 +2533,10 @@
                 "disc": 2300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "df1893e5-0f99-4fd5-8697-7d96d1fd761d",
@@ -2220,7 +2551,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "a1c1a5e6-90d4-4da0-9739-a146596a7525",
@@ -2235,7 +2569,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "aa031381-daf0-40d5-8ca8-130d5b379998",
@@ -2250,7 +2587,10 @@
                 "disc": 2900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "45f4c896-4183-49c5-bd62-a532e95f1140",
@@ -2265,7 +2605,10 @@
                 "disc": 1470,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "497a59df-1850-4a27-be70-1f36c2868bbc",
@@ -2280,7 +2623,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "055d857c-2805-4f6d-a204-410348c2c08c",
@@ -2295,7 +2641,10 @@
                 "disc": 2600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "416d9144-2664-4c3b-9242-ff00f2849324",
@@ -2310,7 +2659,10 @@
                 "disc": 2600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "5624a0ea-8865-43e6-822a-364cc6c97d27",
@@ -2325,7 +2677,10 @@
                 "disc": 1700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "361dbabb-13e2-434e-a619-2c4d06a44b87",
@@ -2340,7 +2695,10 @@
                 "disc": 900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c9f35e06-114b-4ee6-be30-72645394dd7d",
@@ -2355,7 +2713,10 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "942a6911-da5d-42f4-98cc-ae5eec499355",
@@ -2370,7 +2731,10 @@
                 "disc": 700,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "6388e6a0-5aef-496e-8747-c8d4e289c99d",
@@ -2385,7 +2749,10 @@
                 "disc": 1350,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "703fa7dd-92bc-4390-98ba-7b6581c4f89e",
@@ -2400,7 +2767,10 @@
                 "disc": 940,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "67683def-6055-447e-b77b-9195c0afdf94",
@@ -2415,7 +2785,10 @@
                 "disc": 1900,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "491e29ec-106f-409f-91c7-e1abb0b12595",
@@ -2430,7 +2803,10 @@
                 "disc": 1600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "200f583b-3c8c-4bc6-9276-d31a6f913a4a",
@@ -2451,7 +2827,10 @@
                 "disc": 1000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "d0620328-c596-431f-b14f-4b3bd187cdf9",
@@ -2466,7 +2845,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "7ec08578-35ce-4b42-ab2a-810b6d7474c1",
@@ -2481,7 +2863,10 @@
                 "disc": 1050,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "38fda83b-7b6c-4e17-9657-d7e75770dbab",
@@ -2496,7 +2881,10 @@
                 "disc": 620,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "206c87cf-ed9f-4f8b-a172-58ff81ad18dd",
@@ -2511,7 +2899,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "30553b80-1528-4b31-959f-40359e8b6fa4",
@@ -2526,7 +2917,10 @@
                 "disc": 2250,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c51ea26b-d494-4200-8b70-52e3a28985d6",
@@ -2541,7 +2935,10 @@
                 "disc": 1800,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "e989dd56-785c-47a9-b5df-e49d9338984d",
@@ -2556,7 +2953,10 @@
                 "disc": 1600,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "a31820f7-3643-4ec9-b40d-7ca7cf496796",
@@ -2571,7 +2971,10 @@
                 "disc": 3500,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "6883998b-28d4-4e93-aa02-8b14d7c3f2f0",
@@ -2586,7 +2989,10 @@
                 "disc": 2390,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "09e63afc-86b9-4140-933a-04157b99e972",
@@ -2601,7 +3007,10 @@
                 "disc": 2390,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "986b200d-a543-46a8-9d09-1e8684e35e02",
@@ -2616,7 +3025,10 @@
                 "disc": 1200,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "1347588b-9b0f-4aa6-859f-7ca62172fb32",
@@ -2631,7 +3043,10 @@
                 "disc": 1400,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "fdb6d784-986a-48eb-bbc0-fa6f9869a5e9",
@@ -2646,7 +3061,10 @@
                 "disc": 6200,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "43e7b853-40ef-4ca6-9a15-4e26e7f53033",
@@ -2661,7 +3079,10 @@
                 "disc": 3200,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "c05202f9-cdd7-48bc-af9c-326c05870797",
@@ -2676,7 +3097,10 @@
                 "disc": 23000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "873e996f-8ccb-492b-b2ab-83bf7f5803ed",
@@ -2691,7 +3115,10 @@
                 "disc": 4000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "660ae7fe-df63-4c87-b40a-08299405b55a",
@@ -2706,7 +3133,10 @@
                 "disc": 7000,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     },
     {
         "id": "82438942-e777-4044-9458-f3d7e32a24c9",
@@ -2721,6 +3151,9 @@
                 "disc": 1300,
                 "in_stock": true
             }
-        ]
+        ],
+        "purchase_price": 0,
+        "stock": "3+",
+        "history": []
     }
 ]
