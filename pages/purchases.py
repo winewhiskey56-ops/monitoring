@@ -20,21 +20,32 @@ genai.configure(api_key=GEMINI_KEY)
 
 def get_drive_service():
     import os
+    import json
+    
     CREDS_FILE = "google_creds.json"
     
+    # Проверяем, загружен ли файл в репозиторий
     if not os.path.exists(CREDS_FILE):
-        st.error(f"Критическая ошибка: Файл {CREDS_FILE} не найден в корне проекта!")
+        st.error(f"Файл {CREDS_FILE} не найден на GitHub!")
         return None
         
     try:
-        # Прямое чтение целого файла, как требует Google
-        creds = Credentials.from_service_account_file(
-            CREDS_FILE, 
+        # Читаем файл как сырой текст
+        with open(CREDS_FILE, "r", encoding="utf-8") as f:
+            raw_text = f.read()
+        
+        # Принудительно чистим строку от поломанных переносов строк
+        fixed_text = raw_text.replace("\\n", "\n")
+        creds_data = json.loads(fixed_text)
+        
+        # Авторизуемся в Google
+        creds = Credentials.from_service_account_info(
+            creds_data, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации Google: {e}")
+        st.error(f"Ошибка авторизации: {e}")
         return None
         
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
