@@ -15,13 +15,11 @@ if "GEMINI_API_KEY" in st.secrets:
 else:
     st.error("В Secrets не найден GEMINI_API_KEY!")
 
-# Автоматически пытаемся найти ID папки в секретах приложения
 FOLDER_ID = st.secrets.get("google_folder_id") or st.secrets.get("folder_id")
 
 if not FOLDER_ID:
-    st.error("Ошибка: В st.secrets не найден ключ папки (проверьте, чтобы он назывался 'google_folder_id' или 'folder_id')")
+    st.error("Ошибка: В st.secrets не найден ID папки (ключ 'google_folder_id' или 'folder_id')")
 
-# Поле для поиска одного конкретного товара
 product_search = st.text_input("Введите название товара для проверки цены:")
 
 if st.button("Найти цену в накладных"):
@@ -88,14 +86,11 @@ if st.button("Найти цену в накладных"):
                         model = genai.GenerativeModel('gemini-1.5-flash')
                         
                         prompt = (
-                            "Ты менеджер базы данных. Найди упоминания товара и его цену в текстах документов.\n"
+                            f"Ты менеджер базы данных. Найди упоминания товара и его цену в текстах документов.\n"
                             f"Искомый товар: {product_search}\n\n"
                             f"ТЕКСТЫ НАКЛАДНЫХ:\n{full_invoices_text}\n\n"
-                            "Если товар найден в нескольких файлах, выведи все упоминания (историю цен).\n"
-                            "Ответь строго в формате JSON-массива без markdown разметки. Структура:\n"
-                            "[\n"
-                            "  {\"product\": \"запрос\", \"found_name\": \"полное имя из документа\", \"price\": 1250.0, \"invoice\": \"имя_файла.xlsx\", \"status\": \"Найдено\"}\n"
-                            "]"
+                            f"Если товар найден в нескольких файлах, выведи все упоминания (историю цен).\n"
+                            f"Ответь строго в формате JSON-массива объектов с ключами product, found_name, price, invoice, status. Не используй markdown разметку."
                         )
                         
                         response = model.generate_content(prompt)
