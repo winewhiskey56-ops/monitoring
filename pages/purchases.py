@@ -16,14 +16,20 @@ genai.configure(api_key=GEMINI_KEY)
 
 # --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
 def get_drive_service():
-    if not os.path.exists(CREDS_FILE):
-        st.error(f"Файл {CREDS_FILE} не найден в репозитории! Загрузи его на GitHub.")
+    try:
+        # Берем настройки напрямую из секретов Streamlit
+        creds_dict = dict(st.secrets["google_creds"])
+        # Исправляем возможные проблемы с переносом строк в ключе
+        creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+        
+        creds = Credentials.from_service_account_info(
+            creds_dict, 
+            scopes=['https://www.googleapis.com/auth/drive.readonly']
+        )
+        return build('drive', 'v3', credentials=creds)
+    except Exception as e:
+        st.error(f"Ошибка авторизации Google через Secrets: {e}")
         return None
-    creds = Credentials.from_service_account_file(
-        CREDS_FILE, 
-        scopes=['https://www.googleapis.com/auth/drive.readonly']
-    )
-    return build('drive', 'v3', credentials=creds)
 
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
 def analyze_invoices_with_ai(service, wine_name):
