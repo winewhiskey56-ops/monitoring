@@ -46,10 +46,13 @@ if st.button("Найти цену в накладных"):
                 progress_bar = st.progress(0)
                 status_text = st.empty()
                 
+                # Поисковый запрос в нижнем регистре для точного сравнения
+                search_term = product_search.lower().strip()
+                
                 for idx, item in enumerate(items):
                     f_id = item['id']
                     f_name = item['name']
-                    status_text.info(f"Проверяю документ: {f_name}")
+                    status_text.info(f"Сканирую документ: {f_name}")
                     
                     request = service.files().get_media(fileId=f_id)
                     file_stream = io.BytesIO()
@@ -80,16 +83,21 @@ if st.button("Найти цену в накладных"):
                             text_content = file_bytes.decode('utf-8', errors='ignore')
                     except Exception:
                         text_content = ""
+                    
+                    # ПЕРВИЧНЫЙ ФИЛЬТР: Добавляем файл для ИИ, только если внутри есть поисковое слово
+                    if text_content and search_term in text_content.lower():
+                        all_text_data.append(f"=== ФАЙЛ: {f_name} ===\n{text_content}\n")
                         
-                    all_text_data.append(f"=== ФАЙЛ: {f_name} ===\n{text_content}\n")
                     progress_bar.progress((idx + 1) / len(items))
                 
                 status_text.empty()
                 progress_bar.empty()
                 
-                full_invoices_text = "\n".join(all_text_data)
-                if full_invoices_text.strip():
-                    with st.spinner("ИИ сканирует архивы..."):
+                if not all_text_data:
+                    st.info(f"Совпадений по ключевому слову '{product_search}' не найдено ни в одном документе.")
+                else:
+                    full_invoices_text = "\n".join(all_text_data)
+                    with st.spinner(f"ИИ анализирует подходящие документы ({len(all_text_data)} шт.)..."):
                         model = genai.GenerativeModel(
                             'gemini-2.5-flash',
                             generation_config={"response_mime_type": "application/json"}
@@ -109,7 +117,7 @@ if st.button("Найти цену в накладных"):
                             st.success(f"История цен по запросу: {product_search}")
                             st.dataframe(pd.DataFrame(result_data), use_container_width=True)
                         else:
-                            st.info("Позиция с таким названием не обнаружена в загруженных накладных.")
+                            st.info("Позиция с таким названием не обнаружена в выбранных накладных.")
                             
         except Exception as top_err:
             st.error(f"Ошибка выполнения поиска: {top_err}")
