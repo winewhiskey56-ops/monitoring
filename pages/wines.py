@@ -6,7 +6,6 @@ import base64
 from github import Github
 from datetime import datetime
 
-
 # --- КОНФИГУРАЦИЯ GITHUB ---
 REPO_NAME = "winewhiskey56-ops/monitoring"
 FILE_PATH = "wine_db.json"
@@ -30,7 +29,7 @@ def load_data():
         file_content = repo.get_contents(FILE_PATH)
         decoded = base64.b64decode(file_content.content).decode('utf-8')
         data = json.loads(decoded)
-        # Автоматически добавляем новые поля к старым записяям, чтобы не было ошибок
+        # Автоматически добавляем новые поля к старым записям, чтобы не было ошибок
         for w in data:
             if 'purchase_price' not in w: w['purchase_price'] = 0
             if 'stock' not in w: w['stock'] = '3+'
@@ -54,7 +53,7 @@ def save_data(data):
         )
         st.toast("Данные сохранены в GitHub!", icon="✅")
     except Exception as e:
-        st.error(f"Ошибка сохранения: {e}")
+        st.error(f"Ошибка保存ления: {e}")
 
 # --- ИНИЦИАЛИЗАЦИЯ СОСТОЯНИЯ ---
 if 'wines' not in st.session_state:
@@ -202,12 +201,12 @@ elif st.session_state.page == "edit":
     
     with st.container(border=True):
         c1, c2, c3 = st.columns([1, 1, 1.5])
-     with c1:
+        with c1:
             wine['name'] = st.text_input("Название вина*", value=wine['name'])
             wine['category'] = st.selectbox("Категория*", CATEGORIES, index=CATEGORIES.index(wine['category']))
             wine['stock'] = st.radio("Остаток на складе", STOCKS, index=STOCKS.index(wine.get('stock', '3+')), horizontal=True)
             
-            # ИСПРАВЛЕНО: Добавили уникальный key, чтобы изменения закупки мгновенно сохранялись в памяти
+            # ИСПРАВЛЕНО: Связываем поле ввода напрямую с памятью
             pur_val = st.number_input("Закупочная стоимость*", value=int(wine.get('purchase_price', 0)), key="input_pur_price")
             wine['purchase_price'] = pur_val
             
@@ -303,11 +302,15 @@ elif st.session_state.page == "edit":
                 if idx is not None: st.session_state.wines[idx] = wine
                 else: st.session_state.wines.append(wine)
                 save_data(st.session_state.wines)
-                st.session_state.page = "table"; st.rerun()
+                st.session_state.page = "table"
+                st.rerun()
     with b2:
         if st.button("🔙 Отмена", use_container_width=True):
-            st.session_state.page = "table"; st.rerun()
+            st.session_state.page = "table"
+            st.rerun()
     with b3:
         if st.button("🗑️ Удалить вино", type="secondary"):
             st.session_state.wines = [w for w in st.session_state.wines if w['id'] != wine['id']]
-            save_data(st.session_state.wines); st.session_state.page = "table"; st.rerun()
+            save_data(st.session_state.wines)
+            st.session_state.page = "table"
+            st.rerun()
