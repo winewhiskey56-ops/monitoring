@@ -17,28 +17,25 @@ CREDS_FILE = "google_creds.json" # Файл ключа от Google Service Accou
 genai.configure(api_key=GEMINI_KEY)
 
 # --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
+
 def get_drive_service():
     try:
-        # Проверяем наличие ключа в Secrets
-        if "GOOGLE_CREDS_BASE64" not in st.secrets:
-            st.error("Критическая ошибка: GOOGLE_CREDS_BASE64 не найден в Secrets!")
+        # Проверяем, есть ли настройки в Secrets
+        if "google_creds" not in st.secrets:
+            st.error("Критическая ошибка: Блок [google_creds] не найден в Streamlit Secrets!")
             return None
             
-        # Извлекаем закодированную строку
-        b64_str = st.secrets["GOOGLE_CREDS_BASE64"]
+        # Превращаем секреты в чистый словарь Python
+        creds_dict = dict(st.secrets["google_creds"])
         
-        # Расшифровываем её обратно в оригинальный текст JSON
-        decoded_json_bytes = base64.b64decode(b64_str)
-        creds_info = json.loads(decoded_json_bytes.decode("utf-8"))
-        
-        # Авторизуемся в Google с идеальной точностью
+        # Авторизуемся в Google из памяти приложения
         creds = Credentials.from_service_account_info(
-            creds_info, 
+            creds_dict, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации Google через Base64: {e}")
+        st.error(f"Ошибка авторизации Google через Secrets: {e}")
         return None
         
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
