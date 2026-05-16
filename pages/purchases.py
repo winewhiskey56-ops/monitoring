@@ -19,23 +19,19 @@ genai.configure(api_key=GEMINI_KEY)
 # --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
 
 def get_drive_service():
+    import os
+    CREDS_FILE = "google_creds.json"
+    if not os.path.exists(CREDS_FILE):
+        st.error(f"Файл {CREDS_FILE} не найден в корне проекта!")
+        return None
     try:
-        # Проверяем, есть ли настройки в Secrets
-        if "google_creds" not in st.secrets:
-            st.error("Критическая ошибка: Блок [google_creds] не найден в Streamlit Secrets!")
-            return None
-            
-        # Превращаем секреты в чистый словарь Python
-        creds_dict = dict(st.secrets["google_creds"])
-        
-        # Авторизуемся в Google из памяти приложения
-        creds = Credentials.from_service_account_info(
-            creds_dict, 
+        creds = Credentials.from_service_account_file(
+            CREDS_FILE, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации Google через Secrets: {e}")
+        st.error(f"Ошибка чтения файла ключа: {e}")
         return None
         
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
