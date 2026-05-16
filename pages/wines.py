@@ -202,14 +202,19 @@ elif st.session_state.page == "edit":
     
     with st.container(border=True):
         c1, c2, c3 = st.columns([1, 1, 1.5])
-        with c1:
+     with c1:
             wine['name'] = st.text_input("Название вина*", value=wine['name'])
             wine['category'] = st.selectbox("Категория*", CATEGORIES, index=CATEGORIES.index(wine['category']))
             wine['stock'] = st.radio("Остаток на складе", STOCKS, index=STOCKS.index(wine.get('stock', '3+')), horizontal=True)
-            wine['purchase_price'] = st.number_input("Закупочная стоимость*", value=int(wine.get('purchase_price', 0)))
+            
+            # ИСПРАВЛЕНО: Добавили уникальный key, чтобы изменения закупки мгновенно сохранялись в памяти
+            pur_val = st.number_input("Закупочная стоимость*", value=int(wine.get('purchase_price', 0)), key="input_pur_price")
+            wine['purchase_price'] = pur_val
+            
         with c2:
-            wine['our_reg'] = st.number_input("Наша Рег. цена*", value=int(wine['our_reg']))
-            wine['our_disc'] = st.number_input("Наша цена со скидкой*", value=int(wine['our_disc']))
+            wine['our_reg'] = st.number_input("Наша Рег. цена*", value=int(wine['our_reg']), key="input_our_reg")
+            wine['our_disc'] = st.number_input("Наша цена со скидкой*", value=int(wine['our_disc']), key="input_our_disc")
+            
             if wine['our_reg'] > 0:
                 p = get_perc(wine['our_reg'], wine['our_disc'])
                 margin = wine['our_reg'] - wine['our_disc'] - wine['purchase_price']
