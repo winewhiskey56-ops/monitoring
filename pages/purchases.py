@@ -28,22 +28,20 @@ def get_drive_service():
         return None
         
     try:
-        # Читаем файл как обычный текст
         with open(CREDS_FILE, "r", encoding="utf-8") as f:
-            creds_data = json.load(f)
+            raw_data = f.read()
         
-        # ЖЕЛЕЗОБЕТОННОЕ ЛЕЧЕНИЕ: заменяем текстовые '\n' на реальные переносы строк
-        if "private_key" in creds_data:
-            creds_data["private_key"] = creds_data["private_key"].replace("\\n", "\n")
+        # Принудительно чистим строку от любых косяков отображения
+        raw_data = raw_data.replace('\\n', '\n')
+        creds_data = json.loads(raw_data)
             
-        # Авторизуемся из исправленного словаря данных
         creds = Credentials.from_service_account_info(
             creds_data, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка чтения файла ключа: {e}")
+        st.error(f"Ошибка авторизации: {e}")
         return None
         
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
