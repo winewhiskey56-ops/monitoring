@@ -88,19 +88,24 @@ if st.button("Найти цену в накладных"):
                 progress_bar.empty()
                 
                 full_invoices_text = "\n".join(all_text_data)
-                if full_invoices_text.strip():
+               if full_invoices_text.strip():
                     with st.spinner("ИИ сканирует архивы..."):
-                        model = genai.GenerativeModel('gemini-1.5-flash')
+                        # Просим модель СРАЗУ возвращать чистый JSON-массив
+                        model = genai.GenerativeModel(
+                            'gemini-1.5-flash',
+                            generation_config={"response_mime_type": "application/json"}
+                        )
                         
                         prompt = "Ты менеджер базы данных. Найди упоминания товара и его цену в текстах документов.\n"
                         prompt += "Искомый товар: " + str(product_search) + "\n\n"
                         prompt += "ТЕКСТЫ НАКЛАДНЫХ:\n" + str(full_invoices_text) + "\n\n"
                         prompt += "Если товар найден в нескольких файлах, выведи все упоминания (историю цен).\n"
-                        prompt += "Ответь строго в формате JSON-массива объектов с ключами product, found_name, price, invoice, status. Не используй markdown разметку."
+                        prompt += "Ответь строго в формате JSON-массива объектов с ключами product, found_name, price, invoice, status."
                         
                         response = model.generate_content(prompt)
-                        clean_text = response.text.strip().replace("```json", "").replace("
-```", "")
+                        
+                        # Теперь здесь гарантированно чистая JSON-строка без косяков с кавычками!
+                        clean_text = response.text.strip()
                         
                         result_data = json.loads(clean_text)
                         if result_data:
