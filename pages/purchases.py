@@ -5,6 +5,8 @@ from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import google.generativeai as genai
+import base64
+import json
 
 # --- НАСТРОЙКИ ---
 GEMINI_KEY = st.secrets["GEMINI_API_KEY"]
@@ -17,20 +19,28 @@ genai.configure(api_key=GEMINI_KEY)
 # --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
 def get_drive_service():
     try:
-        # Берем настройки напрямую из секретов Streamlit
-        creds_dict = dict(st.secrets["google_creds"])
-        # Исправляем возможные проблемы с переносом строк в ключе
-        creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+        # Проверяем наличие ключа в Secrets
+        if "GOOGLE_CREDS_BASE64" not in st.secrets:
+            st.error("Критическая ошибка: GOOGLE_CREDS_BASE64 не найден в Secrets!")
+            return None
+            
+        # Извлекаем закодированную строку
+        b64_str = st.secrets["GOOGLE_CREDS_BASE64"]
         
+        # Расшифровываем её обратно в оригинальный текст JSON
+        decoded_json_bytes = base64.b64decode(b64_str)
+        creds_info = json.loads(decoded_json_bytes.decode("utf-8"))
+        
+        # Авторизуемся в Google с идеальной точностью
         creds = Credentials.from_service_account_info(
-            creds_dict, 
+            creds_info, 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
     except Exception as e:
-        st.error(f"Ошибка авторизации Google через Secrets: {e}")
+        st.error(f"Ошибка авторизации Google через Base64: {e}")
         return None
-
+        
 # --- ПОИСК И ЗАКУПКА ЧЕРЕЗ ИИ ---
 def analyze_invoices_with_ai(service, wine_name):
     try:
