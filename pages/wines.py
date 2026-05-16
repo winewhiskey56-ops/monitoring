@@ -29,7 +29,6 @@ def load_data():
         file_content = repo.get_contents(FILE_PATH)
         decoded = base64.b64decode(file_content.content).decode('utf-8')
         data = json.loads(decoded)
-        # Автоматически добавляем новые поля к старым записям, чтобы не было ошибок
         for w in data:
             if 'purchase_price' not in w: w['purchase_price'] = 0
             if 'stock' not in w: w['stock'] = '3+'
@@ -53,7 +52,7 @@ def save_data(data):
         )
         st.toast("Данные сохранены в GitHub!", icon="✅")
     except Exception as e:
-        st.error(f"Ошибка保存ления: {e}")
+        st.error(f"Ошибка сохранения: {e}")
 
 # --- ИНИЦИАЛИЗАЦИЯ СОСТОЯНИЯ ---
 if 'wines' not in st.session_state:
@@ -82,7 +81,6 @@ def highlight_min_max(row):
 def go_to_edit(wine_id=None):
     if wine_id:
         wine = next((w for w in st.session_state.wines if w['id'] == wine_id), None)
-        # Делаем глубокую копию, чтобы изменения не применялись до нажатия "Сохранить"
         st.session_state.current_wine = json.loads(json.dumps(wine))
     else:
         st.session_state.current_wine = {
@@ -92,64 +90,77 @@ def go_to_edit(wine_id=None):
         }
     st.session_state.page = "edit"
 
-# --- ДВИЖОК РЕКОМЕНДАЦИЙ ---
+# --- ОБНОВЛЕННЫЙ АВТОМАТИЧЕСКИЙ ДВИЖОК РЕКОМЕНДАЦИЙ ---
 def generate_recommendation(wine):
     if wine.get('purchase_price', 0) <= 0 or wine['our_reg'] <= 0:
         return "⚠️ Для расчета рекомендаций заполните 'Закупочную стоимость' и 'Нашу Рег. цену'."
     
     pur_price = wine['purchase_price']
-    min_retail_price = pur_price * 1.3
+    our_reg = wine['our_reg']
+    min_retail_price = pur_price * 1.3  # Маржа не менее 30% от закупа
+    stock = wine.get('stock', '3+')
     
     active_comps = [c for c in wine['competitors'] if c['in_stock'] and c['disc'] > 0]
     
+    # Если конкурентов нет на рынке
     if not active_comps:
-         return "✅ **Вне конкуренции:** Конкурентов нет или товар у них отсутствует. Рекомендуется убрать скидку (0%)."
+        return f"🏆 **Вне конкуренции:** Конкурентов нет в наличии. Рекомендуется продавать без скидки.\n* **Рекомендуемая цена:** {our_reg:.0f}₽ (Скидка 0%)\n* **Наценка:** {our_reg - pur_price:.0f}₽"
          
     cheapest = min(active_comps, key=lambda x: x['disc'])
     c_price = cheapest['disc']
-    target = c_price * 1.1 # Наша идеальная цель
     
-    # --- НОВАЯ ПРОВЕРКА: Если пользователь УЖЕ изменил цену ---
-    current_disc_price = wine.get('our_disc', 0)
-    if current_disc_price > 0 and current_disc_price <= target:
-        if current_disc_price >= min_retail_price:
-            return f"🟢 **Отличная цена:** Ваша текущая цена ({current_disc_price}₽) уже соответствует стратегии или бьёт цену конкурента ({c_price}₽) с учетом сервиса. Можно сохранять карточку!"
-        else:
-            return f"⚠️ **Внимание:** Вы установили цену ({current_disc_price}₽), которая бьёт конкурента, но она **ниже минимальной маржи** ({min_retail_price:.0f}₽). Вы работаете в убыток!"
+    # Идеальный вариант: быть немного ниже конкурента
+    ideal_target = c_price - 10 
+    
+    # Вспомогательная функция для поиска подходящих промо-акций по эффективной цене за 1 шт
+    def check_promo_options(target_p):
+        options = []
+        if stock == '3+':
+            p_11 = our_reg * 0.666
+            if p_11 >= min_retail_price and p_11 <= target_p:
+                options.append({"type": "«1+1=3»", "price": p_11})
+        if stock in ['2', '3+']:
+            p_50 = our_reg * 0.75
+            if p_50 >= min_retail_price and p_50 <= target_p:
+                options.append({"type": "«-50% на вторую»", "price": p_50})
+        return options
 
-    if target < min_retail_price:
-        return f"🛑 **Капитуляция с честью:** У конкурента ({cheapest['shop']}) цена {c_price:.0f}₽. Наша целевая цена ({target:.0f}₽) падает ниже минимально допустимой розницы ({min_retail_price:.0f}₽). Не снижайте цену, делайте упор на сервис."
+    # --- СТРАТЕГИЯ 1: Идеальный вариант (Перебить цену конкурента с маржой >= 30%) ---
+    if ideal_target >= min_retail_price:
+        # Если у конкурента нет скидок, просто снижаем нашу верхнюю (регулярную) цену
+        if cheapest['disc'] == cheapest['reg'] and ideal_target <= our_reg:
+            return f"🎯 **Вариант 1 (Идеал): Снижение базовой цены**\n\nКонкурент ({cheapest['shop']}) торгует без скидок за {c_price:.0f}₽. Ставим цену чуть ниже.\n* **Рекомендуемая цена:** {ideal_target:.0f}₽ (Без скидки)\n* **Наценка:** {ideal_target - pur_price:.0f}₽"
         
-    if cheapest['disc'] == cheapest['reg']:
-        return f"🎯 **Фиксированная цена:** Конкурент ({cheapest['shop']}) торгует без скидок по {c_price:.0f}₽. Поставьте у себя верхнюю цену около {target:.0f}₽ без скидки."
+        # Ищем стандартную скидку под этот идеал
+        discounts = [10, 15, 20, 25, 30, 35, 40, 45]
+        for d in discounts:
+            p = our_reg * (1 - d / 100.0)
+            if p >= min_retail_price and p <= ideal_target:
+                return f"⚔️ **Вариант 1 (Идеал): Фиксированная скидка**\n\nУспешно бьем цену конкурента ({cheapest['shop']}: {c_price:.0f}₽).\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
         
-    discounts = [0, 10, 15, 20, 25, 30, 35, 40, 45]
-    best_d = None
-    for d in discounts:
-        p = wine['our_reg'] * (1 - d/100.0)
-        if p >= min_retail_price and p <= target:
-            best_d = (d, p)
-            break
-            
-    if best_d is not None:
-         if best_d[0] == 0:
-             return f"💡 **Снижение скидки:** Цены конкурентов позволяют продавать без скидки (0%) по {best_d[1]:.0f}₽ (Целевая: {target:.0f}₽)."
-         else:
-             return f"⚔️ **Борьба скидками:** Рекомендуемая скидка **{best_d[0]}%** (Ваша цена должна быть: {best_d[1]:.0f}₽). Целевая цена конкуренции: {target:.0f}₽."
-             
-    promo = []
-    stock = wine.get('stock', '3+')
-    if stock in ['2', '3+']:
-         p_50 = wine['our_reg'] * 0.75
-         if p_50 >= min_retail_price: promo.append("«-50% на вторую» (экв. скидки 25%)")
-    if stock == '3+':
-         p_11 = wine['our_reg'] * 0.666
-         if p_11 >= min_retail_price: promo.append("«1+1=3» (экв. скидки 33%)")
-              
-    if promo:
-         return "🎁 **Пакетные акции:** Обычные скидки слишком сильно режут маржу. Чтобы конкурировать, используйте объём:\n" + "\n".join([f"- {x}" for x in promo])
-         
-    return f"⚖️ Обычные скидки не достигают целевой цены {target:.0f}₽ без нарушения минимальной маржи. Отредактируйте 'Нашу Рег. цену' или продавайте без скидок."
+        # Если стандартные скидки не подошли, пробуем пакетные акции
+        promos = check_promo_options(ideal_target)
+        if promos:
+            best_p = max(promos, key=lambda x: x['price'])
+            return f"🎁 **Вариант 1 (Идеал): Пакетная акция**\n\nБьем цену конкурента за счет объема продаж.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
+
+    # --- СТРАТЕГИЯ 2: Погрешность +10% (Если идеал уходит в минус, но +10% к цене конкурента проходит маржу) ---
+    error_target = c_price * 1.10
+    if error_target >= min_retail_price:
+        discounts = [10, 15, 20, 25, 30, 35, 40, 45]
+        for d in discounts:
+            p = our_reg * (1 - d / 100.0)
+            if p >= min_retail_price and p <= error_target:
+                return f"⚖️ **Вариант 2: Допустимая погрешность (+10%)**\n\nСделать цену ниже конкурента ({c_price:.0f}₽) нельзя из-за лимита закупки. Ставим цену в пределах +10% от его стоимости.\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
+        
+        promos = check_promo_options(error_target)
+        if promos:
+            best_p = max(promos, key=lambda x: x['price'])
+            return f"🎁 **Вариант 2: Допустимая погрешность через объем**\n\nУдерживаем цену в пределах +10% от конкурента за счет пакетной акции.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
+
+    # --- СТРАТЕГИЯ 3: Максимально возможная скидка (Критическая зона защиты маржи) ---
+    max_d = get_perc(our_reg, min_retail_price)
+    return f"🛑 **Вариант 3: Максимально возможная скидка (Защита маржи)**\n\nКонкурент демпингует ниже нашего закупа ({c_price:.0f}₽ в {cheapest['shop']}). Устанавливаем минимально допустимый предел с маржой 30%.\n* **Рекомендуемая цена:** {min_retail_price:.0f}₽\n* **Скидка на ценнике:** {max_d:.0f}%\n* **Наценка:** {min_retail_price - pur_price:.0f}₽ (Строго 30%)\n* **Внимание:** Ниже опускаться запрещено!"
 
 # --- ОСНОВНОЙ ИНТЕРФЕЙС ---
 st.set_page_config(layout="wide", page_title="Wine Monitoring System")
@@ -206,7 +217,6 @@ elif st.session_state.page == "edit":
             wine['category'] = st.selectbox("Категория*", CATEGORIES, index=CATEGORIES.index(wine['category']))
             wine['stock'] = st.radio("Остаток на складе", STOCKS, index=STOCKS.index(wine.get('stock', '3+')), horizontal=True)
             
-            # ИСПРАВЛЕНО: Связываем поле ввода напрямую с памятью
             pur_val = st.number_input("Закупочная стоимость*", value=int(wine.get('purchase_price', 0)), key="input_pur_price")
             wine['purchase_price'] = pur_val
             
@@ -219,8 +229,8 @@ elif st.session_state.page == "edit":
                 margin = wine['our_reg'] - wine['our_disc'] - wine['purchase_price']
                 st.info(f"Скидка: **{p}%** | Наценка (руб): **{margin}₽**")
         with c3:
-            st.write("📈 **AI-Аналитика Цен**")
-            if st.button("🤖 Получить рекомендацию", type="primary", use_container_width=True):
+            st.write("📈 **Умный подбор под маржу магазина**")
+            if st.button("🤖 Рассчитать лучший вариант", type="primary", use_container_width=True):
                 rec = generate_recommendation(wine)
                 st.success(rec)
 
@@ -250,7 +260,6 @@ elif st.session_state.page == "edit":
 
     st.divider()
     
-    # --- БЛОК ИСТОРИИ ---
     if wine.get('history'):
         with st.expander("📜 История изменений"):
             for entry in wine['history']:
@@ -259,7 +268,6 @@ elif st.session_state.page == "edit":
                     st.write(f"• {ch}")
                 st.write("---")
 
-    # --- СОХРАНЕНИЕ С ГЕНЕРАЦИЕЙ ИСТОРИИ ---
     b1, b2, b3 = st.columns([2, 2, 6])
     with b1:
         if st.button("💾 Сохранить", type="primary", use_container_width=True):
@@ -268,7 +276,6 @@ elif st.session_state.page == "edit":
                 old_wine = next((w for w in st.session_state.wines if w['id'] == wine['id']), None)
                 changes = []
                 
-                # Логика сравнения изменений
                 if old_wine:
                     if old_wine['name'] != wine['name']: changes.append(f"Название: {old_wine['name']} -> {wine['name']}")
                     if old_wine['category'] != wine['category']: changes.append(f"Категория: {old_wine['category']} -> {wine['category']}")
@@ -292,7 +299,6 @@ elif st.session_state.page == "edit":
                 else:
                     changes.append("Карточка создана")
 
-                # Если есть изменения, добавляем их в начало истории
                 if changes:
                     now = datetime.now().strftime("%Y-%m-%d %H:%M")
                     if 'history' not in wine: wine['history'] = []
