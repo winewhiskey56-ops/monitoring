@@ -20,6 +20,7 @@ except:
 CATEGORIES = ["Новый Свет", "Европа", "Игристые", "Крепкие напитки"]
 SHOPS = ["Лента", "Метро", "Магнит", "Перекресток", "О'кей", "Красное и Белое"]
 STOCKS = ["1", "2", "3+"]
+ALLOWED_DISCOUNTS = [10, 15, 20, 25, 30, 35, 40, 45]
 
 # --- РАБОТА С ДАННЫМИ ЧЕРЕЗ GITHUB ---
 def load_data():
@@ -90,32 +91,30 @@ def go_to_edit(wine_id=None):
         }
     st.session_state.page = "edit"
 
-# --- ОБНОВЛЕННЫЙ АВТОМАТИЧЕСКИЙ ДВИЖОК РЕКОМЕНДАЦИЙ ---
+# ---УМНЫЙ ДВИЖОК РЕКОМЕНДАЦИЙ (БЕЗ ПОВТОРОВ) ---
 def generate_recommendation(wine):
     if wine.get('purchase_price', 0) <= 0 or wine['our_reg'] <= 0:
         return "⚠️ Для расчета рекомендаций заполните 'Закупочную стоимость' и 'Нашу Рег. цену'."
     
     pur_price = wine['purchase_price']
     our_reg = wine['our_reg']
+    our_disc = wine['our_disc']
     min_retail_price = pur_price * 1.3  # Маржа не менее 30% от закупа
     stock = wine.get('stock', '3+')
     
     active_comps = [c for c in wine['competitors'] if c['in_stock'] and c['disc'] > 0]
     
-    # Если конкурентов нет на рынке
+    # Ситуация 0: Если конкурентов нет на рынке вообще
     if not active_comps:
-        return f"🏆 **Вне конкуренции:** Конкурентов нет в наличии. Рекомендуется продавать без скидки.\n* **Рекомендуемая цена:** {our_reg:.0f}₽ (Скидка 0%)\n* **Наценка:** {our_reg - pur_price:.0f}₽"
+        if our_disc == our_reg:
+            return "🎉 **Отлично!** Конкурентов нет в наличии. Твоя цена уже стоит без скидки, всё правильно."
+        return f"🏆 **Вне конкуренции:** Конкурентов нет в наличии. Рекомендуется убрать скидку.\n* **Рекомендуемая цена:** {our_reg:.0f}₽ (Скидка 0%)\n* **Наценка:** {our_reg - pur_price:.0f}₽"
          
     cheapest = min(active_comps, key=lambda x: x['disc'])
     c_price = cheapest['disc']
-    
-    # Идеальный вариант: быть немного ниже конкурента
     ideal_target = c_price - 10 
     
-    # СТРОГО ФИКСИРОВАННЫЕ СКИДКИ МАГАЗИНА
-    ALLOWED_DISCOUNTS = [10, 15, 20, 25, 30, 35, 40, 45]
-    
-    # Вспомогательная функция для поиска подходящих промо-акций по эффективной цене за 1 шт
+    # Вспомогательная функция для пакетных промо-акций
     def check_promo_options(target_p):
         options = []
         if stock == '3+':
@@ -128,58 +127,86 @@ def generate_recommendation(wine):
                 options.append({"type": "«-50% на вторую»", "price": p_50})
         return options
 
-    # --- СТРАТЕГИЯ 1: Идеальный вариант (Перебить цену конкурента с маржой >= 30%) ---
+    # Находим цену лучшего предложения по алгоритму (Идеал -> Погрешность -> Защита)
+    target_price = None
+    rec_type = ""
+    rec_detail = ""
+
+    # СТРАТЕГИЯ 1: Идеал
     if ideal_target >= min_retail_price:
-        # Если у конкурента нет скидок, просто снижаем нашу верхнюю (регулярную) цену
         if cheapest['disc'] == cheapest['reg'] and ideal_target <= our_reg:
-            return f"🎯 **Вариант 1 (Идеал): Снижение базовой цены**\n\nКонкурент ({cheapest['shop']}) торгует без скидок за {c_price:.0f}₽. Ставим цену чуть ниже.\n* **Рекомендуемая цена:** {ideal_target:.0f}₽ (Без скидки)\n* **Наценка:** {ideal_target - pur_price:.0f}₽"
-        
-        # Ищем стандартную скидку под этот идеал (СТРОГО из разрешенных)
-        for d in ALLOWED_DISCOUNTS:
-            p = our_reg * (1 - d / 100.0)
-            if p >= min_retail_price and p <= ideal_target:
-                return f"⚔️ **Вариант 1 (Идеал): Фиксированная скидка**\n\nУспешно бьем цену конкурента ({cheapest['shop']}: {c_price:.0f}₽).\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
-        
-        # Если стандартные скидки не подошли, пробуем пакетные акции
-        promos = check_promo_options(ideal_target)
-        if promos:
-            best_p = max(promos, key=lambda x: x['price'])
-            return f"🎁 **Вариант 1 (Идеал): Пакетная акция**\n\nБьем цену конкурента за счет объема продаж.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
-
-    # --- СТРАТЕГИЯ 2: Погрешность +10% (Если идеал уходит в минус, но +10% к цене конкурента проходит маржу) ---
-    error_target = c_price * 1.10
-    if error_target >= min_retail_price:
-        # ИСПРАВЛЕНО: Теперь здесь тоже перебираются ТОЛЬКО фиксированные скидки магазина
-        for d in ALLOWED_DISCOUNTS:
-            p = our_reg * (1 - d / 100.0)
-            if p >= min_retail_price and p <= error_target:
-                return f"⚖️ **Вариант 2: Допустимая погрешность (+10%)**\n\nСделать цену ниже конкурента ({c_price:.0f}₽) нельзя из-за лимита закупки. Ставим цену в пределах +10% от его стоимости.\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
-        
-        promos = check_promo_options(error_target)
-        if promos:
-            best_p = max(promos, key=lambda x: x['price'])
-            return f"🎁 **Вариант 2: Допустимая погрешность через объем**\n\nУдерживаем цену в пределах +10% от конкурента за счет пакетной акции.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
-
-    # --- СТРАТЕГИЯ 3: Максимально возможная скидка (Критическая зона защиты маржи) ---
-    # ИСПРАВЛЕНО: Вместо математически точного процента ищем МАКСИМАЛЬНУЮ ФИКСИРОВАННУЮ скидку, которая не уходит в минус
-    best_safety_discount = None
-    best_safety_price = min_retail_price
-    
-    for d in ALLOWED_DISCOUNTS:
-        p = our_reg * (1 - d / 100.0)
-        if p >= min_retail_price:
-            best_safety_discount = d
-            best_safety_price = p
+            target_price = ideal_target
+            rec_type = "base_price"
+            rec_detail = f"🎯 **Вариант 1 (Идеал): Снижение базовой цены**\n\nКонкурент ({cheapest['shop']}) торгует без скидок за {c_price:.0f}₽. Ставим цену чуть ниже.\n* **Рекомендуемая цена:** {ideal_target:.0f}₽ (Без скидки)\n* **Наценка:** {ideal_target - pur_price:.0f}₽"
         else:
-            break # Так как скидки идут по возрастанию, дальше проверять нет смысла
+            for d in ALLOWED_DISCOUNTS:
+                p = our_reg * (1 - d / 100.0)
+                if p >= min_retail_price and p <= ideal_target:
+                    target_price = p
+                    rec_type = "discount"
+                    rec_detail = f"⚔️ **Вариант 1 (Идеал): Фиксированная скидка**\n\nУспешно бьем цену конкурента ({cheapest['shop']}: {c_price:.0f}₽).\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
+                    break
             
-    if best_safety_discount is not None:
-        return f"🛑 **Вариант 3: Максимально возможная скидка (Защита маржи)**\n\nКонкурент демпингует ниже нашего закупа ({c_price:.0f}₽ в {cheapest['shop']}). Устанавливаем максимально возможную скидку из нашей матрицы без ухода в минус.\n* **Рекомендуемая скидка:** {best_safety_discount}%\n* **Новая цена:** {best_safety_price:.0f}₽\n* **Наценка:** {best_safety_price - pur_price:.0f}₽\n* **Внимание:** Порог маржи 30% соблюден."
-    else:
-        return f"🛑 **Вариант 3: Блокировка скидки (Защита маржи)**\n\nКонкурент демпингует ({c_price:.0f}₽), а даже минимальная скидка 10% уводит нас ниже маржи. Продаем строго по минимальному порогу.\n* **Рекомендуемая цена:** {min_retail_price:.0f}₽ (Скидка 0%)\n* **Наценка:** {min_retail_price - pur_price:.0f}₽ (Ровно 30%)"
+            if not target_price:
+                promos = check_promo_options(ideal_target)
+                if promos:
+                    best_p = max(promos, key=lambda x: x['price'])
+                    target_price = best_p['price']
+                    rec_type = f"promo_{best_p['type']}"
+                    rec_detail = f"🎁 **Вариант 1 (Идеал): Пакетная акция**\n\nБьем цену конкурента за счет объема продаж.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
 
-# --- ОСНОВНОЙ ИНТЕРФЕЙС ---
-st.set_page_config(layout="wide", page_title="Wine Monitoring System")
+    # СТРАТЕГИЯ 2: Погрешность +10%
+    if not target_price:
+        error_target = c_price * 1.10
+        if error_target >= min_retail_price:
+            for d in ALLOWED_DISCOUNTS:
+                p = our_reg * (1 - d / 100.0)
+                if p >= min_retail_price and p <= error_target:
+                    target_price = p
+                    rec_type = "discount"
+                    rec_detail = f"⚖️ **Вариант 2: Допустимая погрешность (+10%)**\n\nСделать цену ниже конкурента ({c_price:.0f}₽) нельзя из-за лимита закупки. Ставим цену в пределах +10% от его стоимости.\n* **Рекомендуемая скидка:** {d}%\n* **Новая цена:** {p:.0f}₽\n* **Наценка:** {p - pur_price:.0f}₽"
+                    break
+            
+            if not target_price:
+                promos = check_promo_options(error_target)
+                if promos:
+                    best_p = max(promos, key=lambda x: x['price'])
+                    target_price = best_p['price']
+                    rec_type = f"promo_{best_p['type']}"
+                    rec_detail = f"🎁 **Вариант 2: Допустимая погрешность через объем**\n\nУдерживаем цену в пределах +10% от конкурента за счет пакетной акции.\n* **Рекомендуемая акция:** {best_p['type']}\n* **Эффективная цена за шт:** {best_p['price']:.0f}₽\n* **Наценка за шт:** {best_p['price'] - pur_price:.0f}₽"
+
+    # СТРАТЕГИЯ 3: Максимальная защита маржи
+    if not target_price:
+        best_safety_discount = None
+        best_safety_price = min_retail_price
+        for d in ALLOWED_DISCOUNTS:
+            p = our_reg * (1 - d / 100.0)
+            if p >= min_retail_price:
+                best_safety_discount = d
+                best_safety_price = p
+            else:
+                break
+                
+        if best_safety_discount is not None:
+            target_price = best_safety_price
+            rec_type = "discount"
+            rec_detail = f"🛑 **Вариант 3: Максимально возможная скидка (Защита маржи)**\n\nКонкурент демпингует ниже нашего закупа ({c_price:.0f}₽ в {cheapest['shop']}). Устанавливаем максимально возможную скидку из нашей матрицы без ухода в минус.\n* **Рекомендуемая скидка:** {best_safety_discount}%\n* **Новая цена:** {best_safety_price:.0f}₽\n* **Наценка:** {best_safety_price - pur_price:.0f}₽"
+        else:
+            target_price = min_retail_price
+            rec_type = "min_retail"
+            rec_detail = f"🛑 **Вариант 3: Блокировка скидки (Защита маржи)**\n\nКонкурент демпингует ({c_price:.0f}₽), а даже минимальная скидка 10% уводит нас ниже маржи. Продаем строго по минимальному порогу.\n* **Рекомендуемая цена:** {min_retail_price:.0f}₽ (Скидка 0%)\n* **Наценка:** {min_retail_price - pur_price:.0f}₽"
+
+    # --- ПРОВЕРКА: ЕСЛИ ПОЛЬЗОВАТЕЛЬ УЖЕ УСТАНОВИЛ РЕКОМЕНДОВАННУЮ ЦЕНУ ---
+    # Для пакетных акций проверяем соответствие эффективной цены
+    if rec_type.startswith("promo_"):
+        promo_name = rec_type.replace("promo_", "")
+        if abs(our_disc - target_price) <= 5: # Погрешность округления 5 рублей
+            return f"🎉 **Отлично!** У тебя уже выставлена цена {our_disc:.0f}₽, что идеально соответствует пакетной акции {promo_name} под этого конкурента. Менять ничего не нужно!"
+    else:
+        if int(our_disc) == int(target_price):
+            return f"🎉 **Отлично!** Твоя текущая цена со скидкой ({our_disc:.0f}₽) уже полностью соответствует лучшему предложению рынка. Менять ничего не нужно!"
+
+    return rec_detail
 
 # --- СТРАНИЦА: ТАБЛИЦА ---
 if st.session_state.page == "table":
@@ -248,7 +275,10 @@ elif st.session_state.page == "edit":
             st.write("📈 **Умный подбор под маржу магазина**")
             if st.button("🤖 Рассчитать лучший вариант", type="primary", use_container_width=True):
                 rec = generate_recommendation(wine)
-                st.success(rec)
+                if "🎉" in rec:
+                    st.info(rec)
+                else:
+                    st.success(rec)
 
     st.subheader("🛒 Конкуренты")
     used = [c['shop'] for c in wine['competitors']]
