@@ -19,47 +19,14 @@ genai.configure(api_key=GEMINI_KEY)
 # --- ФУНКЦИЯ ПОДКЛЮЧЕНИЯ К ГУГЛ ДИСКУ ---
 
 def get_drive_service():
-    import os
-    import re
-    
-    CREDS_FILE = "google_creds.json"
-    
-    if not os.path.exists(CREDS_FILE):
-        st.error(f"Файл {CREDS_FILE} не найден на GitHub!")
-        return None
-        
     try:
-        # Читаем файл просто как сплошной текст, не как JSON
-        with open(CREDS_FILE, "r", encoding="utf-8") as f:
-            text = f.read()
-        
-        # Вытаскиваем приватный ключ с помощью регулярного выражения
-        pk_match = re.search(r'"private_key"\s*:\s*"([^"]+)"', text)
-        # Вытаскиваем email сервисного аккаунта
-        email_match = re.search(r'"client_email"\s*:\s*"([^"]+)"', text)
-        
-        if not pk_match or not email_match:
-            st.error("Не удалось найти 'private_key' или 'client_email' внутри файла google_creds.json!")
+        # Официальный метод авторизации Streamlit через секреты
+        if "gcp_service_account" not in st.secrets:
+            st.error("Критическая ошибка: В Secrets не найден блок [gcp_service_account]!")
             return None
             
-        private_key = pk_match.group(1)
-        client_email = email_match.group(1)
-        
-        # Исправляем отображение переносов строк в ключе
-        private_key = private_key.replace("\\n", "\n")
-        
-        # Собираем минимально необходимый словарь вручную
-        creds_data = {
-            "type": "service_account",
-            "project_id": "fifth-honor-496507-f0",
-            "private_key": private_key,
-            "client_email": client_email,
-            "token_uri": "https://oauth2.googleapis.com/token"
-        }
-        
-        # Авторизуемся
         creds = Credentials.from_service_account_info(
-            creds_data, 
+            dict(st.secrets["gcp_service_account"]), 
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         return build('drive', 'v3', credentials=creds)
