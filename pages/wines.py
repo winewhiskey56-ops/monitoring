@@ -102,7 +102,7 @@ def generate_recommendation(wine):
     pur_price = wine['purchase_price']
     our_reg = wine['our_reg']
     our_disc = wine['our_disc']
-    min_retail_price = pur_price * 1.3  # Маржа не менее 30% от закупа
+    min_retail_price = pur_price * 1.4  # ИЗМЕНЕНО: Маржа не менее 40% от закупа (было 1.3)
     stock = wine.get('stock', '3+')
     
     active_comps = [c for c in wine['competitors'] if c['in_stock'] and c['disc'] > 0]
