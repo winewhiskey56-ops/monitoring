@@ -812,7 +812,7 @@
         "name": "Вино крепленое ликерное BARROS Ruby выдержанное портвейн",
         "category": "Крепкие напитки",
         "our_reg": 2500,
-        "our_disc": 2500,
+        "our_disc": 1875,
         "competitors": [
             {
                 "shop": "Лента",
@@ -821,9 +821,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1282,
+        "stock": "2",
+        "history": [
+            {
+                "date": "2026-05-17 05:47",
+                "changes": [
+                    "Остаток: 3+ -> 2",
+                    "Закупка: 0 -> 1282",
+                    "Наша Скидка: 2500 -> 1875"
+                ]
+            }
+        ]
     },
     {
         "id": "9b043555-c686-40e6-806d-377d6bfba6d7",
