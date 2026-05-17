@@ -998,7 +998,7 @@
         "name": "Онегин ГУРМЭ",
         "category": "Крепкие напитки",
         "our_reg": 1700,
-        "our_disc": 1700,
+        "our_disc": 1530,
         "competitors": [
             {
                 "shop": "Лента",
@@ -1031,9 +1031,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1100,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-17 05:59",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 1100",
+                    "Наша Скидка: 1700 -> 1530"
+                ]
+            }
+        ]
     },
     {
         "id": "4edb8fea-61d8-4ca7-b9e1-4b807c39d436",
