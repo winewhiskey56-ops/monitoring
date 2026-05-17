@@ -1478,7 +1478,7 @@
         "name": "Виски PROPER № TWELVE Пропер № Твелв купажированный 40%, 0.7L",
         "category": "Крепкие напитки",
         "our_reg": 3600,
-        "our_disc": 2700,
+        "our_disc": 2520,
         "competitors": [
             {
                 "shop": "Лента",
@@ -1499,9 +1499,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 1596,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 08:24",
+                "changes": [
+                    "Закупка: 0 -> 1596",
+                    "Наша Скидка: 2700 -> 2520"
+                ]
+            }
+        ]
     },
     {
         "id": "1b558851-1aa0-4ad9-b528-675074b2fdbc",
