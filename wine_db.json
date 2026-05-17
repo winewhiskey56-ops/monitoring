@@ -1636,7 +1636,7 @@
         "name": "Ром MATUSALEM Платино выдержанный 40%, 0.7L",
         "category": "Крепкие напитки",
         "our_reg": 2500,
-        "our_disc": 2500,
+        "our_disc": 2125,
         "competitors": [
             {
                 "shop": "Лента",
@@ -1651,9 +1651,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1483,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-17 08:30",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 1483",
+                    "Наша Скидка: 2500 -> 2125"
+                ]
+            }
+        ]
     },
     {
         "id": "4eeea6b1-1bca-4d5f-bd3c-01065a857158",
