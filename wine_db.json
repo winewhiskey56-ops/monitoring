@@ -1522,7 +1522,7 @@
         "name": "Виски BUSHMILLS Бушмиллз Ориджинал Ирландский купажированный, 40%, п/у/без п/у, 0.7L",
         "category": "Крепкие напитки",
         "our_reg": 2900,
-        "our_disc": 2900,
+        "our_disc": 2465,
         "competitors": [
             {
                 "shop": "Лента",
@@ -1543,9 +1543,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 1745,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 08:27",
+                "changes": [
+                    "Закупка: 0 -> 1745",
+                    "Наша Скидка: 2900 -> 2465"
+                ]
+            }
+        ]
     },
     {
         "id": "889db2a2-abdf-40d1-87a3-f8a4ccd2df99",
