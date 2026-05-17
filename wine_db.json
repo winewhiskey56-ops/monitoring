@@ -29,7 +29,7 @@
         "name": "Вино PFEFFERER ординарное белое полусухое",
         "category": "Европа",
         "our_reg": 2500,
-        "our_disc": 2125,
+        "our_disc": 2250,
         "competitors": [
             {
                 "shop": "Лента",
@@ -59,6 +59,12 @@
         "purchase_price": 1580,
         "stock": "2",
         "history": [
+            {
+                "date": "2026-05-17 05:09",
+                "changes": [
+                    "Наша Скидка: 2125 -> 2250"
+                ]
+            },
             {
                 "date": "2026-05-16 11:03",
                 "changes": [
