@@ -839,7 +839,7 @@
         "name": "Вино CAPE ORIGINAL Шенен Блан - Пинотаж ординарное белое сухое",
         "category": "Новый Свет",
         "our_reg": 1400,
-        "our_disc": 1400,
+        "our_disc": 1050,
         "competitors": [
             {
                 "shop": "Лента",
@@ -854,9 +854,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 589,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 05:49",
+                "changes": [
+                    "Закупка: 0 -> 589",
+                    "Наша Скидка: 1400 -> 1050"
+                ]
+            }
+        ]
     },
     {
         "id": "105b3d3f-b636-4761-baec-b419caf01597",
