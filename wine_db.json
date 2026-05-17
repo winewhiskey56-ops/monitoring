@@ -365,7 +365,7 @@
         "name": "Вино LE GRAND NOIR Розе одинарное розовое сухое",
         "category": "Европа",
         "our_reg": 2200,
-        "our_disc": 2200,
+        "our_disc": 1540,
         "competitors": [
             {
                 "shop": "Лента",
@@ -377,6 +377,12 @@
         "purchase_price": 920,
         "stock": "2",
         "history": [
+            {
+                "date": "2026-05-17 05:20",
+                "changes": [
+                    "Наша Скидка: 2200 -> 1540"
+                ]
+            },
             {
                 "date": "2026-05-16 11:52",
                 "changes": [
