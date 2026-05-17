@@ -1958,8 +1958,8 @@
         "id": "41bc478a-37cc-4535-961c-8b13b82acc26",
         "name": "Вино безалкогольное Felix Solis Vina Albali Sauvignon Blanc белое полусухое",
         "category": "Европа",
-        "our_reg": 1400,
-        "our_disc": 1400,
+        "our_reg": 1200,
+        "our_disc": 1200,
         "competitors": [
             {
                 "shop": "Метро",
@@ -1968,9 +1968,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 643,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 08:41",
+                "changes": [
+                    "Закупка: 0 -> 643",
+                    "Наша Рег.: 1400 -> 1200",
+                    "Наша Скидка: 1400 -> 1200"
+                ]
+            }
+        ]
     },
     {
         "id": "fc4fb6ac-f715-462f-8317-5680b27379f8",
