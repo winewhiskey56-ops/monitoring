@@ -1753,7 +1753,7 @@
         "name": "Напиток спиртной JOSE CUERVO Текила Especial Silver 35–38%, 0.7L",
         "category": "Крепкие напитки",
         "our_reg": 2600,
-        "our_disc": 2600,
+        "our_disc": 2210,
         "competitors": [
             {
                 "shop": "Лента",
@@ -1780,9 +1780,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1555,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-17 08:34",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 1555",
+                    "Наша Скидка: 2600 -> 2210"
+                ]
+            }
+        ]
     },
     {
         "id": "b1654044-a47c-47d6-848f-3ab8b7664799",
