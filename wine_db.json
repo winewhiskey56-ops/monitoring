@@ -661,7 +661,7 @@
         "name": "Вино TRAPICHE VINEYARDS Мальбек Шардоне АНАЛОГИ",
         "category": "Новый Свет",
         "our_reg": 1500,
-        "our_disc": 1500,
+        "our_disc": 1125,
         "competitors": [
             {
                 "shop": "Лента",
@@ -682,9 +682,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 670,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 05:40",
+                "changes": [
+                    "Закупка: 0 -> 670",
+                    "Наша Скидка: 1500 -> 1125"
+                ]
+            }
+        ]
     },
     {
         "id": "475316ab-4629-4432-a2e6-37c6af58f4a1",
