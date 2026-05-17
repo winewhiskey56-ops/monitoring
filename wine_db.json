@@ -149,7 +149,7 @@
         "name": "Вино TRE PASSO ординарное красное полусухое",
         "category": "Европа",
         "our_reg": 2500,
-        "our_disc": 2500,
+        "our_disc": 1875,
         "competitors": [
             {
                 "shop": "Лента",
@@ -161,6 +161,12 @@
         "purchase_price": 1295,
         "stock": "3+",
         "history": [
+            {
+                "date": "2026-05-17 05:11",
+                "changes": [
+                    "Наша Скидка: 2500 -> 1875"
+                ]
+            },
             {
                 "date": "2026-05-16 11:28",
                 "changes": [
