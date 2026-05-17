@@ -1872,8 +1872,8 @@
         "id": "4ef069fe-313b-415c-89b2-a63f1be2c7fb",
         "name": "Вино безалкогольное Hans Baer Пино нуар розовое сухое",
         "category": "Европа",
-        "our_reg": 1500,
-        "our_disc": 1500,
+        "our_reg": 1400,
+        "our_disc": 1400,
         "competitors": [
             {
                 "shop": "Метро",
@@ -1882,9 +1882,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 706,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 08:39",
+                "changes": [
+                    "Закупка: 0 -> 706",
+                    "Наша Рег.: 1500 -> 1400",
+                    "Наша Скидка: 1500 -> 1400"
+                ]
+            }
+        ]
     },
     {
         "id": "560c9b9d-758d-4552-80e0-38a596fe18e8",
