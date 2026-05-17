@@ -2183,7 +2183,7 @@
         "name": "Вино Pfefferer Pink розовое сухое",
         "category": "Европа",
         "our_reg": 2700,
-        "our_disc": 2025,
+        "our_disc": 2295,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2198,9 +2198,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1739,
+        "stock": "2",
+        "history": [
+            {
+                "date": "2026-05-17 08:49",
+                "changes": [
+                    "Остаток: 3+ -> 2",
+                    "Закупка: 0 -> 1739",
+                    "Наша Скидка: 2025 -> 2295"
+                ]
+            }
+        ]
     },
     {
         "id": "5a64b492-4cfd-45d0-8cc4-aa28104981a8",
