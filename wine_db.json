@@ -897,7 +897,7 @@
         "name": "Вино CAPE ORIGINAL Совиньон Блан ординарное белое сухое, 0.25L",
         "category": "Новый Свет",
         "our_reg": 400,
-        "our_disc": 400,
+        "our_disc": 360,
         "competitors": [
             {
                 "shop": "Лента",
@@ -912,9 +912,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 228,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-17 05:52",
+                "changes": [
+                    "Закупка: 0 -> 228",
+                    "Наша Скидка: 400 -> 360"
+                ]
+            }
+        ]
     },
     {
         "id": "7b7c1611-5d06-4f26-8907-2f7f927ef9f4",
