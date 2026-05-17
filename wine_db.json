@@ -2123,8 +2123,8 @@
         "id": "e52d3c73-f002-44e1-a208-8fc76a4a581c",
         "name": "Вино Domini Veneti Garganega белое полусухое",
         "category": "Европа",
-        "our_reg": 3000,
-        "our_disc": 3000,
+        "our_reg": 2500,
+        "our_disc": 2500,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2133,9 +2133,19 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1581,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-17 08:47",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 1581",
+                    "Наша Рег.: 3000 -> 2500",
+                    "Наша Скидка: 3000 -> 2500"
+                ]
+            }
+        ]
     },
     {
         "id": "768384ff-31c7-45fe-8f3b-1a4fb4d76be5",
