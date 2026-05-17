@@ -1714,7 +1714,7 @@
         "name": "Напиток спиртной JOSE CUERVO Текила Especial Reposado 35–38%, 0.7L",
         "category": "Крепкие напитки",
         "our_reg": 2500,
-        "our_disc": 2500,
+        "our_disc": 2125,
         "competitors": [
             {
                 "shop": "Лента",
@@ -1735,9 +1735,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1495,
+        "stock": "2",
+        "history": [
+            {
+                "date": "2026-05-17 08:33",
+                "changes": [
+                    "Остаток: 3+ -> 2",
+                    "Закупка: 0 -> 1495",
+                    "Наша Скидка: 2500 -> 2125"
+                ]
+            }
+        ]
     },
     {
         "id": "82e38e3d-892d-47bd-b03f-392a41784ec2",
