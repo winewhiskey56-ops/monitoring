@@ -3961,7 +3961,7 @@
         "name": "Вино Jardin de la Taur Grenache-Syrah красное полусухое",
         "category": "Европа",
         "our_reg": 1700,
-        "our_disc": 1700,
+        "our_disc": 1530,
         "competitors": [
             {
                 "shop": "Перекресток",
@@ -3970,9 +3970,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 777,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 14:15",
+                "changes": [
+                    "Закупка: 0 -> 777",
+                    "Наша Скидка: 1700 -> 1530"
+                ]
+            }
+        ]
     },
     {
         "id": "7ec08578-35ce-4b42-ab2a-810b6d7474c1",
