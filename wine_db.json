@@ -2494,8 +2494,8 @@
         "id": "cec528ac-395b-4b24-ab49-e36428b1c1bc",
         "name": "Вино Mare&Grill Vinho Verde White белое полусухое",
         "category": "Новый Свет",
-        "our_reg": 1600,
-        "our_disc": 1600,
+        "our_reg": 1500,
+        "our_disc": 1275,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2516,9 +2516,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 777,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 07:58",
+                "changes": [
+                    "Закупка: 0 -> 777",
+                    "Наша Рег.: 1600 -> 1500",
+                    "Наша Скидка: 1600 -> 1275"
+                ]
+            }
+        ]
     },
     {
         "id": "64f67dc7-481c-4da2-9429-ee596a2b5bfd",
