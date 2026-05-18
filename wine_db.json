@@ -3289,7 +3289,7 @@
         "name": "Виски Bushmills Original, 1л",
         "category": "Крепкие напитки",
         "our_reg": 4800,
-        "our_disc": 4800,
+        "our_disc": 3600,
         "competitors": [
             {
                 "shop": "Метро",
@@ -3304,9 +3304,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 2490,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 11:22",
+                "changes": [
+                    "Закупка: 0 -> 2490",
+                    "Наша Скидка: 4800 -> 3600"
+                ]
+            }
+        ]
     },
     {
         "id": "04a48bfa-4c96-4e48-a54a-53ab66cc29d2",
