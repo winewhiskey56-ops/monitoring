@@ -3448,7 +3448,7 @@
         "name": "Бренди Tio Toto De Jerez Solera, 0.7л",
         "category": "Крепкие напитки",
         "our_reg": 3500,
-        "our_disc": 2975,
+        "our_disc": 2450,
         "competitors": [
             {
                 "shop": "Метро",
@@ -3457,9 +3457,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1739,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-18 11:33",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 1739",
+                    "Наша Скидка: 2975 -> 2450"
+                ]
+            }
+        ]
     },
     {
         "id": "755c8698-c69a-4dd4-8942-a111bd961740",
