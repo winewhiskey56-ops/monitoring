@@ -3257,7 +3257,7 @@
         "name": "Водка Онегин Organic Special, 0.5л",
         "category": "Крепкие напитки",
         "our_reg": 1800,
-        "our_disc": 1800,
+        "our_disc": 1530,
         "competitors": [
             {
                 "shop": "Метро",
@@ -3272,9 +3272,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 1074,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 11:20",
+                "changes": [
+                    "Закупка: 0 -> 1074",
+                    "Наша Скидка: 1800 -> 1530"
+                ]
+            }
+        ]
     },
     {
         "id": "23494c5c-c1cb-4b16-b38a-dfd409be8610",
