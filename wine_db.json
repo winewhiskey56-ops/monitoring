@@ -3573,9 +3573,16 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 875,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 11:41",
+                "changes": [
+                    "Закупка: 0 -> 875"
+                ]
+            }
+        ]
     },
     {
         "id": "aa031381-daf0-40d5-8ca8-130d5b379998",
