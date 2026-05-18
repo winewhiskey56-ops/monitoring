@@ -2539,8 +2539,8 @@
         "id": "64f67dc7-481c-4da2-9429-ee596a2b5bfd",
         "name": "Вино Loco Cimbali Merlot красное сухое",
         "category": "Новый Свет",
-        "our_reg": 2900,
-        "our_disc": 2175,
+        "our_reg": 2600,
+        "our_disc": 2600,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2549,9 +2549,19 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1503,
+        "stock": "2",
+        "history": [
+            {
+                "date": "2026-05-18 08:01",
+                "changes": [
+                    "Остаток: 3+ -> 2",
+                    "Закупка: 0 -> 1503",
+                    "Наша Рег.: 2900 -> 2600",
+                    "Наша Скидка: 2175 -> 2600"
+                ]
+            }
+        ]
     },
     {
         "id": "b59aaf31-b082-49d1-8086-179c39c3180a",
