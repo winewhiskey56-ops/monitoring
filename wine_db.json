@@ -2416,7 +2416,7 @@
         "name": "Вино Ed Knows АНАЛОГИ",
         "category": "Новый Свет",
         "our_reg": 1200,
-        "our_disc": 1200,
+        "our_disc": 1020,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2425,9 +2425,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 560,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 07:54",
+                "changes": [
+                    "Закупка: 0 -> 560",
+                    "Наша Скидка: 1200 -> 1020"
+                ]
+            }
+        ]
     },
     {
         "id": "8e9dfd8b-1674-418e-be54-7ba1ffe2faf5",
