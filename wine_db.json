@@ -2260,7 +2260,7 @@
         "name": "Вино Cielo Freschello Rose розовое полусухое",
         "category": "Европа",
         "our_reg": 1500,
-        "our_disc": 1500,
+        "our_disc": 1125,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2269,9 +2269,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 734,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 07:36",
+                "changes": [
+                    "Закупка: 0 -> 734",
+                    "Наша Скидка: 1500 -> 1125"
+                ]
+            }
+        ]
     },
     {
         "id": "8f90c0b8-e5c3-44ca-b99a-56efb7f35c76",
