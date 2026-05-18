@@ -3500,8 +3500,8 @@
         "id": "16cb29bd-bd97-44ce-a4ca-abc9b1118e9a",
         "name": "Классик Кюве Цвайгельт Мерло сухое Nastl",
         "category": "Европа",
-        "our_reg": 3000,
-        "our_disc": 3000,
+        "our_reg": 2300,
+        "our_disc": 2300,
         "competitors": [
             {
                 "shop": "Магнит",
@@ -3510,9 +3510,19 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 1555,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-18 11:37",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 1555",
+                    "Наша Рег.: 3000 -> 2300",
+                    "Наша Скидка: 3000 -> 2300"
+                ]
+            }
+        ]
     },
     {
         "id": "df1893e5-0f99-4fd5-8697-7d96d1fd761d",
