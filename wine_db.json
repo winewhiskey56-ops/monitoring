@@ -3475,7 +3475,7 @@
         "name": "Вино Noseworthy Chardonnay молодое белое полусухое",
         "category": "Новый Свет",
         "our_reg": 1900,
-        "our_disc": 1900,
+        "our_disc": 1330,
         "competitors": [
             {
                 "shop": "Магнит",
@@ -3484,9 +3484,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 850,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 11:35",
+                "changes": [
+                    "Закупка: 0 -> 850",
+                    "Наша Скидка: 1900 -> 1330"
+                ]
+            }
+        ]
     },
     {
         "id": "16cb29bd-bd97-44ce-a4ca-abc9b1118e9a",
