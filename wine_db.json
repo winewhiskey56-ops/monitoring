@@ -2820,7 +2820,7 @@
         "name": "Вино Crab&More Chardonnay белое полусухое",
         "category": "Новый Свет",
         "our_reg": 2300,
-        "our_disc": 2300,
+        "our_disc": 1725,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2829,9 +2829,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 1076,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 08:20",
+                "changes": [
+                    "Закупка: 0 -> 1076",
+                    "Наша Скидка: 2300 -> 1725"
+                ]
+            }
+        ]
     },
     {
         "id": "ecd7db84-95af-4b42-aa5f-ca6114d5863e",
