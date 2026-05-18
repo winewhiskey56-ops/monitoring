@@ -2468,7 +2468,7 @@
         "name": "Вино Mare&Grill Vinho Verde Rose розовое полусухое",
         "category": "Новый Свет",
         "our_reg": 1500,
-        "our_disc": 1500,
+        "our_disc": 1275,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2480,6 +2480,12 @@
         "purchase_price": 777,
         "stock": "3+",
         "history": [
+            {
+                "date": "2026-05-18 07:59",
+                "changes": [
+                    "Наша Скидка: 1500 -> 1275"
+                ]
+            },
             {
                 "date": "2026-05-18 07:57",
                 "changes": [
