@@ -3797,7 +3797,7 @@
         "name": "Джин Hoppers  40% 500мл",
         "category": "Крепкие напитки",
         "our_reg": 1000,
-        "our_disc": 1000,
+        "our_disc": 700,
         "competitors": [
             {
                 "shop": "Магнит",
@@ -3806,9 +3806,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 450,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 11:55",
+                "changes": [
+                    "Закупка: 0 -> 450",
+                    "Наша Скидка: 1000 -> 700"
+                ]
+            }
+        ]
     },
     {
         "id": "6388e6a0-5aef-496e-8747-c8d4e289c99d",
