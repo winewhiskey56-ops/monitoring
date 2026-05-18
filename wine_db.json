@@ -3528,8 +3528,8 @@
         "id": "df1893e5-0f99-4fd5-8697-7d96d1fd761d",
         "name": "Вино Baluarte roble красное сухое",
         "category": "Европа",
-        "our_reg": 1900,
-        "our_disc": 1900,
+        "our_reg": 1800,
+        "our_disc": 1800,
         "competitors": [
             {
                 "shop": "Магнит",
@@ -3541,6 +3541,13 @@
         "purchase_price": 1053,
         "stock": "1",
         "history": [
+            {
+                "date": "2026-05-18 11:40",
+                "changes": [
+                    "Наша Рег.: 1900 -> 1800",
+                    "Наша Скидка: 1900 -> 1800"
+                ]
+            },
             {
                 "date": "2026-05-18 11:39",
                 "changes": [
