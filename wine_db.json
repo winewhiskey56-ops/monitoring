@@ -3321,7 +3321,7 @@
         "name": "Виски шотландский Glen Scotia Double Cask в подарочной упаковке, 0.7л",
         "category": "Крепкие напитки",
         "our_reg": 10000,
-        "our_disc": 10000,
+        "our_disc": 7500,
         "competitors": [
             {
                 "shop": "Метро",
@@ -3330,9 +3330,18 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
-        "stock": "3+",
-        "history": []
+        "purchase_price": 4396,
+        "stock": "1",
+        "history": [
+            {
+                "date": "2026-05-18 11:25",
+                "changes": [
+                    "Остаток: 3+ -> 1",
+                    "Закупка: 0 -> 4396",
+                    "Наша Скидка: 10000 -> 7500"
+                ]
+            }
+        ]
     },
     {
         "id": "285a3ab7-d013-4664-bb88-2f755fdd0d0f",
