@@ -2794,7 +2794,7 @@
         "name": "Вино Crab&More Zinfandel красное полусухое",
         "category": "Новый Свет",
         "our_reg": 2300,
-        "our_disc": 2070,
+        "our_disc": 1725,
         "competitors": [
             {
                 "shop": "Метро",
@@ -2803,9 +2803,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 1076,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 08:19",
+                "changes": [
+                    "Закупка: 0 -> 1076",
+                    "Наша Скидка: 2070 -> 1725"
+                ]
+            }
+        ]
     },
     {
         "id": "8ae59649-e1b9-49db-8e2f-81ba9aec9dc2",
