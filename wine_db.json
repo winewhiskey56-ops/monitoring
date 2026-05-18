@@ -3987,7 +3987,7 @@
         "name": "Вино Pinot Grigio Muzzi Origin Wine Stellenbosch ординарное белое сухое",
         "category": "Новый Свет",
         "our_reg": 1500,
-        "our_disc": 1500,
+        "our_disc": 1050,
         "competitors": [
             {
                 "shop": "Перекресток",
@@ -3996,9 +3996,17 @@
                 "in_stock": true
             }
         ],
-        "purchase_price": 0,
+        "purchase_price": 648,
         "stock": "3+",
-        "history": []
+        "history": [
+            {
+                "date": "2026-05-18 14:17",
+                "changes": [
+                    "Закупка: 0 -> 648",
+                    "Наша Скидка: 1500 -> 1050"
+                ]
+            }
+        ]
     },
     {
         "id": "38fda83b-7b6c-4e17-9657-d7e75770dbab",
